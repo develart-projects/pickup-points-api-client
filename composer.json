@@ -1,0 +1,14 @@
+{
+    "name": "develart/pp-api-client",
+    "description": "Pickup Points API client library",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Marcin Orlowski",
+            "email": "marcin.orlowski@develart.cz"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
