@@ -1,0 +1,27 @@
+{
+    "name": "develart-projects/pickup-points-api-client",
+    "description": "Pickup Points client library for Olza Logistic API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcin Orlowski",
+            "email": "marcin.orlowski@develart.cz"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Develart\\PpApi\\Client\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Develart\\PpApi\\Client\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
+    }
+}
