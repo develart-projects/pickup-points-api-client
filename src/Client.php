@@ -215,4 +215,5 @@ abstract class Client implements ClientContract
         $request = $this->createRequest('GET', $uri);
         return $client->sendRequest($request);
     }
-}
+
+} // end of class
