@@ -9,6 +9,19 @@
             "email": "marcin.orlowski@develart.cz"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Develart\\PpApi\\Client\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Develart\\PpApi\\Client\\Tests\\": "tests/"
+        }
+    },
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
+    }
 }
