@@ -1,6 +1,6 @@
 <?php
 
-namespace Develart\PpApi\Client;
+namespace OlzaLogistic\PpApi\Client;
 
 class Consts
 {

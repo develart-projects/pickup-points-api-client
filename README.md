@@ -1,4 +1,4 @@
-# PP-API Client
+# pickup-points-api-client
 
 A PickupPoint API Client PHP library
 
@@ -9,7 +9,7 @@ A PickupPoint API Client PHP library
 ## Installation
 
 ```bash
-$ composer require develart/pp-api-client
+$ composer require develart-projects/pickup-points-api-client
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ $ composer require develart/pp-api-client
 all the required `use` clauses.
 
 ```php
-use Develart\PpApiClient\Client as PpApiClient;
+use OlzaLogistic\PpApi\Client as PpApiClient;
 ```
 
 

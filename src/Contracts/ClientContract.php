@@ -1,6 +1,6 @@
 <?php
 
-namespace Develart\PpApi\Client\Contracts;
+namespace OlzaLogistic\PpApi\Client\Contracts;
 
 use Develart\PpApi\Client\Result;
 

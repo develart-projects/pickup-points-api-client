@@ -1,6 +1,6 @@
 <?php
 
-namespace Develart\PpApi\Client;
+namespace OlzaLogistic\PpApi\Client;
 
 use Develart\PpApi\Client\Model\PickupPoint;
 use Psr\Http\Message\ResponseInterface;

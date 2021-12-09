@@ -11,12 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Develart\\PpApi\\Client\\": "src/"
+            "OlzaLogistic\\PpApi\\Client\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Develart\\PpApi\\Client\\Tests\\": "tests/"
+            "OlzaLogistic\\PpApi\\Client\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",
