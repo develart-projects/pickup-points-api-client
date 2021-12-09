@@ -18,7 +18,7 @@ $ composer require develart-projects/pickup-points-api-client
 all the required `use` clauses.
 
 ```php
-use Develart\PpApiClient\Client as PpApiClient;
+use OlzaLogistic\PpApi\Client as PpApiClient;
 ```
 
 

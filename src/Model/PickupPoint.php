@@ -1,6 +1,6 @@
 <?php
 
-namespace Develart\PpApi\Client\Model;
+namespace OlzaLogistic\PpApi\Client\Model;
 
 class PickupPoint
 {

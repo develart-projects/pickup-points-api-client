@@ -1,6 +1,6 @@
 <?php
 
-namespace Develart\PpApi\Client;
+namespace OlzaLogistic\PpApi\Client;
 
 use Develart\PpApi\Client\Contracts\ClientContract;
 use Psr\Http\Client\ClientInterface;
