@@ -1,8 +1,8 @@
 {
-    "name": "develart/pp-api-client",
-    "description": "Pickup Points API client library",
+    "name": "develart-projects/pickup-points-api-client",
+    "description": "Pickup Points client library for Olza Logistic API",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Marcin Orlowski",
