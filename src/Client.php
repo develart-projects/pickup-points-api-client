@@ -2,6 +2,17 @@
 
 namespace OlzaLogistic\PpApi\Client;
 
+/**
+ * Olza Logistic's Pickup Points API client
+ *
+ * @package   OlzaLogistic\PpApi\Client
+ *
+ * @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
+ * @copyright 2021 DevelArt IV
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      https://github.com/develart-projects/pickup-points-api-client/
+ */
+
 use Develart\PpApi\Client\Contracts\ClientContract;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -14,11 +25,13 @@ abstract class Client implements ClientContract
 
     public function __construct(ClientInterface         $httpClient,
                                 RequestFactoryInterface $requestFactory,
-                                string                  $accessToken)
+                                string                  $accessToken,
+                                string                  $apiUrl)
     {
         $this->setHttpClient($httpClient);
         $this->setRequestFactory($requestFactory);
         $this->setAccessToken($accessToken);
+        $this->setApiUrl($apiUrl);
     }
 
     /** ********************************************************************************************* **/
@@ -121,15 +134,6 @@ abstract class Client implements ClientContract
     /** ********************************************************************************************* **/
 
     /**
-     * Base URL for APi endpoints.
-     *
-     * NOTE: The value MUST NOT contain any trailing slash!
-     *
-     * @var string
-     */
-    protected const API_URL = 'https://api.posten.no/pp/v1';
-
-    /**
      * Talks to API and returns list of PPs matching search criteria.
      *
      * @param string      $countryCode Mandatory country code (i.e. 'cz', 'hu', etc.).
@@ -188,6 +192,9 @@ abstract class Client implements ClientContract
 
     /** ********************************************************************************************* **/
 
+    /** @var string */
+    protected const KEY_ACCESS_TOKEN = 'access_token';
+
     /**
      * Constructs final request and does GET request to remote API.
      *
@@ -195,7 +202,11 @@ abstract class Client implements ClientContract
      */
     protected function doGetRequest(string $endPoint, ?array $queryArgs = null): ResponseInterface
     {
-        $uri = static::API_URL . $endPoint;
+        if (!\array_key_exists(static::KEY_ACCESS_TOKEN)) {
+            $queryArgs[ static::KEY_ACCESS_TOKEN ] = $this->getAccessToken();
+        }
+
+        $uri = $this->getApiUrl() . $endPoint;
         if (!empty($queryArgs ?? [])) {
             $uri .= '?' . \http_build_query($queryArgs);
         }
@@ -204,4 +215,5 @@ abstract class Client implements ClientContract
         $request = $this->createRequest('GET', $uri);
         return $client->sendRequest($request);
     }
-}
+
+} // end of class
