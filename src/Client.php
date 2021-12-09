@@ -8,9 +8,9 @@ namespace OlzaLogistic\PpApi\Client;
  * @package   OlzaLogistic\PpApi\Client
  *
  * @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
- * @copyright 2016-2021 Marcin Orlowski
+ * @copyright 2021 DevelArt IV
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
- * @link      https://github.com/MarcinOrlowski/laravel-api-response-builder
+ * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
 use Develart\PpApi\Client\Contracts\ClientContract;
