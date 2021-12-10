@@ -35,7 +35,7 @@ class Consts
     /** ********************************************************************************************* **/
 
     /** @var string */
-    public const API_KEY_RESULT = 'result';
+    public const API_KEY_SUCCESS = 'success';
 
     /** @var string */
     public const API_KEY_CODE = 'code';

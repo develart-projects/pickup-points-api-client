@@ -13,7 +13,7 @@ namespace OlzaLogistic\PpApi\Client;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-use Develart\PpApi\Client\Model\PickupPoint;
+use OlzaLogistic\PpApi\Client\Model\PickupPoint;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -81,7 +81,7 @@ class Result
                 return static::asError();
             }
 
-            $result = $json[ Consts::API_KEY_RESULT ] ? self::asSuccess() : self::asError();
+            $result = $json[ Consts::API_KEY_SUCCESS ] ? self::asSuccess() : self::asError();
             $result
                 ->setCode($json[ Consts::API_KEY_CODE ])
                 ->setMessage($json[ Consts::API_KEY_MESSAGE ]);
@@ -116,7 +116,7 @@ class Result
     protected static function isApiResponseArrayValid(array $json): bool
     {
         $requiredKeys = [
-            Consts::API_KEY_RESULT,
+            Consts::API_KEY_SUCCESS,
             Consts::API_KEY_MESSAGE,
             Consts::API_KEY_CODE,
             Consts::API_KEY_DATA,
@@ -127,7 +127,7 @@ class Result
             }
         }
 
-        if (!\is_bool($json[ Consts::API_KEY_RESULT ])
+        if (!\is_bool($json[ Consts::API_KEY_SUCCESS ])
             || !\is_string($json[ Consts::API_KEY_MESSAGE ])
             || !\is_int($json[ Consts::API_KEY_CODE ])
             || !($json[ Consts::API_KEY_DATA ] === null
