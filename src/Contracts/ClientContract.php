@@ -13,7 +13,7 @@ namespace OlzaLogistic\PpApi\Client\Contracts;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-use Develart\PpApi\Client\Result;
+use OlzaLogistic\PpApi\Client\Result;
 
 interface ClientContract
 {
