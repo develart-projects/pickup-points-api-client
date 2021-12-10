@@ -1,6 +1,6 @@
 <?php
 
-namespace OlzaLogistic\PpApi\Client\Tests\Model;
+namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
 use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
