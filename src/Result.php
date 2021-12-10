@@ -76,19 +76,19 @@ class Result
         }
 
         try {
-            $json = \json_decode($response->getBody(), true, 32, \JSON_THROW_ON_ERROR);
-            if (static::isApiResponseArrayValid($json)) {
+            $json = \json_decode($response->getBody()->getContents(), true, 32, \JSON_THROW_ON_ERROR);
+            if (!static::isApiResponseArrayValid($json)) {
                 return static::asError();
             }
-
             $result = $json[ Consts::API_KEY_SUCCESS ] ? self::asSuccess() : self::asError();
             $result
                 ->setCode($json[ Consts::API_KEY_CODE ])
                 ->setMessage($json[ Consts::API_KEY_MESSAGE ]);
 
-            $dataSrc = $json[ Consts::API_KEY_DATA ];
             $data = null;
-            if (!empty($dataSrc)) {
+
+            if ($json[ Consts::API_KEY_DATA ] !== null) {
+                $dataSrc = $json[ Consts::API_KEY_DATA ][ Consts::API_KEY_ITEMS ];
                 $data = [];
                 foreach ($dataSrc as $item) {
                     $data[] = PickupPoint::fromApiResponse($item);
@@ -121,6 +121,7 @@ class Result
             Consts::API_KEY_CODE,
             Consts::API_KEY_DATA,
         ];
+
         foreach ($requiredKeys as $key) {
             if (!\array_key_exists($key, $json)) {
                 return false;

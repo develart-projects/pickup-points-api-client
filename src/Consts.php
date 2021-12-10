@@ -46,4 +46,9 @@ class Consts
     /** @var string */
     public const API_KEY_DATA = 'data';
 
+    /** ********************************************************************************************* **/
+
+    /** @var string */
+    public const API_KEY_ITEMS = 'items';
+
 } // end of class

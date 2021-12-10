@@ -22,31 +22,42 @@ use Psr\Http\Message\ResponseInterface;
 abstract class ClientBase implements ClientContract
 {
     /**
-     * Configures client to use specific API URL and access token
+     * Configures client to use specific API URL
      *
      * @param string $apiUrl Valid API URL, i.e. 'https://api.olzalogistic.com/v1'
-     * @param string $accessToken
-     *
-     * @return static
      */
-    public static function useApi(string $apiUrl, string $accessToken): self
+    public static function useApi(string $apiUrl): self
     {
         if (!preg_match('#^https?://#', $apiUrl)) {
             throw new \InvalidArgumentException('Invalid API URL.');
         }
 
+        return new static($apiUrl);
+    }
+
+    /**
+     * Configures client to use specific access token while talking to Pickup Points API.
+     *
+     * @param string $accessToken Your private access token.
+     *
+     * @return $this
+     */
+    public function withAccessToken(string $accessToken): self
+    {
         if (empty(\trim($accessToken))) {
             throw new \InvalidArgumentException('Invalid API access token.');
         }
 
-        return new static($apiUrl, $accessToken);
+        $this->setAccessToken($accessToken);
+        return $this;
     }
 
     /**
      * Configures Client instance to use Guzzle HTTP client.
+     *
      * NOTE: Requires Guzzle package to be installed.
      */
-    public function withGuzzle(): self
+    public function withGuzzleClient(): self
     {
         $this->assertClientNotConfigured();
 
@@ -111,9 +122,8 @@ abstract class ClientBase implements ClientContract
 
     /** ********************************************************************************************* **/
 
-    protected function __construct(string $apiUrl, string $accessToken)
+    protected function __construct(string $apiUrl)
     {
-        $this->setAccessToken($accessToken);
         $this->setApiUrl($apiUrl);
     }
 
@@ -268,8 +278,10 @@ abstract class ClientBase implements ClientContract
      */
     protected function doGetRequest(string $endPoint, ?array $queryArgs = null): ResponseInterface
     {
-        if (!\array_key_exists(static::KEY_ACCESS_TOKEN, $queryArgs)) {
-            $queryArgs[ static::KEY_ACCESS_TOKEN ] = $this->getAccessToken();
+        if ($this->accessToken !== null) {
+            if (!\array_key_exists(static::KEY_ACCESS_TOKEN, $queryArgs)) {
+                $queryArgs[ static::KEY_ACCESS_TOKEN ] = $this->getAccessToken();
+            }
         }
 
         $uri = $this->getApiUrl() . $endPoint;
