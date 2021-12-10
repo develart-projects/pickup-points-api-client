@@ -13,7 +13,7 @@ namespace OlzaLogistic\PpApi\Client;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-use Develart\PpApi\Client\Model\PickupPoint;
+use OlzaLogistic\PpApi\Client\Model\PickupPoint;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -76,19 +76,19 @@ class Result
         }
 
         try {
-            $json = \json_decode($response->getBody(), true, 32, \JSON_THROW_ON_ERROR);
-            if (static::isApiResponseArrayValid($json)) {
+            $json = \json_decode($response->getBody()->getContents(), true, 32, \JSON_THROW_ON_ERROR);
+            if (!static::isApiResponseArrayValid($json)) {
                 return static::asError();
             }
-
-            $result = $json[ Consts::API_KEY_RESULT ] ? self::asSuccess() : self::asError();
+            $result = $json[ Consts::API_KEY_SUCCESS ] ? self::asSuccess() : self::asError();
             $result
                 ->setCode($json[ Consts::API_KEY_CODE ])
                 ->setMessage($json[ Consts::API_KEY_MESSAGE ]);
 
-            $dataSrc = $json[ Consts::API_KEY_DATA ];
             $data = null;
-            if (!empty($dataSrc)) {
+
+            if ($json[ Consts::API_KEY_DATA ] !== null) {
+                $dataSrc = $json[ Consts::API_KEY_DATA ][ Consts::API_KEY_ITEMS ];
                 $data = [];
                 foreach ($dataSrc as $item) {
                     $data[] = PickupPoint::fromApiResponse($item);
@@ -116,18 +116,19 @@ class Result
     protected static function isApiResponseArrayValid(array $json): bool
     {
         $requiredKeys = [
-            Consts::API_KEY_RESULT,
+            Consts::API_KEY_SUCCESS,
             Consts::API_KEY_MESSAGE,
             Consts::API_KEY_CODE,
             Consts::API_KEY_DATA,
         ];
+
         foreach ($requiredKeys as $key) {
             if (!\array_key_exists($key, $json)) {
                 return false;
             }
         }
 
-        if (!\is_bool($json[ Consts::API_KEY_RESULT ])
+        if (!\is_bool($json[ Consts::API_KEY_SUCCESS ])
             || !\is_string($json[ Consts::API_KEY_MESSAGE ])
             || !\is_int($json[ Consts::API_KEY_CODE ])
             || !($json[ Consts::API_KEY_DATA ] === null

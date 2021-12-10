@@ -35,7 +35,7 @@ class Consts
     /** ********************************************************************************************* **/
 
     /** @var string */
-    public const API_KEY_RESULT = 'result';
+    public const API_KEY_SUCCESS = 'success';
 
     /** @var string */
     public const API_KEY_CODE = 'code';
@@ -45,5 +45,10 @@ class Consts
 
     /** @var string */
     public const API_KEY_DATA = 'data';
+
+    /** ********************************************************************************************* **/
+
+    /** @var string */
+    public const API_KEY_ITEMS = 'items';
 
 } // end of class
