@@ -18,6 +18,16 @@ class PickupPoint
 
     /** ********************************************************************************************* **/
 
+    /**
+     * Max number of name rows that can be returned in KEY_GROUP_NAME list.
+     *
+     * @var int
+     */
+    public const MAX_NAME_LINES = 2;
+
+    /**
+     * @var string
+     */
     public const KEY_GROUP_NAME = 'name';
 
     /** ********************************************************************************************* **/
@@ -728,7 +738,7 @@ class PickupPoint
     /** ********************************************************************************************* **/
     /** ********************************************************************************************* **/
 
-    protected function __construct(string $spedition)
+    protected function __construct()
     {
         // dummy
     }
@@ -749,13 +759,14 @@ class PickupPoint
         }
 
         if (\array_key_exists(static::KEY_GROUP_ADDRESS, $a)) {
+            $node = $a[ static::KEY_GROUP_ADDRESS ];
             $pp
-                ->setFullAddress($a[ static::KEY_FULL_ADDRESS ])
-                ->setStreet($a[ static::KEY_STREET ])
-                ->setZip($a[ static::KEY_ZIP ])
-                ->setCity($a[ static::KEY_CITY ])
-                ->setCounty($a[ static::KEY_COUNTY ])
-                ->setCountry($a[ static::KEY_COUNTRY ]);
+                ->setFullAddress($node[ static::KEY_FULL_ADDRESS ])
+                ->setStreet($node[ static::KEY_STREET ])
+                ->setZip($node[ static::KEY_ZIP ])
+                ->setCity($node[ static::KEY_CITY ])
+                ->setCounty($node[ static::KEY_COUNTY ])
+                ->setCountry($node[ static::KEY_COUNTRY ]);
         }
 
         if (\array_key_exists(static::KEY_GROUP_CONTACTS, $a)) {
