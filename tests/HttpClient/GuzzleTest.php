@@ -3,6 +3,7 @@
 namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
 use OlzaLogistic\PpApi\Client\Client;
+use OlzaLogistic\PpApi\Client\Data;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
 
 /**
@@ -30,7 +31,7 @@ class GuzzleTest extends BaseTestCase
         $response = $apiClient->find('cz');
 
         $this->assertTrue($response->success());
-        $this->assertIsArray($response->getData());
+        $this->assertInstanceOf(Data::class, $response->getData());
     }
 
 } // end of class
