@@ -66,15 +66,45 @@ abstract class ClientBase implements ClientContract
      *
      * NOTE: Requires Guzzle package to be installed.
      */
-    public function withGuzzleClient(): self
+    public function withGuzzleHttpClient(): self
     {
         $this->assertClientNotConfigured();
 
-        if (!\class_exists('\GuzzleHttp\Client')) {
-            throw new \RuntimeException('Guzzle package not found. Install it: composer require guzzlehttp/guzzle');
+        $httpClientClass = '\GuzzleHttp\Client';
+
+        if (!\class_exists($httpClientClass)) {
+            throw new \RuntimeException('Guzzle HTTP client not found. See library docs for assistance.');
         }
-        $this->setHttpClient(new \GuzzleHttp\Client());
+        // NOTE: do NOT move Symfony reference out of this method! This code is OPTIONAL
+        // and if you "optimize" by i.e. adding "use" then client will fail (due to missing
+        // class) if end user is not using Guzzle client!
+        $this->setHttpClient(new $httpClientClass());
         $this->setRequestFactory(new GuzzleRequestFactory());
+        return $this;
+    }
+
+    /**
+     * Configures Client instance to use Symfony's PSR18 HTTP client.
+     *
+     * NOTE: Requires Symfony HTTP client and support packages to be installed.
+     */
+    public function withSymfonyHttpClient(): self
+    {
+        $this->assertClientNotConfigured();
+
+        $httpClientClass = \Symfony\Component\HttpClient\Psr18Client::class;
+
+        if (!\class_exists($httpClientClass)) {
+            throw new \RuntimeException('Symfony HTTP client not found. See library docs for assistance.');
+        }
+
+        // NOTE: do NOT move Symfony reference out of this method! This code is OPTIONAL
+        // and if you "optimize" by i.e. adding "use" then client will fail (due to missing
+        // class) if end user is not using Symfony client!
+        $client = new $httpClientClass();
+        $this->setHttpClient($client);
+        $this->setRequestFactory($client);
+
         return $this;
     }
 

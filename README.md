@@ -11,16 +11,24 @@ incl. [Guzzle](https://guzzlephp.org/).
 
 ## Installation
 
-Instal the PickupPoint API client library first
+Install the PickupPoint API client package first:
 
 ```bash
 $ composer require develart-projects/pickup-points-api-client
 ```
 
-then install HTTP client library of your choice, i.e. Guzzle:
+Next, install HTTP client library of your choice.
+
+### Guzzle HTTP Client
 
 ```bash
 $ composer require guzzlehttp/guzzle
+```
+
+### Symfony PSR18 HTTP Client
+
+```bash
+composer require symfony/http-client nyholm/psr7
 ```
 
 ## Usage
@@ -37,7 +45,7 @@ Get instance of API client first:
 ```php
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withGuzzleClient()
+                       ->withGuzzleHttpClient()
                        ->get();
 ```
 
@@ -47,7 +55,7 @@ you should now be able to access the API data:
 ```php
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withGuzzleClient()
+                       ->withGuzzleHttpClient()
                        ->get();
 $result = $client->find('cz');
 ...

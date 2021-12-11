@@ -16,7 +16,7 @@ use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
-class GuzzleTest extends BaseTestCase
+class GuzzleHttpClientTest extends BaseTestCase
 {
     public function testGuzzle(): void
     {
@@ -25,7 +25,7 @@ class GuzzleTest extends BaseTestCase
 
         $apiClient = Client::useApi($url)
             ->withAccessToken($accessToken)
-            ->withGuzzleClient()
+            ->withGuzzleHttpClient()
             ->get();
 
         $response = $apiClient->find('cz');
