@@ -39,8 +39,6 @@ abstract class ClientBase implements ClientContract
      * Configures client to use specific access token while talking to Pickup Points API.
      *
      * @param string $accessToken Your private access token.
-     *
-     * @return $this
      */
     public function withAccessToken(string $accessToken): self
     {
@@ -49,6 +47,17 @@ abstract class ClientBase implements ClientContract
         }
 
         $this->setAccessToken($accessToken);
+        return $this;
+    }
+
+    /**
+     * Sets User Agent string to be used with all the API requests.
+     *
+     * @param string $userAgent User agent string.
+     */
+    public function withUserAgent(string $userAgent): self
+    {
+        $this->setUserAgent($userAgent);
         return $this;
     }
 
@@ -113,6 +122,9 @@ abstract class ClientBase implements ClientContract
         }
     }
 
+    /**
+     * Ensures client is not yet configured and all configuration methods can safely be executed.
+     */
     protected function assertClientNotConfigured(): void
     {
         if ($this->clientInitialized) {
@@ -212,6 +224,24 @@ abstract class ClientBase implements ClientContract
     }
 
     /**
+     * User Agent string for API requests
+     *
+     * @var string
+     */
+    protected string $userAgent = 'Olza Logistic/PpApiClient';
+
+    protected function getUserAgent(): string
+    {
+        return $this->userAgent;
+    }
+
+    protected function setUserAgent(string $userAgent): self
+    {
+        $this->userAgent = $userAgent;
+        return $this;
+    }
+
+    /**
      * Helper method that creates instance of Request object, set up according
      * to provided arguments.
      *
@@ -225,9 +255,7 @@ abstract class ClientBase implements ClientContract
     protected function createRequest(string $method, string $uri,
                                      ?array $queryArgs = null): RequestInterface
     {
-        if ($queryArgs === null) {
-            $queryArgs = [];
-        }
+        $queryArgs ??= [];
 
         if (!empty($queryArgs)) {
             $uri += '?' . \http_build_query($queryArgs);
@@ -235,9 +263,9 @@ abstract class ClientBase implements ClientContract
 
         $request = $this->getRequestFactory()->createRequest($method, $uri);
 
+        $ua = $this->getUserAgent();
         if (!$request->hasHeader('User-Agent')) {
-            // FIXME: make UA a class' constant.
-            $request = $request->withHeader('User-Agent', 'Develart/PpApi');
+            $request = $request->withHeader('User-Agent', $this->getUserAgent());
         }
         return $request;
     }
