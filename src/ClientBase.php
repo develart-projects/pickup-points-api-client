@@ -70,14 +70,15 @@ abstract class ClientBase implements ClientContract
     {
         $this->assertClientNotConfigured();
 
+        // NOTE: do NOT move Guzzle reference out of this method! This code is OPTIONAL and
+        // if you "optimize" by i.e. adding "use" instead, then instantiation of this
+        // class will be Guzzle dependent and will simply fail if there's no Guzzle dependency.
         $httpClientClass = '\GuzzleHttp\Client';
 
         if (!\class_exists($httpClientClass)) {
             throw new \RuntimeException('Guzzle HTTP client not found. See library docs for assistance.');
         }
-        // NOTE: do NOT move Symfony reference out of this method! This code is OPTIONAL
-        // and if you "optimize" by i.e. adding "use" then client will fail (due to missing
-        // class) if end user is not using Guzzle client!
+
         $this->setHttpClient(new $httpClientClass());
         $this->setRequestFactory(new GuzzleRequestFactory());
         return $this;
@@ -92,15 +93,16 @@ abstract class ClientBase implements ClientContract
     {
         $this->assertClientNotConfigured();
 
-        $httpClientClass = \Symfony\Component\HttpClient\Psr18Client::class;
+        // NOTE: do NOT move Symfony reference out of this method! This code is OPTIONAL and
+        // if you "optimize" by i.e. adding "use" instead, then instantiation of this
+        // class will be Symfony client dependent and will simply fail if there's no Symfony
+        // HTTP client dependency.
+        $httpClientClass = '\Symfony\Component\HttpClient\Psr18Client';
 
         if (!\class_exists($httpClientClass)) {
             throw new \RuntimeException('Symfony HTTP client not found. See library docs for assistance.');
         }
 
-        // NOTE: do NOT move Symfony reference out of this method! This code is OPTIONAL
-        // and if you "optimize" by i.e. adding "use" then client will fail (due to missing
-        // class) if end user is not using Symfony client!
         $client = new $httpClientClass();
         $this->setHttpClient($client);
         $this->setRequestFactory($client);
