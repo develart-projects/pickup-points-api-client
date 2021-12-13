@@ -12,6 +12,9 @@ namespace OlzaLogistic\PpApi\Client;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+use OlzaLogistic\PpApi\Client\Consts\Route;
+
 class Client extends ClientBase
 {
     /**
@@ -38,7 +41,7 @@ class Client extends ClientBase
             $queryArgs[ Consts::PARAM_CITY ] = $city;
         }
 
-        return $this->handleHttpRequest('/pp/find', $queryArgs);
+        return $this->handleHttpRequest(Route::FIND, $queryArgs);
     }
 
     /**
@@ -61,7 +64,7 @@ class Client extends ClientBase
             Consts::PARAM_SPEDITION => $spedition,
             Consts::PARAM_ID        => $id,
         ];
-        return $this->handleHttpRequest('/pp/details', $queryArgs);
+        return $this->handleHttpRequest(Route::DETAILS, $queryArgs);
     }
 
 } // end of class

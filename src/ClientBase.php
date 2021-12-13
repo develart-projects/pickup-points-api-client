@@ -39,8 +39,6 @@ abstract class ClientBase implements ClientContract
      * Configures client to use specific access token while talking to Pickup Points API.
      *
      * @param string $accessToken Your private access token.
-     *
-     * @return $this
      */
     public function withAccessToken(string $accessToken): self
     {
@@ -53,19 +51,62 @@ abstract class ClientBase implements ClientContract
     }
 
     /**
+     * Sets User Agent string to be used with all the API requests.
+     *
+     * @param string $userAgent User agent string.
+     */
+    public function withUserAgent(string $userAgent): self
+    {
+        $this->setUserAgent($userAgent);
+        return $this;
+    }
+
+    /**
      * Configures Client instance to use Guzzle HTTP client.
      *
      * NOTE: Requires Guzzle package to be installed.
      */
-    public function withGuzzleClient(): self
+    public function withGuzzleHttpClient(): self
     {
         $this->assertClientNotConfigured();
 
-        if (!\class_exists('\GuzzleHttp\Client')) {
-            throw new \RuntimeException('Guzzle package not found. Install it: composer require guzzlehttp/guzzle');
+        // NOTE: do NOT move Guzzle reference out of this method! This code is OPTIONAL and
+        // if you "optimize" by i.e. adding "use" instead, then instantiation of this
+        // class will be Guzzle dependent and will simply fail if there's no Guzzle dependency.
+        $httpClientClass = '\GuzzleHttp\Client';
+
+        if (!\class_exists($httpClientClass)) {
+            throw new \RuntimeException('Guzzle HTTP client not found. See library docs for assistance.');
         }
-        $this->setHttpClient(new \GuzzleHttp\Client());
+
+        $this->setHttpClient(new $httpClientClass());
         $this->setRequestFactory(new GuzzleRequestFactory());
+        return $this;
+    }
+
+    /**
+     * Configures Client instance to use Symfony's PSR18 HTTP client.
+     *
+     * NOTE: Requires Symfony HTTP client and support packages to be installed.
+     */
+    public function withSymfonyHttpClient(): self
+    {
+        $this->assertClientNotConfigured();
+
+        // NOTE: do NOT move Symfony reference out of this method! This code is OPTIONAL and
+        // if you "optimize" by i.e. adding "use" instead, then instantiation of this
+        // class will be Symfony client dependent and will simply fail if there's no Symfony
+        // HTTP client dependency.
+        $httpClientClass = '\Symfony\Component\HttpClient\Psr18Client';
+
+        if (!\class_exists($httpClientClass)) {
+            throw new \RuntimeException('Symfony HTTP client not found. See library docs for assistance.');
+        }
+
+        $client = new $httpClientClass();
+        $this->setHttpClient($client);
+        $this->setRequestFactory($client);
+
         return $this;
     }
 
@@ -94,7 +135,7 @@ abstract class ClientBase implements ClientContract
         return $this;
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     protected bool $clientInitialized = false;
 
@@ -113,6 +154,9 @@ abstract class ClientBase implements ClientContract
         }
     }
 
+    /**
+     * Ensures client is not yet configured and all configuration methods can safely be executed.
+     */
     protected function assertClientNotConfigured(): void
     {
         if ($this->clientInitialized) {
@@ -120,14 +164,14 @@ abstract class ClientBase implements ClientContract
         }
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     protected function __construct(string $apiUrl)
     {
         $this->setApiUrl($apiUrl);
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     /**
      * PP-API access token
@@ -212,6 +256,24 @@ abstract class ClientBase implements ClientContract
     }
 
     /**
+     * User Agent string for API requests
+     *
+     * @var string
+     */
+    protected string $userAgent = 'Olza Logistic/PpApiClient';
+
+    protected function getUserAgent(): string
+    {
+        return $this->userAgent;
+    }
+
+    protected function setUserAgent(string $userAgent): self
+    {
+        $this->userAgent = $userAgent;
+        return $this;
+    }
+
+    /**
      * Helper method that creates instance of Request object, set up according
      * to provided arguments.
      *
@@ -225,9 +287,7 @@ abstract class ClientBase implements ClientContract
     protected function createRequest(string $method, string $uri,
                                      ?array $queryArgs = null): RequestInterface
     {
-        if ($queryArgs === null) {
-            $queryArgs = [];
-        }
+        $queryArgs ??= [];
 
         if (!empty($queryArgs)) {
             $uri += '?' . \http_build_query($queryArgs);
@@ -235,14 +295,14 @@ abstract class ClientBase implements ClientContract
 
         $request = $this->getRequestFactory()->createRequest($method, $uri);
 
+        $ua = $this->getUserAgent();
         if (!$request->hasHeader('User-Agent')) {
-            // FIXME: make UA a class' constant.
-            $request = $request->withHeader('User-Agent', 'Develart/PpApi');
+            $request = $request->withHeader('User-Agent', $this->getUserAgent());
         }
         return $request;
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     /**
      * Calls API endpoint and builds proper Response instance either with returned
@@ -266,7 +326,7 @@ abstract class ClientBase implements ClientContract
         return $result;
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     /** @var string */
     protected const KEY_ACCESS_TOKEN = 'access_token';

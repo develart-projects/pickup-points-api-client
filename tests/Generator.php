@@ -27,7 +27,7 @@ class Generator
         return new static();
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     /**
      * Generates given number of random name lines. Value of 0 (zero) means
@@ -84,12 +84,10 @@ class Generator
 
     public function withContacts(?array $fields = null): self
     {
-        if ($fields === null) {
-            $fields = [
-                PP::KEY_PHONE,
-                PP::KEY_EMAIL,
-            ];
-        }
+        $fields ??= [
+            PP::KEY_PHONE,
+            PP::KEY_EMAIL,
+        ];
 
         if (\array_key_exists(PP::KEY_PHONE, $fields)) {
             $this->data[ PP::KEY_GROUP_CONTACTS ][ PP::KEY_PHONE ] = $this->getRandomString('phone');
@@ -133,7 +131,7 @@ class Generator
         return $this->data;
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     protected array $data = [];
 

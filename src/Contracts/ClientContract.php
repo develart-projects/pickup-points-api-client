@@ -33,8 +33,6 @@ interface ClientContract
      * @param string      $countryCode Country to get data for (i.e. `cz`, `hu`...)
      * @param string|null $spedition   Code for specified carrier (spedition), i.e. `HUP-CS`).
      * @param string      $id          Carrier's assigned pickup point code
-     *
-     * @return \Develart\PpApi\Client\Result
      */
     public function details(string $countryCode, string $spedition, string $id): Result;
 

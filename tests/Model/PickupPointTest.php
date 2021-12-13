@@ -29,7 +29,7 @@ class PickupPointTest extends BaseTestCase
         $this->assertModelMatchesData($data, $pp);
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     protected function assertModelMatchesData(array $expected, PP $pp): void
     {

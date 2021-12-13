@@ -86,12 +86,11 @@ class Result
                 ->setMessage($json[ Consts::API_KEY_MESSAGE ]);
 
             $data = null;
-
             if ($json[ Consts::API_KEY_DATA ] !== null) {
                 $dataSrc = $json[ Consts::API_KEY_DATA ][ Consts::API_KEY_ITEMS ];
-                $data = [];
+                $data = new Data();
                 foreach ($dataSrc as $item) {
-                    $data[] = PickupPoint::fromApiResponse($item);
+                    $data->append(PickupPoint::fromApiResponse($item));
                 }
             }
             $result->setData($data);
@@ -103,7 +102,7 @@ class Result
         return $result;
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     /**
      * Ensures decoded JSON response from API matches expectations.
@@ -140,14 +139,14 @@ class Result
         return true;
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     protected function __construct(bool $success)
     {
         $this->setSuccess($success);
     }
 
-    /** ********************************************************************************************* **/
+    /* ****************************************************************************************** */
 
     /**
      * Set to TRUE if result relates to successful action's response, FALSE otherwise.
@@ -194,14 +193,14 @@ class Result
         return $this;
     }
 
-    protected ?array $data = null;
+    protected ?Data $data = null;
 
-    public function getData(): ?array
+    public function getData(): ?Data
     {
         return $this->data;
     }
 
-    protected function setData($data): self
+    protected function setData(?Data $data): self
     {
         $this->data = $data;
         return $this;
