@@ -33,7 +33,8 @@ class FieldType
 
     public const ADDRESS = 'address';
 
-    /** Include contact (email, phone etc) details.
+    /**
+     * Include contact (email, phone etc) details.
      *
      * @var string
      */

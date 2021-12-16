@@ -14,6 +14,7 @@ namespace OlzaLogistic\PpApi\Client;
  */
 
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
+use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
