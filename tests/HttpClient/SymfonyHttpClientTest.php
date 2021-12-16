@@ -2,8 +2,10 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
+use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Data;
+use OlzaLogistic\PpApi\Client\FieldType;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
 
 /**
@@ -18,6 +20,9 @@ use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
  */
 class SymfonyHttpClientTest extends BaseTestCase
 {
+    /**
+     * Tests integration with Symfony HTTP client
+     */
     public function testSymfonyHttpClient(): void
     {
         $url = 'http://127.0.0.1:8000';
@@ -28,7 +33,12 @@ class SymfonyHttpClientTest extends BaseTestCase
             ->withSymfonyHttpClient()
             ->get();
 
-        $response = $apiClient->find('cz');
+        $filter = (new Params())
+            ->withCountry('cz')
+            ->addField(FieldType::ADDRESS)
+            ->addField(FieldType::LOCATION);
+
+        $response = $apiClient->find($filter);
 
         $this->assertTrue($response->success());
         $this->assertInstanceOf(Data::class, $response->getData());
