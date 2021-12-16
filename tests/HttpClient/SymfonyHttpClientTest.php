@@ -31,9 +31,9 @@ class SymfonyHttpClientTest extends BaseTestCase
         $apiClient = Client::useApi($url)
             ->withAccessToken($accessToken)
             ->withSymfonyHttpClient()
-            ->get();
+            ->build();
 
-        $filter = (new Params())
+        $filter = Params::create()
             ->withCountry('cz')
             ->addField(FieldType::ADDRESS)
             ->addField(FieldType::LOCATION);

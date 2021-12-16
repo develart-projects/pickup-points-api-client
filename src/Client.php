@@ -14,57 +14,44 @@ namespace OlzaLogistic\PpApi\Client;
  */
 
 use OlzaLogistic\PpApi\Client\Consts\Route;
+use OlzaLogistic\PpApi\Client\ApiParam;
 
 class Client extends ClientBase
 {
     /**
      * Talks to API and returns list of PPs matching search criteria.
      *
-     * @param string      $countryCode Mandatory country code (i.e. 'cz', 'hu', etc.).
-     * @param string|null $spedition   (optional) Olza's spedition code (i.e. 'CP-BAL', etc.).
-     * @param string|null $city        (optional) City name to narrow the search to.
-     *
-     * @return \OlzaLogistic\PpApi\Client\Result
+     * @param Params $apiParams Populated instance of request parameters' container.
      */
-    public function find(string  $countryCode, ?string $spedition = null,
-                         ?string $city = null): Result
+    public function find(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
 
-        $queryArgs = [
-            Consts::PARAM_COUNTRY => $countryCode,
+        $requiredFields = [
+            Params::COUNTRY,
         ];
-        if (!empty($spedition)) {
-            $queryArgs[ Consts::PARAM_SPEDITION ] = $spedition;
-        }
-        if (!empty($city)) {
-            $queryArgs[ Consts::PARAM_CITY ] = $city;
-        }
-
-        return $this->handleHttpRequest(Route::FIND, $queryArgs);
+        $apiParams->setRequiredFields($requiredFields);
+        return $this->handleHttpRequest(Route::FIND, $apiParams);
     }
 
     /**
      * Return details about given PP
      *
-     * @param string $countryCode Mandatory country code (i.e. 'cz', 'hu', etc.).
-     * @param string $spedition   Olza's spedition code (i.e. 'CP-BAL', etc.).
-     * @param string $id          Pickup Point ID
+     * @param Params $apiParams Populated instance of request parameters' container.
      *
-     * TODO: add support for fields
-     *
-     * @return \OlzaLogistic\PpApi\Client\Result
+     * @return Result
      */
-    public function details(string $countryCode, string $spedition, string $id): Result
+    public function details(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
 
-        $queryArgs = [
-            Consts::PARAM_COUNTRY   => $countryCode,
-            Consts::PARAM_SPEDITION => $spedition,
-            Consts::PARAM_ID        => $id,
+        $requiredFields = [
+            Params::COUNTRY,
+            Params::SPEDITION,
+            Params::ID,
         ];
-        return $this->handleHttpRequest(Route::DETAILS, $queryArgs);
+        $apiParams->setRequiredFields($requiredFields);
+        return $this->handleHttpRequest(Route::DETAILS, $apiParams);
     }
 
 } // end of class

@@ -31,9 +31,9 @@ class GuzzleHttpClientTest extends BaseTestCase
         $apiClient = Client::useApi($url)
             ->withAccessToken($accessToken)
             ->withGuzzleHttpClient()
-            ->get();
+            ->build();
 
-        $filter = (new Params())
+        $filter = Params::create()
             ->withCountry('cz');
         $response = $apiClient->find($filter);
 

@@ -80,14 +80,14 @@ class Result
             if (!static::isApiResponseArrayValid($json)) {
                 return static::asError();
             }
-            $result = $json[ Consts::API_KEY_SUCCESS ] ? self::asSuccess() : self::asError();
+            $result = $json[ ApiResponse::KEY_SUCCESS ] ? self::asSuccess() : self::asError();
             $result
-                ->setCode($json[ Consts::API_KEY_CODE ])
-                ->setMessage($json[ Consts::API_KEY_MESSAGE ]);
+                ->setCode($json[ ApiResponse::KEY_CODE ])
+                ->setMessage($json[ ApiResponse::KEY_MESSAGE ]);
 
             $data = null;
-            if ($json[ Consts::API_KEY_DATA ] !== null) {
-                $dataSrc = $json[ Consts::API_KEY_DATA ][ Consts::API_KEY_ITEMS ];
+            if ($json[ ApiResponse::KEY_DATA ] !== null) {
+                $dataSrc = $json[ ApiResponse::KEY_DATA ][ ApiResponse::KEY_ITEMS ];
                 $data = new Data();
                 foreach ($dataSrc as $item) {
                     $data->append(PickupPoint::fromApiResponse($item));
@@ -111,14 +111,13 @@ class Result
      *
      * @return bool
      */
-
     protected static function isApiResponseArrayValid(array $json): bool
     {
         $requiredKeys = [
-            Consts::API_KEY_SUCCESS,
-            Consts::API_KEY_MESSAGE,
-            Consts::API_KEY_CODE,
-            Consts::API_KEY_DATA,
+            ApiResponse::KEY_SUCCESS,
+            ApiResponse::KEY_MESSAGE,
+            ApiResponse::KEY_CODE,
+            ApiResponse::KEY_DATA,
         ];
 
         foreach ($requiredKeys as $key) {
@@ -127,11 +126,11 @@ class Result
             }
         }
 
-        if (!\is_bool($json[ Consts::API_KEY_SUCCESS ])
-            || !\is_string($json[ Consts::API_KEY_MESSAGE ])
-            || !\is_int($json[ Consts::API_KEY_CODE ])
-            || !($json[ Consts::API_KEY_DATA ] === null
-                || \is_array($json[ Consts::API_KEY_DATA ]))
+        if (!\is_bool($json[ ApiResponse::KEY_SUCCESS ])
+            || !\is_string($json[ ApiResponse::KEY_MESSAGE ])
+            || !\is_int($json[ ApiResponse::KEY_CODE ])
+            || !($json[ ApiResponse::KEY_DATA ] === null
+                || \is_array($json[ ApiResponse::KEY_DATA ]))
         ) {
             return false;
         }
