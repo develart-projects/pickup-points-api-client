@@ -18,5 +18,6 @@ namespace OlzaLogistic\PpApi\Client;
  */
 class Data extends \ArrayObject
 {
+    // No extra body ATM
 
 } // end of class

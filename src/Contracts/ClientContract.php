@@ -13,27 +13,19 @@ namespace OlzaLogistic\PpApi\Client\Contracts;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
+use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Result;
 
 interface ClientContract
 {
     /**
      * Returns all pickup points associated with given country and spedition(s).
-     *
-     * @param string      $countryCode Country to get data for (i.e. `cz`, `hu`...)
-     * @param string|null $spedition   Optional code for specified carrier (spedition), i.e. `HUP-CS`).
-     * @param string|null $city        Optional city name to get data for. Note: partial match is used.
      */
-    public function find(string  $countryCode, ?string $spedition = null,
-                         ?string $city = null): Result;
+    public function find(Params $apiParams): Result;
 
     /**
      * Return details about specified pickup points.
-     *
-     * @param string      $countryCode Country to get data for (i.e. `cz`, `hu`...)
-     * @param string|null $spedition   Code for specified carrier (spedition), i.e. `HUP-CS`).
-     * @param string      $id          Carrier's assigned pickup point code
      */
-    public function details(string $countryCode, string $spedition, string $id): Result;
+    public function details(Params $apiParams): Result;
 
 } // end of class

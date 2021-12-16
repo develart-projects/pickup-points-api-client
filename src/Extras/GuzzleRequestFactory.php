@@ -1,6 +1,6 @@
 <?php
 
-namespace OlzaLogistic\PpApi\Client;
+namespace OlzaLogistic\PpApi\Client\Extras;
 
 /**
  * Olza Logistic's Pickup Points API client

@@ -46,18 +46,21 @@ Get instance of API client first:
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
                        ->withGuzzleHttpClient()
-                       ->get();
+                       ->build();
 ```
 
 Assuming you got internet access, you know `$apiUrl` and your `$accessToken` is correct and valid
-you should now be able to access the API data:
+you should now be able to access the API data. As API methods may require some arguments, we
+will need instance of `Params` class that let us pass all these required information to the method:
 
 ```php
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
                        ->withGuzzleHttpClient()
                        ->get();
-$result = $client->find('cz');
+$params = Params::create()
+                  ->withCountry('cz');
+$result = $client->find($params);
 ...
 ```
 
@@ -72,7 +75,7 @@ Client response are always returned with use of `Response` class.
 $result = $client->find('cz');
 if ($result->success()) {
     $items = $result->getData();
-    foreach( $items as $item ) {
+    foreach($items as $item) {
         echo $item->getSpeditionId() . PHP_EOL;
     }
 }

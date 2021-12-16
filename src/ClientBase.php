@@ -14,6 +14,7 @@ namespace OlzaLogistic\PpApi\Client;
  */
 
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
+use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -129,7 +130,7 @@ abstract class ClientBase implements ClientContract
     /**
      * Returns complete, ready to use PP-API Client instance.
      */
-    public function get(): self
+    public function build(): self
     {
         $this->seal();
         return $this;
@@ -309,14 +310,14 @@ abstract class ClientBase implements ClientContract
      * data or one indicating request failure.
      *
      * @param string     $endPoint  Endpoint to call (i.e. '/pp/find')
-     * @param array|null $queryArgs Array of
+     * @param array|null $apiParams Array of
      *
      * @return \OlzaLogistic\PpApi\Client\Result
      */
-    protected function handleHttpRequest(string $endPoint, ?array $queryArgs): Result
+    protected function handleHttpRequest(string $endPoint, ?Params $apiParams): Result
     {
         try {
-            $apiResponse = $this->doGetRequest($endPoint, $queryArgs);
+            $apiResponse = $this->doGetRequest($endPoint, $apiParams);
             $result = Result::fromApiResponse($apiResponse);
         } catch (\Throwable $ex) {
             // FIXME: log the exception
@@ -336,17 +337,13 @@ abstract class ClientBase implements ClientContract
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    protected function doGetRequest(string $endPoint, ?array $queryArgs = null): ResponseInterface
+    protected function doGetRequest(string $endPoint, ?Params $apiParams = null): ResponseInterface
     {
-        if ($this->accessToken !== null) {
-            if (!\array_key_exists(static::KEY_ACCESS_TOKEN, $queryArgs)) {
-                $queryArgs[ static::KEY_ACCESS_TOKEN ] = $this->getAccessToken();
-            }
-        }
-
         $uri = $this->getApiUrl() . $endPoint;
-        if (!empty($queryArgs ?? [])) {
-            $uri .= '?' . \http_build_query($queryArgs);
+
+        if ($apiParams !== null) {
+            $apiParams->withAccessToken($this->accessToken);
+            $uri .= '?' . $apiParams->toQueryString();
         }
 
         $client = $this->getHttpClient();

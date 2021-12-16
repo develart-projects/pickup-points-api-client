@@ -2,6 +2,7 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
+use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Data;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
@@ -18,6 +19,10 @@ use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
  */
 class GuzzleHttpClientTest extends BaseTestCase
 {
+    /**
+     * Tests integration with Guzzle HTTP client
+     */
+
     public function testGuzzle(): void
     {
         $url = 'http://127.0.0.1:8000';
@@ -26,9 +31,11 @@ class GuzzleHttpClientTest extends BaseTestCase
         $apiClient = Client::useApi($url)
             ->withAccessToken($accessToken)
             ->withGuzzleHttpClient()
-            ->get();
+            ->build();
 
-        $response = $apiClient->find('cz');
+        $filter = Params::create()
+            ->withCountry('cz');
+        $response = $apiClient->find($filter);
 
         $this->assertTrue($response->success());
         $this->assertInstanceOf(Data::class, $response->getData());
