@@ -28,6 +28,7 @@
         "phpunit/phpunit": "^9.5",
         "guzzlehttp/guzzle": "^7.4",
         "symfony/http-client": "^5.4",
-        "nyholm/psr7": "^1.4"
+        "nyholm/psr7": "^1.4",
+        "marcin-orlowski/phpunit-extra-asserts": "^1.3"
     }
 }
