@@ -28,4 +28,9 @@ class Route
      * @var string
      */
     public const DETAILS = self::PREFIX . '/details';
+
+    /**
+     * @var string
+     */
+    public const NEARBY = self::PREFIX . '/nearby';
 }
