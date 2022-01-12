@@ -22,6 +22,8 @@ class Client extends ClientBase
      * Talks to API and returns list of PPs matching search criteria.
      *
      * @param Params $apiParams Populated instance of request parameters' container.
+     *
+     * @return Result
      */
     public function find(Params $apiParams): Result
     {
@@ -54,4 +56,21 @@ class Client extends ClientBase
         return $this->handleHttpRequest(Route::DETAILS, $apiParams);
     }
 
+    /**
+     * Talks to API and returns list of nearby PPs matching search criteria.
+     *
+     * @param Params $apiParams Populated instance of request parameters' container.
+     *
+     * @return Result
+     */
+    public function nearby(Params $apiParams): Result
+    {
+        $this->assertConfigurationSealed();
+        $requiredFields = [
+            Params::COUNTRY,
+            Params::LOCATION,
+        ];
+        $apiParams->setRequiredFields($requiredFields);
+        return $this->handleHttpRequest(Route::NEARBY, $apiParams);
+    }
 } // end of class

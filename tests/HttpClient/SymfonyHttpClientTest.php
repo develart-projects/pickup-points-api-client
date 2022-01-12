@@ -2,6 +2,7 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
+use OlzaLogistic\PpApi\Client\Country;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Data;
@@ -34,14 +35,14 @@ class SymfonyHttpClientTest extends BaseTestCase
             ->build();
 
         $filter = Params::create()
-            ->withCountry('cz')
-            ->addField(FieldType::ADDRESS)
+            ->withCountry(Country::CZECH)
+            ->addField(FieldType::NAME)
             ->addField(FieldType::LOCATION);
 
         $response = $apiClient->find($filter);
-
-        $this->assertTrue($response->success());
-        $this->assertInstanceOf(Data::class, $response->getData());
+        $apiMsg = $response->getMessage();
+        $this->assertTrue($response->success(), $apiMsg);
+        $this->assertInstanceOf(Data::class, $response->getData(), $apiMsg);
     }
 
 } // end of class

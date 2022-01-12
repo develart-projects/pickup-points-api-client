@@ -17,7 +17,7 @@ namespace OlzaLogistic\PpApi\Client\Util;
 /**
  * Data validator helper
  */
-final class Validator
+class Validator
 {
     /**
      *
@@ -43,8 +43,11 @@ final class Validator
      */
     public static function assertIsObjectOrExistingClass(string $varName, $classOrObject): void
     {
-        self::assertIsType($varName, $classOrObject, [Type::EXISTING_CLASS,
-                                                      Type::OBJECT]);
+        $allowedTypes = [
+            Type::EXISTING_CLASS,
+            Type::OBJECT,
+        ];
+        static::assertIsType($varName, $classOrObject, $allowedTypes);
     }
 
     /**
@@ -122,6 +125,42 @@ final class Validator
             throw new \InvalidArgumentException(
                 \sprintf('"%s" must be instance of "%s".', $varName, $cls)
             );
+        }
+    }
+
+    /**
+     * Ensures provided $value is in specified $range.
+     *
+     * @param string    $varName Name of variable that the $obj value is coming from. Used for exception message reference.
+     * @param float|int $value   Current value of the variable.
+     * @param float|int $min     Minimum allowed value (inclusive).
+     * @param float|int $max     Maximum allowed value (inclusive).
+     *
+     * @throws \InvalidArgumentException
+     */
+    public static function assertIsInRange(string $varName, $value, $min, $max): void
+    {
+        static::assertIsNumber($varName, $value);
+        static::assertIsNumber($varName, $min);
+        static::assertIsNumber($varName, $max);
+
+        if ($value < $min || $value > $max) {
+            $msg = \sprintf('"%s" must be in range [%s, %s]: %s', $varName, $min, $max, $value);
+            throw new \InvalidArgumentException($msg);
+        }
+    }
+
+    /**
+     * Ensures provided value is a number (either int or float).
+     *
+     * @param string $varName Name of variable that the $obj value is coming from. Used for exception message reference.
+     * @param        $value
+     */
+    public static function assertIsNumber(string $varName, $value): void
+    {
+        if (!(\is_int($value) || \is_float($value))) {
+            $msg = \sprintf('"%s" must be a number: "%s" given.', $varName, \gettype($value));
+            throw new \InvalidArgumentException($msg);
         }
     }
 

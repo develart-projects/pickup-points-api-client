@@ -64,22 +64,20 @@ class Result
      */
     public static function fromApiResponse(ResponseInterface $response): self
     {
-        if ($response->getStatusCode() !== 200) {
-            $code = $response->getStatusCode();
-            $reason = $response->getReasonPhrase();
-            if ($reason === '') {
-                $reason = "HTTP error #{$code}";
-            }
-            return (static::asError())
-                ->setCode($code)
-                ->setMessage($reason);
-        }
-
         try {
+            $code = $response->getStatusCode();
             $json = \json_decode($response->getBody()->getContents(), true, 32, \JSON_THROW_ON_ERROR);
             if (!static::isApiResponseArrayValid($json)) {
-                return static::asError();
+                return static::asError()->setCode($code);
             }
+
+            $response = $json[ApiResponse::KEY_MESSAGE];
+            if ($response === null || \trim($response) === '') {
+                if ($response === '') {
+                    $response = "HTTP error #{$code}";
+                }
+            }
+
             $result = $json[ ApiResponse::KEY_SUCCESS ] ? self::asSuccess() : self::asError();
             $result
                 ->setCode($json[ ApiResponse::KEY_CODE ])
@@ -94,11 +92,11 @@ class Result
                 }
             }
             $result->setData($data);
+
         } catch (\Throwable $ex) {
             $result = (static::asError())
                 ->setMessage($ex->getMessage());
         }
-
         return $result;
     }
 

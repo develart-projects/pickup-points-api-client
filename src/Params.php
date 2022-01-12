@@ -35,6 +35,9 @@ class Params
     /** @var string */
     public const ID = 'id';
 
+    /** @var string */
+    public const LOCATION = 'location';
+
     /* ****************************************************************************************** */
 
     protected function __construct()
@@ -124,6 +127,36 @@ class Params
 
     /* ****************************************************************************************** */
 
+    protected ?float $latitude  = null;
+    protected ?float $longitude = null;
+
+    public function withLocation(?float $latitude, ?float $longitude): self
+    {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+    protected function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    protected function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    protected function getLocationAsString(): ?string
+    {
+        if ($this->latitude === null || $this->longitude === null) {
+            return null;
+        }
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
+    }
+
+    /* ****************************************************************************************** */
+
     protected array $fields = [];
 
     public function withFields(?array $fields): self
@@ -149,11 +182,12 @@ class Params
     public function addField(string $field): self
     {
         $fields = $this->getFields();
-        if ($fields !== null) {
-            if (!\in_array($field, $fields, true)) {
-                $fields[] = $field;
-                $this->withFields($fields);
-            }
+        if ($fields === null) {
+            $fields = [];
+        }
+        if (!\in_array($field, $fields, true)) {
+            $fields[] = $field;
+            $this->withFields($fields);
         }
         return $this;
     }
@@ -204,6 +238,12 @@ class Params
                 case self::FIELDS:
                     Validator::assertNotEmpty($field, $this->getFields());
                     break;
+                case self::LOCATION:
+                    Validator::assertNotEmpty($field, $this->getLatitude());
+                    Validator::assertNotEmpty($field, $this->getLongitude());
+                    Validator::assertIsInRange('latitude', $this->getLatitude(), -90, 90);
+                    Validator::assertIsInRange('longitude', $this->getLongitude(), -180, 180);
+                    break;
                 default:
                     throw new \RuntimeException("Unknown field: {$field}");
             }
@@ -234,6 +274,7 @@ class Params
             self::CITY         => $this->getCity(),
             self::ID           => $this->getSpeditionId(),
             self::FIELDS       => $this->getFieldsAsString(),
+            self::LOCATION     => $this->getLocationAsString(),
         ];
 
         if (!\array_key_exists(self::ACCESS_TOKEN, $queryArgs)) {
@@ -243,7 +284,7 @@ class Params
             }
         }
 
-        $filtered = array_filter($queryArgs, static function($value) {
+        $filtered = \array_filter($queryArgs, static function($value) {
             return $value !== null;
         });
 
