@@ -149,11 +149,12 @@ class Params
     public function addField(string $field): self
     {
         $fields = $this->getFields();
-        if ($fields !== null) {
-            if (!\in_array($field, $fields, true)) {
-                $fields[] = $field;
-                $this->withFields($fields);
-            }
+        if ($fields === null) {
+            $fields = [];
+        }
+        if (!\in_array($field, $fields, true)) {
+            $fields[] = $field;
+            $this->withFields($fields);
         }
         return $this;
     }
