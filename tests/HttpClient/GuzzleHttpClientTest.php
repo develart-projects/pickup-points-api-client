@@ -2,6 +2,7 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
+use OlzaLogistic\PpApi\Client\Country;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Data;
@@ -34,7 +35,7 @@ class GuzzleHttpClientTest extends BaseTestCase
             ->build();
 
         $filter = Params::create()
-            ->withCountry('cz');
+            ->withCountry(Country::CZECH);
         $response = $apiClient->find($filter);
 
         $this->assertTrue($response->success());
