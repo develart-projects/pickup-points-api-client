@@ -34,8 +34,10 @@ class GuzzleHttpClientTest extends BaseTestCase
             ->withGuzzleHttpClient()
             ->build();
 
+        $sped = $this->getRandomString('sped');
         $filter = Params::create()
-            ->withCountry(Country::CZECH);
+            ->withCountry(Country::CZECH)
+            ->withSpedition($sped);
         $response = $apiClient->find($filter);
 
         $this->assertTrue($response->success());

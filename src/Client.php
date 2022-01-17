@@ -31,6 +31,8 @@ class Client extends ClientBase
 
         $requiredFields = [
             Params::COUNTRY,
+            Params::SPEDITION
+
         ];
         $apiParams->setRequiredFields($requiredFields);
         return $this->handleHttpRequest(Route::FIND, $apiParams);

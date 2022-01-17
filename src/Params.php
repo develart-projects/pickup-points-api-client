@@ -267,10 +267,16 @@ class Params
         $requiredFields = $requiredFields ?? [];
         $this->validate($requiredFields);
 
+        $sped = $this->getSpedition();
+        $spedTmp = \array_map(static function($item) {
+            return \trim($item);
+        }, \explode(',', $sped));
+        $spedStr = \implode(',', $spedTmp);
+
         $queryArgs = [
             self::ACCESS_TOKEN => $this->getAccessToken(),
             self::COUNTRY      => $this->getCountry(),
-            self::SPEDITION    => $this->getSpedition(),
+            self::SPEDITION    => $spedStr,
             self::CITY         => $this->getCity(),
             self::ID           => $this->getSpeditionId(),
             self::FIELDS       => $this->getFieldsAsString(),
