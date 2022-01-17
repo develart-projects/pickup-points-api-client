@@ -74,6 +74,7 @@ abstract class ClientBase implements ClientContract
         // NOTE: do NOT move Guzzle reference out of this method! This code is OPTIONAL and
         // if you "optimize" by i.e. adding "use" instead, then instantiation of this
         // class will be Guzzle dependent and will simply fail if there's no Guzzle dependency.
+        /** @noinspection ClassConstantCanBeUsedInspection */
         $httpClientClass = '\GuzzleHttp\Client';
 
         if (!\class_exists($httpClientClass)) {
@@ -98,6 +99,7 @@ abstract class ClientBase implements ClientContract
         // if you "optimize" by i.e. adding "use" instead, then instantiation of this
         // class will be Symfony client dependent and will simply fail if there's no Symfony
         // HTTP client dependency.
+        /** @noinspection ClassConstantCanBeUsedInspection */
         $httpClientClass = '\Symfony\Component\HttpClient\Psr18Client';
 
         if (!\class_exists($httpClientClass)) {
@@ -146,7 +148,7 @@ abstract class ClientBase implements ClientContract
     }
 
     /**
-     * Ensures Client is correctly configured. Will throw excetion if not.
+     * Ensures Client is correctly configured. Will throw exception if not.
      */
     protected function assertConfigurationSealed(): void
     {
@@ -291,7 +293,7 @@ abstract class ClientBase implements ClientContract
         $queryArgs ??= [];
 
         if (!empty($queryArgs)) {
-            $uri += '?' . \http_build_query($queryArgs);
+            $uri .= '?' . \http_build_query($queryArgs);
         }
 
         $request = $this->getRequestFactory()->createRequest($method, $uri);

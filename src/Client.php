@@ -14,7 +14,6 @@ namespace OlzaLogistic\PpApi\Client;
  */
 
 use OlzaLogistic\PpApi\Client\Consts\Route;
-use OlzaLogistic\PpApi\Client\ApiParam;
 
 class Client extends ClientBase
 {

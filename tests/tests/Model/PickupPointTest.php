@@ -15,7 +15,7 @@ namespace OlzaLogistic\PpApi\Client\Tests\Model;
 
 use OlzaLogistic\PpApi\Client\Model\PickupPoint as PP;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
-use OlzaLogistic\PpApi\Client\Tests\Generator;
+use OlzaLogistic\PpApi\Client\Tests\Util\Generator;
 
 class PickupPointTest extends BaseTestCase
 {
