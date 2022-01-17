@@ -34,8 +34,10 @@ class SymfonyHttpClientTest extends BaseTestCase
             ->withSymfonyHttpClient()
             ->build();
 
+        $sped = $this->getRandomString('sped');
         $filter = Params::create()
             ->withCountry(Country::CZECH)
+            ->withSpedition($sped)
             ->addField(FieldType::NAME)
             ->addField(FieldType::LOCATION);
 
