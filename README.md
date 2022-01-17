@@ -6,7 +6,7 @@ incl. [Guzzle](https://guzzlephp.org/).
 
 ## Requirements
 
-* PHP 7.4+,
+* PHP 7.2+,
 * Any PSR-7 compatible HTTP Client library (e.g. [Guzzle](https://guzzlephp.org/),
   [Symfony's HTTP Client](https://symfony.com/doc/current/http_client.html), etc.).
 
