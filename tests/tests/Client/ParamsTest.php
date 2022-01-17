@@ -15,7 +15,7 @@ namespace OlzaLogistic\PpApi\Client\Tests\Model;
 
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
-use OlzaLogistic\PpApi\Client\Tests\Location;
+use OlzaLogistic\PpApi\Client\Tests\Util\Location;
 
 class ParamsTest extends BaseTestCase
 {

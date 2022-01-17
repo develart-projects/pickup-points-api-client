@@ -1,6 +1,6 @@
 <?php
 
-namespace OlzaLogistic\PpApi\Client\Tests;
+namespace OlzaLogistic\PpApi\Client\Tests\Util;
 
 /**
  * Olza Logistic's Pickup Points API client

@@ -27,7 +27,7 @@ class Result
      * @param array|null $data Optional data to be added as result payload. Can also
      *                         be added later using setData() method.
      */
-    public static function asSuccess(?array $data = null): self
+    public static function asSuccess(?Data $data = null): self
     {
         $result = new self(true);
         $result->setData($data);

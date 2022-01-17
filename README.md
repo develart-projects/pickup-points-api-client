@@ -1,6 +1,6 @@
 # pickup-points-api-client
 
-A PickupPoint API Client PHP library. It is HTTP client agnostic library and it will work with
+A PickupPoint API Client PHP library. It is HTTP client agnostic library, and it will work with
 any [PSR-7](https://www.php-fig.org/psr/psr-7/) compatible HTTP client,
 incl. [Guzzle](https://guzzlephp.org/).
 
