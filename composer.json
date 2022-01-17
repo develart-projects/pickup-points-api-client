@@ -16,12 +16,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OlzaLogistic\\PpApi\\Client\\Tests\\": "tests/"
+            "OlzaLogistic\\PpApi\\Client\\Tests\\": "tests/tests",
+            "OlzaLogistic\\PpApi\\Client\\Tests\\Traits\\": "tests/Traits/",
+            "OlzaLogistic\\PpApi\\Client\\Tests\\Util\\": "tests/Util/"
         }
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.2.5, >=8.0",
+        "php": ">=7.4",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0"
     },
