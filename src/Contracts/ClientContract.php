@@ -28,4 +28,9 @@ interface ClientContract
      */
     public function details(Params $apiParams): Result;
 
+    /**
+     * Returns nearby pickup points matching search criteria.
+     */
+    public function nearby(Params $apiParams): Result;
+
 } // end of class
