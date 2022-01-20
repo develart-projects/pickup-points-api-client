@@ -155,7 +155,7 @@ class PickupPoint
     public const KEY_LONGITUDE = 'longitude';
 
     /* ****************************************************************************************** */
-
+    /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
     /**
@@ -745,21 +745,27 @@ class PickupPoint
 
     /* ****************************************************************************************** */
 
-    public static function fromApiResponse(array $a): self
+    /**
+     * Constructs instance of PickupPoint filled PP with data returned in API response.
+     * NOTE: $ppData must point to single PP data node (element of 'data/items' array).
+     *
+     * @param array $ppData Single PP data.
+     */
+    public static function fromApiResponse(array $ppData): self
     {
         $pp = (new static())
-            ->setSpeditionId($a[ static::KEY_ID ])
-            ->setSpedition($a[ static::KEY_SPEDITION ]);
+            ->setSpeditionId($ppData[ static::KEY_ID ])
+            ->setSpedition($ppData[ static::KEY_SPEDITION ]);
 
-        if (\array_key_exists(static::KEY_GROUP_NAME, $a)) {
-            $pp->setName1($a[ static::KEY_GROUP_NAME ][0]);
-            if (isset($a[ static::KEY_GROUP_NAME ][1])) {
-                $pp->setName2($a[ static::KEY_GROUP_NAME ][1]);
+        if (\array_key_exists(static::KEY_GROUP_NAME, $ppData)) {
+            $pp->setName1($ppData[ static::KEY_GROUP_NAME ][0]);
+            if (isset($ppData[ static::KEY_GROUP_NAME ][1])) {
+                $pp->setName2($ppData[ static::KEY_GROUP_NAME ][1]);
             }
         }
 
-        if (\array_key_exists(static::KEY_GROUP_ADDRESS, $a)) {
-            $node = $a[ static::KEY_GROUP_ADDRESS ];
+        if (\array_key_exists(static::KEY_GROUP_ADDRESS, $ppData)) {
+            $node = $ppData[ static::KEY_GROUP_ADDRESS ];
             $pp
                 ->setFullAddress($node[ static::KEY_FULL_ADDRESS ])
                 ->setStreet($node[ static::KEY_STREET ])
@@ -769,8 +775,8 @@ class PickupPoint
                 ->setCountry($node[ static::KEY_COUNTRY ]);
         }
 
-        if (\array_key_exists(static::KEY_GROUP_CONTACTS, $a)) {
-            $node = $a[ static::KEY_GROUP_CONTACTS ];
+        if (\array_key_exists(static::KEY_GROUP_CONTACTS, $ppData)) {
+            $node = $ppData[ static::KEY_GROUP_CONTACTS ];
             if (\array_key_exists(static::KEY_PHONE, $node)) {
                 $pp->setPhone($node[ static::KEY_PHONE ]);
             }
@@ -779,8 +785,8 @@ class PickupPoint
             }
         }
 
-        if (\array_key_exists(static::KEY_GROUP_HOURS, $a)) {
-            $node = $a[ static::KEY_GROUP_HOURS ];
+        if (\array_key_exists(static::KEY_GROUP_HOURS, $ppData)) {
+            $node = $ppData[ static::KEY_GROUP_HOURS ];
 
             if (\array_key_exists(static::KEY_MONDAY, $node)) {
                 $pp->setMondayHours($node[ static::KEY_HOURS ]);
@@ -812,8 +818,8 @@ class PickupPoint
             }
         }
 
-        if (\array_key_exists(static::KEY_GROUP_LOCATION, $a)) {
-            $node = $a[ static::KEY_GROUP_LOCATION ];
+        if (\array_key_exists(static::KEY_GROUP_LOCATION, $ppData)) {
+            $node = $ppData[ static::KEY_GROUP_LOCATION ];
             $pp->setLocation(
                 $node[ static::KEY_LATITUDE ],
                 $node[ static::KEY_LONGITUDE ]
