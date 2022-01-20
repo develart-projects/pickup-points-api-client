@@ -56,9 +56,10 @@ class ParamsTest extends BaseTestCase
     {
         $expected = $this->getRandomString('spedition');
         $p = Params::create()->withSpedition($expected);
-        $value = $this->callProtectedMethod($p, 'getSpedition');
-        $this->assertIsString($value);
-        $this->assertEquals($expected, $value);
+        $value = $this->callProtectedMethod($p, 'getSpeditions');
+        $this->assertIsArray($value);
+        $this->assertCount(1, $value);
+        $this->assertEquals($expected, $value[0]);
     }
 
     public function testSpeditionId(): void

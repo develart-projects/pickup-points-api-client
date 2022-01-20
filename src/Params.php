@@ -97,17 +97,30 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?string $spedition = null;
+    protected ?array $speditions = null;
 
-    public function withSpedition(string $spedition): self
+    /**
+     * @param string|string[] $speditions
+     */
+    public function withSpeditions(array $speditions): self
     {
-        $this->spedition = $spedition;
+        $this->speditions = $speditions;
         return $this;
     }
 
-    protected function getSpedition(): ?string
+    public function withSpedition(string $spedition): self
     {
-        return $this->spedition;
+        if ($this->speditions === null) {
+            $this->speditions = [];
+        }
+
+        $this->speditions[] = $spedition;
+        return $this;
+    }
+
+    protected function getSpeditions(): ?array
+    {
+        return $this->speditions;
     }
 
     /* ****************************************************************************************** */
@@ -233,7 +246,7 @@ class Params
                     Validator::assertNotEmpty($field, $this->getSpeditionId());
                     break;
                 case self::SPEDITION:
-                    Validator::assertNotEmpty($field, $this->getSpedition());
+                    Validator::assertNotEmpty($field, $this->getSpeditions());
                     break;
                 case self::FIELDS:
                     Validator::assertNotEmpty($field, $this->getFields());
@@ -267,16 +280,14 @@ class Params
         $requiredFields = $requiredFields ?? [];
         $this->validate($requiredFields);
 
-        $sped = $this->getSpedition();
-        $spedTmp = \array_map(static function($item) {
+        $speditions = \implode(',', \array_map(static function($item) {
             return \trim($item);
-        }, \explode(',', $sped));
-        $spedStr = \implode(',', $spedTmp);
+        }, $this->getSpeditions()));
 
         $queryArgs = [
             self::ACCESS_TOKEN => $this->getAccessToken(),
             self::COUNTRY      => $this->getCountry(),
-            self::SPEDITION    => $spedStr,
+            self::SPEDITION    => $speditions,
             self::CITY         => $this->getCity(),
             self::ID           => $this->getSpeditionId(),
             self::FIELDS       => $this->getFieldsAsString(),
