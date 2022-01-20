@@ -30,7 +30,7 @@ class Client extends ClientBase
 
         $requiredFields = [
             Params::COUNTRY,
-            Params::SPEDITION
+            Params::SPEDITION,
 
         ];
         $apiParams->setRequiredFields($requiredFields);
@@ -74,4 +74,16 @@ class Client extends ClientBase
         $apiParams->setRequiredFields($requiredFields);
         return $this->handleHttpRequest(Route::NEARBY, $apiParams);
     }
+
+    public function speditions(Params $apiParams): Result
+    {
+        $this->assertConfigurationSealed();
+
+        $requiredFields = [
+            Params::COUNTRY,
+        ];
+        $apiParams->setRequiredFields($requiredFields);
+        return $this->handleHttpRequest(Route::NEARBY, $apiParams);
+    }
+
 } // end of class
