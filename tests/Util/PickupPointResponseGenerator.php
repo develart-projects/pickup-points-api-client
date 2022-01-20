@@ -18,7 +18,7 @@ use OlzaLogistic\PpApi\Client\Model\PickupPoint as PP;
 /**
  * Generates array with the structure as PP API response
  */
-class Generator
+class PickupPointResponseGenerator
 {
     use \OlzaLogistic\PpApi\Client\Tests\Traits\TestHelpersTrait;
 

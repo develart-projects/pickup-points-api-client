@@ -30,7 +30,7 @@ class Client extends ClientBase
 
         $requiredFields = [
             Params::COUNTRY,
-            Params::SPEDITION
+            Params::SPEDITION,
 
         ];
         $apiParams->setRequiredFields($requiredFields);
@@ -38,11 +38,9 @@ class Client extends ClientBase
     }
 
     /**
-     * Return details about given PP
+     * Return details about given Pickup Point.
      *
      * @param Params $apiParams Populated instance of request parameters' container.
-     *
-     * @return Result
      */
     public function details(Params $apiParams): Result
     {
@@ -58,11 +56,9 @@ class Client extends ClientBase
     }
 
     /**
-     * Talks to API and returns list of nearby PPs matching search criteria.
+     * Talks to API and returns list of nearby Pickup Points matching search criteria.
      *
      * @param Params $apiParams Populated instance of request parameters' container.
-     *
-     * @return Result
      */
     public function nearby(Params $apiParams): Result
     {
@@ -74,4 +70,21 @@ class Client extends ClientBase
         $apiParams->setRequiredFields($requiredFields);
         return $this->handleHttpRequest(Route::NEARBY, $apiParams);
     }
+
+    /**
+     * Talks to API and returns list of available speditions.
+     *
+     * @param Params $apiParams Populated instance of request parameters' container.
+     */
+    public function speditions(Params $apiParams): Result
+    {
+        $this->assertConfigurationSealed();
+
+        $requiredFields = [
+            Params::COUNTRY,
+        ];
+        $apiParams->setRequiredFields($requiredFields);
+        return $this->handleHttpRequest(Route::SPEDITIONS, $apiParams);
+    }
+
 } // end of class

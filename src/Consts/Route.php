@@ -19,6 +19,8 @@ class Route
      */
     protected const PREFIX = '/v1/pp';
 
+    /* ****************************************************************************************** */
+
     /**
      * @var string
      */
@@ -33,4 +35,9 @@ class Route
      * @var string
      */
     public const NEARBY = self::PREFIX . '/nearby';
+
+    /**
+     * @var string
+     */
+    public const SPEDITIONS = self::PREFIX . '/speditions';
 }
