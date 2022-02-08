@@ -59,22 +59,8 @@ class Spedition
     public const HUNGARIAN_POST_OTHERS = 'HUP-PP';
 
     /* ****************************************************************************************** */
-
-    /**
-     * Country code of the spedition.
-     */
-    protected string $country;
-
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    protected function setCountry(string $country): self
-    {
-        $this->country = $country;
-        return $this;
-    }
+    /* ****************************************************************************************** */
+    /* ****************************************************************************************** */
 
     /**
      * Code of the spedition (i.e. 'CP-BAL' for 'Ceska Posta').
@@ -107,6 +93,59 @@ class Spedition
     }
 
     /* ****************************************************************************************** */
+
+    protected string $code;
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /* ****************************************************************************************** */
+
+    protected string $label;
+
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    public function setLabel(string $label): self
+    {
+        $this->label = $label;
+        return $this;
+    }
+
+    /* ****************************************************************************************** */
+
+    protected array $names = [];
+
+    public function getNames(): array
+    {
+        return $this->names;
+    }
+
+    public function addName(string $languageCode, string $name): self
+    {
+        $this->names[ $languageCode ] = $name;
+        return $this;
+    }
+
+    public function addNames(array $names): self
+    {
+        foreach ($names as $languageCode => $name) {
+            $this->addName($languageCode, $name);
+        }
+        return $this;
+    }
+
+    /* ****************************************************************************************** */
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
@@ -121,12 +160,21 @@ class Spedition
     public const KEY_COUNTRY = 'country';
     /** @var string */
     public const KEY_SPEDITION = 'spedition';
+    /** @var string */
+    public const KEY_CODE = 'code';
+    /** @var string */
+    public const KEY_LABEL = 'label';
+    /** @var string */
+    public const KEY_NAMES = 'names';
 
     public static function fromApiResponse(array $a): self
     {
         return (new static())
-            ->setCountry($a[ static::KEY_COUNTRY ])
-            ->setSpedition($a[ static::KEY_SPEDITION ]);
+            ->setCode($a[ static::KEY_CODE ])
+            ->setLabel($a[ static::KEY_LABEL ])
+            ->addNames($a[ static::KEY_NAMES ]);
+
+        // TODO: parse translated names
     }
 
 } // end of class

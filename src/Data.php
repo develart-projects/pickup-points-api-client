@@ -18,6 +18,26 @@ namespace OlzaLogistic\PpApi\Client;
  */
 class Data extends \ArrayObject
 {
-    // No extra body ATM
+    protected ?array $items = null;
+
+    public function addItem($value): self
+    {
+        if ($this->items === null) {
+            $this->items = [];
+        }
+        $this->items[] = $value;
+        return $this;
+    }
+
+    public function setItems(?array $items): self
+    {
+        $this->items = $items;
+        return $this;
+    }
+
+    public function getItems(): array
+    {
+        return $this->items;
+    }
 
 } // end of class

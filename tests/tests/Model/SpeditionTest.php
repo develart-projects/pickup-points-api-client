@@ -24,16 +24,12 @@ class SpeditionTest extends BaseTestCase
         $count = $this->getRandomInt(1, 10);
         foreach ($this->generateSpeditionData($country, $count) as $spedData) {
             $code = $spedData[ Spedition::KEY_CODE ];
-            $country = $spedData[ Spedition::KEY_COUNTRY ];
             $label = $spedData[ Spedition::KEY_LABEL ];
-            $spedition = $spedData[ Spedition::KEY_SPEDITION ];
 
             $sped = Spedition::fromApiResponse($spedData);
 
             $this->assertEquals($code, $sped->getCode());
-            $this->assertEquals($country, $sped->getCountry());
             $this->assertEquals($label, $sped->getLabel());
-            $this->assertEquals($spedition, $sped->getSpedition());
         }
     }
 
@@ -54,9 +50,9 @@ class SpeditionTest extends BaseTestCase
 
             yield [
                 Spedition::KEY_CODE      => "{$spedCodeBase}{$i}",
-                Spedition::KEY_COUNTRY   => $country,
                 Spedition::KEY_LABEL     => $this->getRandomString('label'),
-                Spedition::KEY_SPEDITION => $this->getRandomString('sped'),
+                // TODO: generate fake translations too
+                Spedition::KEY_NAMES     => [],
             ];
         }
     }
