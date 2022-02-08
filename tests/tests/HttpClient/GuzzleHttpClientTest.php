@@ -2,12 +2,6 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
-use OlzaLogistic\PpApi\Client\Country;
-use OlzaLogistic\PpApi\Client\Params;
-use OlzaLogistic\PpApi\Client\Client;
-use OlzaLogistic\PpApi\Client\Data;
-use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
-
 /**
  * Olza Logistic's Pickup Points API client
  *
@@ -18,6 +12,13 @@ use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+use OlzaLogistic\PpApi\Client\Country;
+use OlzaLogistic\PpApi\Client\Params;
+use OlzaLogistic\PpApi\Client\Client;
+use OlzaLogistic\PpApi\Client\Data;
+use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
+
 class GuzzleHttpClientTest extends BaseTestCase
 {
     /**
@@ -40,7 +41,10 @@ class GuzzleHttpClientTest extends BaseTestCase
             ->withSpedition($sped);
         $response = $apiClient->find($filter);
 
-        $this->assertTrue($response->success(), $response->getMessage());
+        $this->assertTrue(
+            $response->success(),
+            $response->getMessage()
+        );
         $this->assertInstanceOf(Data::class, $response->getData(), $response->getMessage());
     }
 
