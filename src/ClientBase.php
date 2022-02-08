@@ -19,7 +19,6 @@ use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 abstract class ClientBase implements ClientContract
 {
@@ -293,12 +292,7 @@ abstract class ClientBase implements ClientContract
             $uri .= '?' . \http_build_query($queryArgs);
         }
 
-        $requestFactory = $this->getRequestFactory();
-        $request = $requestFactory->createRequest($method, $uri);
-        if ($request === null) {
-            throw new \RuntimeException('Request factory returned null.');
-        }
-
+        $request = $this->getRequestFactory()->createRequest($method, $uri);
         if (!$request->hasHeader('User-Agent')) {
             $request = $request->withHeader('User-Agent', $this->getUserAgent());
         }

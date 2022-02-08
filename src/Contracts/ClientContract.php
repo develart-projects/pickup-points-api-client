@@ -34,8 +34,8 @@ interface ClientContract
     public function nearby(Params $apiParams): Result;
 
     /**
-     * Returns codes of speditions available in given country
+     * Returns runtime API config and params
      */
-    public function speditions(Params $apiParams): Result;
+    public function config(Params $apiParams): Result;
 
 } // end of class
