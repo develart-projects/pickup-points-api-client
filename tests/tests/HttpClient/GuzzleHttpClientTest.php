@@ -41,10 +41,7 @@ class GuzzleHttpClientTest extends BaseTestCase
             ->withSpedition($sped);
         $response = $apiClient->find($filter);
 
-        $this->assertTrue(
-            $response->success(),
-            $response->getMessage()
-        );
+        $this->assertTrue($response->success(), $response->getMessage());
         $this->assertInstanceOf(Data::class, $response->getData(), $response->getMessage());
     }
 

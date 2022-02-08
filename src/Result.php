@@ -61,7 +61,9 @@ class Result
                                                           array             $extraKeys): self
     {
         $code = $response->getStatusCode();
-        $jsonStr = $response->getBody()->getContents();
+        $body = $response->getBody();
+        $body->rewind();
+        $jsonStr = $body->getContents();
         $json = \json_decode($jsonStr, true, 32, \JSON_THROW_ON_ERROR);
         if (!static::isApiResponseArrayValid($json, $extraKeys)) {
             throw new ResponseIncorrectParserException();
@@ -94,7 +96,9 @@ class Result
     public static function fromApiResponseWithItems(ResponseInterface $response): self
     {
         try {
-            $respJsonStr = $response->getBody()->getContents();
+            $body = $response->getBody();
+            $body->rewind();
+            $respJsonStr = $body->getContents();
             $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
 
             $requiredKeys = [
