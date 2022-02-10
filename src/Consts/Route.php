@@ -39,5 +39,5 @@ class Route
     /**
      * @var string
      */
-    public const SPEDITIONS = self::PREFIX . '/speditions';
+    public const CONFIG = self::PREFIX . '/config';
 }

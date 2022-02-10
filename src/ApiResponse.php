@@ -51,4 +51,21 @@ class ApiResponse
      */
     public const KEY_ITEMS = 'items';
 
+    /**
+     * JSON key for API for list of configuration items.
+     *
+     * @var string
+     */
+    public const KEY_CONFIG = 'config';
+
+    /**
+     * @var string
+     */
+    public const KEY_SPEDITIONS = 'speditions';
+
+    /**
+     * @var string
+     */
+    public const KEY_LABEL = 'label';
+
 } // end of class

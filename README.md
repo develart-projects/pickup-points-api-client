@@ -157,6 +157,15 @@ public function getData(): ?Data
 
 Returns API returned payload.
 
+#### Data class methods
+
+```php
+public function getItems(): ?array
+```
+
+Some endpoints return list of items (i.e. list of Pickup Points). In such case you can 
+obtain the list of items using `getItems()` method on `Data` class instance.
+
 ### Examples
 
 **NOTE:** It is assumed that each class that tries to use API client also contains all the

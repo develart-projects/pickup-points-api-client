@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client;
 
@@ -18,7 +19,6 @@ use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 abstract class ClientBase implements ClientContract
 {
@@ -29,10 +29,6 @@ abstract class ClientBase implements ClientContract
      */
     public static function useApi(string $apiUrl): self
     {
-        if (!preg_match('#^https?://#', $apiUrl)) {
-            throw new \InvalidArgumentException('Invalid API URL.');
-        }
-
         return new static($apiUrl);
     }
 
@@ -191,7 +187,7 @@ abstract class ClientBase implements ClientContract
     /**
      * Sets access token to provided value. Must be a valid, non-empty string.
      *
-     * @param string|null $accessToken PP-API access token
+     * @param string $accessToken PP-API access token.
      *
      * @return $this
      */
@@ -290,15 +286,13 @@ abstract class ClientBase implements ClientContract
     protected function createRequest(string $method, string $uri,
                                      ?array $queryArgs = null): RequestInterface
     {
+        /** @var string[string]|null */
         $queryArgs ??= [];
-
         if (!empty($queryArgs)) {
             $uri .= '?' . \http_build_query($queryArgs);
         }
 
         $request = $this->getRequestFactory()->createRequest($method, $uri);
-
-        $ua = $this->getUserAgent();
         if (!$request->hasHeader('User-Agent')) {
             $request = $request->withHeader('User-Agent', $this->getUserAgent());
         }
@@ -311,16 +305,27 @@ abstract class ClientBase implements ClientContract
      * Calls API endpoint and builds proper Response instance either with returned
      * data or one indicating request failure.
      *
-     * @param string     $endPoint  Endpoint to call (i.e. '/pp/find')
-     * @param array|null $apiParams Array of
+     * @param string      $endPoint                  Endpoint to call (i.e. '/pp/find')
+     * @param Params|null $apiParams                 Instance of Params container with valid API params.
+     * @param callback    $processResponseCallback   Callback that will be called to map response data
+     *                                               to Result object.
      *
      * @return \OlzaLogistic\PpApi\Client\Result
      */
-    protected function handleHttpRequest(string $endPoint, ?Params $apiParams): Result
+    protected function handleHttpRequest(string   $endPoint, ?Params $apiParams,
+                                         callable $processResponseCallback): Result
     {
         try {
-            $apiResponse = $this->doGetRequest($endPoint, $apiParams);
-            $result = Result::fromApiResponse($apiResponse);
+            $uri = $this->getApiUrl() . $endPoint;
+            if ($apiParams !== null) {
+                $apiParams->withAccessToken($this->accessToken);
+                $uri .= '?' . $apiParams->toQueryString();
+            }
+
+            $client = $this->getHttpClient();
+            $request = $this->createRequest('GET', $uri);
+            $apiResponse = $client->sendRequest($request);
+            $result = $processResponseCallback($apiResponse);
         } catch (\Throwable $ex) {
             // FIXME: log the exception
             $result = Result::fromThrowable($ex);
@@ -330,27 +335,5 @@ abstract class ClientBase implements ClientContract
     }
 
     /* ****************************************************************************************** */
-
-    /** @var string */
-    protected const KEY_ACCESS_TOKEN = 'access_token';
-
-    /**
-     * Constructs final request and does GET request to remote API.
-     *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
-     */
-    protected function doGetRequest(string $endPoint, ?Params $apiParams = null): ResponseInterface
-    {
-        $uri = $this->getApiUrl() . $endPoint;
-
-        if ($apiParams !== null) {
-            $apiParams->withAccessToken($this->accessToken);
-            $uri .= '?' . $apiParams->toQueryString();
-        }
-
-        $client = $this->getHttpClient();
-        $request = $this->createRequest('GET', $uri);
-        return $client->sendRequest($request);
-    }
 
 } // end of class

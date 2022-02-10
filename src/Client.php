@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client;
 
@@ -14,7 +15,11 @@ namespace OlzaLogistic\PpApi\Client;
  */
 
 use OlzaLogistic\PpApi\Client\Consts\Route;
+use Psr\Http\Message\ResponseInterface;
 
+/**
+ * All exposed public methods of PP API client.
+ */
 class Client extends ClientBase
 {
     /**
@@ -28,13 +33,13 @@ class Client extends ClientBase
     {
         $this->assertConfigurationSealed();
 
-        $requiredFields = [
+        $apiParams->setRequiredFields([
             Params::COUNTRY,
             Params::SPEDITION,
-
-        ];
-        $apiParams->setRequiredFields($requiredFields);
-        return $this->handleHttpRequest(Route::FIND, $apiParams);
+        ]);
+        return $this->handleHttpRequest(Route::FIND, $apiParams,
+            static fn(ResponseInterface $apiResponse) => Result::fromApiResponseWithItems($apiResponse)
+        );
     }
 
     /**
@@ -46,13 +51,14 @@ class Client extends ClientBase
     {
         $this->assertConfigurationSealed();
 
-        $requiredFields = [
+        $apiParams->setRequiredFields([
             Params::COUNTRY,
             Params::SPEDITION,
             Params::ID,
-        ];
-        $apiParams->setRequiredFields($requiredFields);
-        return $this->handleHttpRequest(Route::DETAILS, $apiParams);
+        ]);
+        return $this->handleHttpRequest(Route::DETAILS, $apiParams,
+            static fn(ResponseInterface $apiResponse) => Result::fromApiResponseWithItems($apiResponse)
+        );
     }
 
     /**
@@ -63,28 +69,30 @@ class Client extends ClientBase
     public function nearby(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
-        $requiredFields = [
+        $apiParams->setRequiredFields([
             Params::COUNTRY,
             Params::LOCATION,
-        ];
-        $apiParams->setRequiredFields($requiredFields);
-        return $this->handleHttpRequest(Route::NEARBY, $apiParams);
+        ]);
+        return $this->handleHttpRequest(Route::NEARBY, $apiParams,
+            static fn(ResponseInterface $apiResponse) => Result::fromApiResponseWithItems($apiResponse)
+        );
     }
 
     /**
-     * Talks to API and returns list of available speditions.
+     * Talks to API and returns list current API runtime params and available options.
      *
      * @param Params $apiParams Populated instance of request parameters' container.
      */
-    public function speditions(Params $apiParams): Result
+    public function config(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
 
-        $requiredFields = [
+        $apiParams->setRequiredFields([
             Params::COUNTRY,
-        ];
-        $apiParams->setRequiredFields($requiredFields);
-        return $this->handleHttpRequest(Route::SPEDITIONS, $apiParams);
+        ]);
+        return $this->handleHttpRequest(Route::CONFIG, $apiParams,
+            static fn(ResponseInterface $apiResponse) => Result::fromConfigApiResponse($apiResponse)
+        );
     }
 
 } // end of class

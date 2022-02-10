@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client;
 
@@ -280,9 +281,12 @@ class Params
         $requiredFields = $requiredFields ?? [];
         $this->validate($requiredFields);
 
-        $speditions = \implode(',', \array_map(static function($item) {
-            return \trim($item);
-        }, $this->getSpeditions()));
+        $speditions = $this->getSpeditions();
+        if (!empty($speditions)) {
+            $speditions = \implode(',',
+                \array_map(static fn(string $item): string => \trim($item),
+                    $speditions));
+        }
 
         $queryArgs = [
             self::ACCESS_TOKEN => $this->getAccessToken(),
@@ -301,9 +305,8 @@ class Params
             }
         }
 
-        $filtered = \array_filter($queryArgs, static function($value) {
-            return $value !== null;
-        });
+        // Remove all null-value query arguments.
+        $filtered = \array_filter($queryArgs, static fn($value): bool => $value !== null);
 
         return \http_build_query($filtered);
     }

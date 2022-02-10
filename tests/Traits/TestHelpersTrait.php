@@ -13,7 +13,7 @@ namespace OlzaLogistic\PpApi\Client\Tests\Traits;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-use App\ResponseBuilder\ResponseBuilder;
+use OlzaLogistic\PpApi\Client\ApiResponse;
 
 trait TestHelpersTrait
 {
@@ -83,9 +83,9 @@ trait TestHelpersTrait
      */
     protected function assertSuccessResponse(array $json, int $apiCode = 0): void
     {
-        $this->assertTrue($json[ ResponseBuilder::KEY_SUCCESS ]);
-        $this->assertEquals($apiCode, $json[ ResponseBuilder::KEY_CODE ]);
-        $this->assertNotEmpty($json[ ResponseBuilder::KEY_MESSAGE ]);
+        $this->assertTrue($json[ ApiResponse::KEY_SUCCESS ]);
+        $this->assertEquals($apiCode, $json[ ApiResponse::KEY_CODE ]);
+        $this->assertNotEmpty($json[ ApiResponse::KEY_MESSAGE ]);
     }
 
     /**
@@ -98,10 +98,10 @@ trait TestHelpersTrait
      */
     protected function assertErrorResponse(array $json, int $apiCode): void
     {
-        $this->assertFalse($json[ ResponseBuilder::KEY_SUCCESS ]);
-        $this->assertEquals($apiCode, $json[ ResponseBuilder::KEY_CODE ]);
-        $this->assertNotEmpty($json[ ResponseBuilder::KEY_MESSAGE ]);
-        $this->assertNull($json[ ResponseBuilder::KEY_DATA ]);
+        $this->assertFalse($json[ ApiResponse::KEY_SUCCESS ]);
+        $this->assertEquals($apiCode, $json[ ApiResponse::KEY_CODE ]);
+        $this->assertNotEmpty($json[ ApiResponse::KEY_MESSAGE ]);
+        $this->assertNull($json[ ApiResponse::KEY_DATA ]);
     }
 
     /**
@@ -112,10 +112,10 @@ trait TestHelpersTrait
     public function assertValidJsonResponse(array $json): void
     {
         $this->assertIsArray($json);
-        $this->assertIsBool($json[ ResponseBuilder::KEY_SUCCESS ]);
-        $this->assertIsInt($json[ ResponseBuilder::KEY_CODE ]);
-        $this->assertIsString($json[ ResponseBuilder::KEY_MESSAGE ]);
-        $responsePayload = $json[ ResponseBuilder::KEY_DATA ];
+        $this->assertIsBool($json[ ApiResponse::KEY_SUCCESS ]);
+        $this->assertIsInt($json[ ApiResponse::KEY_CODE ]);
+        $this->assertIsString($json[ ApiResponse::KEY_MESSAGE ]);
+        $responsePayload = $json[ ApiResponse::KEY_DATA ];
         $this->assertTrue(($responsePayload === null) || \is_array($responsePayload),
             "Response 'data' must be either object or null");
     }
