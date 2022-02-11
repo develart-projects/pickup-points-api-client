@@ -202,14 +202,95 @@ $result = $client->find($params);
 
 ## Client methods
 
-### `find(Params $params): Result;`
-
-Looks for available pickup points. 
-
-Required arguments:
-* country - country code (use Country::xxx consts)
-* spedition - one (string) or more (array of strings)
+* details()
+* find()
+* nearby()
 
 ### `details(Params $params): Result;`
+
+Return details about specific Pickup Point.
+
+Required arguments:
+* `country` - **[required]** country code (use Country::xxx consts)
+* `spedition` - **[required]** one (string) or more (array of strings)
+* `id` - **[required]** Pickup point identifier
+
+```php
+$params = Params::create()
+                  ->withCountry(Country::CZECH)
+                  ->withSpedition(Spedition::CZECH_POST)
+                  ->withId('12345');
+$result = $client->details($params);
+if($result->success()) {
+    /** @var ?Data $data */
+    $items = $result->getData() ?? [];
+    foreach($items as $pp) {
+        echo $pp->getSpeditionId() . PHP_EOL;
+    }
+    ...
+} else {
+    // Error occurred
+    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+...
+```
+
+### `find(Params $params): Result;`
+
+Looks for available pickup points matching provided parameters.
+
+Required arguments:
+* `country` - **[required]** country code (use Country::xxx consts)
+* `spedition` - **[required]** one (string) or more (array of strings)
+* `search` - (optional) search string that will be additionally matched against pickup point names,
+  identifiers, addresses, etc.
+
+```php
+$params = Params::create()
+                  ->withCountry(Country::CZECH)
+                  ->withSpedition(Spedition::CZECH_POST);
+$result = $client->find($params);
+if($result->success()) {
+    /** @var ?Data $data */
+    $items = $result->getData() ?? [];
+    foreach($items as $pp) {
+        echo $pp->getSpeditionId() . PHP_EOL;
+    }
+    ...
+} else {
+    // Error occurred
+    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+...
+```
+
+
 ### `nearby(Params $params): Result;`
-### `speditions(Params $params): Result;`
+
+Looks for pickup points located nearby specified geographic location.
+* `country` - **[required]** country code (use Country::xxx consts)
+* `spedition` - **[required]** one (string) or more (array of strings)
+* `coords` - **[required]** search string that will be additionally matched against pickup point names,
+  identifiers, addresses, etc.
+
+```php
+$lat = 50.087;
+$long = 14.421;
+$params = Params::create()
+                  ->withCountry(Country::CZECH)
+                  ->withSpedition(Spedition::CZECH_POST)
+                  ->withLocation($lat, $long);
+$result = $client->find($params);
+if($result->success()) {
+    /** @var ?Data $data */
+    $items = $result->getData() ?? [];
+    foreach($items as $pp) {
+        echo $pp->getSpeditionId() . PHP_EOL;
+    }
+    ...
+} else {
+    // Error occurred
+    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+...
+```
