@@ -111,7 +111,7 @@ class Result
                 $dataSrc = $json[ ApiResponse::KEY_DATA ][ ApiResponse::KEY_ITEMS ];
                 $data = new Data();
                 foreach ($dataSrc as $item) {
-                    $data->addItem(PickupPoint::fromApiResponse($item));
+                    $data[] = PickupPoint::fromApiResponse($item);
                 }
             }
             $result->setData($data);
