@@ -8,7 +8,7 @@ namespace OlzaLogistic\PpApi\Client\Exception;
  *
  * @package   OlzaLogistic\PpApi\Server
  *
- * @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
+ * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
  * @copyright 2022 DevelArt
  * @license   Proprietary
  */

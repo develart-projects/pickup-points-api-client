@@ -7,7 +7,7 @@ namespace OlzaLogistic\PpApi\Client\Tests\Endpoint;
  *
  * @package   OlzaLogistic\PpApi\Client
  *
- * @author    Marcin Orlowski <mail (#) marcinOrlowski (.) com>
+ * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
  * @copyright 2021-2022 DevelArt
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
@@ -27,69 +27,21 @@ class ConfigTest extends BaseTestCase
               "code": 0,
               "message": "OK",
               "data": {
-                "config": {
-                  "cache.pp.ttl": 3600
-                },
                 "speditions": {
                   "cp-bal": {
-                    "code": "cp-bal",
-                    "label": "cp-bal",
-                    "names": {
-                      "cs": "Czech Post (cs)",
-                      "en": "Czech Post (en)",
-                      "de": "Czech Post (de)",
-                      "hu": "Czech Post (hu)",
-                      "pl": "Czech Post (pl)",
-                      "sk": "Czech Post (sk)"
-                    }
+                    "code": "cp-bal"
                   },
                   "gls-ps": {
-                    "code": "gls-ps",
-                    "label": "gls-ps",
-                    "names": {
-                      "cs": "GLS (cs)",
-                      "en": "GLS (en)",
-                      "de": "GLS (de)",
-                      "hu": "GLS (hu)",
-                      "pl": "GLS (pl)",
-                      "sk": "GLS (sk)"
-                    }
+                    "code": "gls-ps"
                   },
                   "zas": {
-                    "code": "zas",
-                    "label": "zas",
-                    "names": {
-                      "cs": "Packeta (IPP) (cs)",
-                      "en": "Packeta (IPP) (en)",
-                      "de": "Packeta (IPP) (de)",
-                      "hu": "Packeta (IPP) (hu)",
-                      "pl": "Packeta (IPP) (pl)",
-                      "sk": "Packeta (IPP) (sk)"
-                    }
+                    "code": "zas"
                   },
                   "ppl-ps": {
-                    "code": "ppl-ps",
-                    "label": "ppl-ps",
-                    "names": {
-                      "cs": "PPL (cs)",
-                      "en": "PPL (en)",
-                      "de": "PPL (de)",
-                      "hu": "PPL (hu)",
-                      "pl": "PPL (pl)",
-                      "sk": "PPL (sk)"
-                    }
+                    "code": "ppl-ps"
                   },
                   "bmcg-int-pp": {
-                    "code": "bmcg-int-pp",
-                    "label": "bmcg-int-pp",
-                    "names": {
-                      "cs": "We-Do (cs)",
-                      "en": "We-Do (en)",
-                      "de": "We-Do (de)",
-                      "hu": "We-Do (hu)",
-                      "pl": "We-Do (pl)",
-                      "sk": "We-Do (sk)"
-                    }
+                    "code": "bmcg-int-pp"
                   }
                 }
               }
@@ -139,6 +91,7 @@ class ConfigTest extends BaseTestCase
         $result = $apiClient->config($apiParams);
         /** @var \OlzaLogistic\PpApi\Client\ConfigData $configData */
         $configData = $result->getData();
+        $this->assertNotNull($configData);
 
         $configItems = $configData->getConfigItems();
         $this->assertNotEmpty($configItems);
