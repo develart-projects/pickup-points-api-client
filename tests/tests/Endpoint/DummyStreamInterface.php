@@ -13,13 +13,11 @@ namespace OlzaLogistic\PpApi\Client\Tests\Endpoint;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 class DummyStreamInterface implements StreamInterface
 {
-    public function __toString()
+    public function __toString(): string
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
@@ -46,47 +44,47 @@ class DummyStreamInterface implements StreamInterface
 
     public function eof()
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function isSeekable()
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function seek($offset, $whence = SEEK_SET)
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function rewind()
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function isWritable()
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function write($string)
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function isReadable()
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function read($length)
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function getContents()
     {
-        throw new RuntimeException('Method not implemented: ' . __METHOD__);
+        throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
     public function getMetadata($key = null)

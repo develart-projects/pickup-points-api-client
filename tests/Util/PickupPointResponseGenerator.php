@@ -135,7 +135,7 @@ class PickupPointResponseGenerator
 
     protected array $data = [];
 
-    protected function __construct()
+    final protected function __construct()
     {
         $this->data = [
             PP::KEY_ID        => $this->getRandomString('id'),
