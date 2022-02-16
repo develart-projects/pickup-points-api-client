@@ -31,8 +31,13 @@ jobs:
       # do not stop the workflow if single run failed
       fail-fast: false
       matrix:
+        # TODO: restore tests on PHP 8.1
+        #
+        # NOTE: PHPStan had problems with this project on PHP8.1 due to exceeding  128MB of memory_limit.
+        # I am not sure why this happens (reported to upstream) so for now we skip 8.1 from matrix below.
+        #
         # quotes are needed it is treated as a number and zero at decimal part is gone at runtime
-        php: ["7.4", "8.0", "8.1"]
+        php: ["7.4", "8.0"]
 
     runs-on: ubuntu-latest
 
