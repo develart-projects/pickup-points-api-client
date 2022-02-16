@@ -167,14 +167,26 @@ class Spedition
     /** @var string */
     public const KEY_NAMES = 'names';
 
-    public static function fromApiResponse(array $a): self
+    /**
+     * Returns instance of Spedition, instantiated using data from provided source array.
+     *
+     * @param array $spedData Spedition data from API response.
+     */
+    public static function fromApiResponse(array $spedData): self
     {
-        return (new static())
-            ->setCode($a[ static::KEY_CODE ])
-            ->setLabel($a[ static::KEY_LABEL ])
-            ->addNames($a[ static::KEY_NAMES ]);
+        $spedition = new static();
 
-        // TODO: parse translated names
+        if (\array_key_exists(static::KEY_CODE, $spedData)) {
+            $spedition->setCode($spedData[ static::KEY_CODE ]);
+        }
+        if (\array_key_exists(static::KEY_LABEL, $spedData)) {
+            $spedition->setLabel($spedData[ static::KEY_LABEL ]);
+        }
+        if (\array_key_exists(static::KEY_NAMES, $spedData)) {
+            $spedition->addNames($spedData[ static::KEY_NAMES ]);
+        }
+
+        return $spedition;
     }
 
 } // end of class

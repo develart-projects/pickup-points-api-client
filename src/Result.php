@@ -130,7 +130,6 @@ class Result
             $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
 
             $requiredKeys = [
-                ApiResponse::KEY_CONFIG,
                 ApiResponse::KEY_SPEDITIONS,
             ];
             $result = static::getConfiguredResponseObject($response, $requiredKeys);
@@ -139,7 +138,6 @@ class Result
 
             // All speditions found
             $data = new ConfigData();
-            $data->addConfigItems($apiData[ ApiResponse::KEY_CONFIG ]);
             foreach ($apiData[ ApiResponse::KEY_SPEDITIONS ] as $speditionData) {
                 $spedition = Spedition::fromApiResponse($speditionData);
                 $data->addSpedition($spedition);
