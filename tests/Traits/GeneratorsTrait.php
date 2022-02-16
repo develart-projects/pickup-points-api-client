@@ -22,11 +22,11 @@ trait GeneratorsTrait
      *
      * @param string|null $prefix    Optional prefix to be added to generated string.
      * @param int         $length    Length of the string to be generated.
-     * @param string|null $separator Optional prefix separator.
+     * @param string $separator Optional prefix separator.
      *
      * @return string
      */
-    protected function getRandomString(string $prefix = null, int $length = 24,
+    protected function getRandomString(?string $prefix = null, int $length = 24,
                                        string $separator = '_'): string
     {
         if ($length < 1) {
@@ -44,8 +44,6 @@ trait GeneratorsTrait
      * @param int $min Min allowed value (inclusive)
      * @param int $max Max allowed value (inclusive)
      *
-     * @return int
-     *
      * @throws \Exception
      */
     protected function getRandomInt(int $min = 0, int $max = 100): int
@@ -61,7 +59,7 @@ trait GeneratorsTrait
      * @param int   $round The optional number of decimal digits to round to.
      *                     Default 0 means not rounding.
      */
-    function getRandomFloat(float $min, float $max, int $round = 0)
+    public function getRandomFloat(float $min, float $max, int $round = 0): float
     {
         $result = $min + \mt_rand() / \mt_getrandmax() * ($max - $min);
         if ($round > 0) {

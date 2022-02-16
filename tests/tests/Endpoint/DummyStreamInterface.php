@@ -52,11 +52,20 @@ class DummyStreamInterface implements StreamInterface
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
+    /**
+     * @param int $offset
+     * @param int $whence
+     *
+     * @return int
+     */
     public function seek($offset, $whence = SEEK_SET)
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
+    /**
+     * @return int
+     */
     public function rewind()
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);

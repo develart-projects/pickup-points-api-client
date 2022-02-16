@@ -72,13 +72,13 @@ class Validator
             }
         }
 
-        $type = \gettype($value);
         if (!empty($tmp)) {
+            $type = \gettype($value);
             if (!\in_array($type, $allowedTypes, true)) {
                 throw static::buildException($varName, $type, $allowedTypes);
             }
         } else {
-            throw new \RuntimeException("Class not found {$value}");
+            throw new \RuntimeException("Class not found");
         }
     }
 
@@ -154,7 +154,7 @@ class Validator
      * Ensures provided value is a number (either int or float).
      *
      * @param string $varName Name of variable that the $obj value is coming from. Used for exception message reference.
-     * @param        $value
+     * @param mixed  $value
      */
     public static function assertIsNumber(string $varName, $value): void
     {
@@ -164,4 +164,4 @@ class Validator
         }
     }
 
-}
+} // end of class
