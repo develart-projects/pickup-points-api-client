@@ -27,6 +27,8 @@ class SymfonyHttpClientTest extends BaseTestCase
      */
     public function testSymfonyHttpClient(): void
     {
+        $this->markTestSkipped('Not isolated.');
+
         $url = 'http://127.0.0.1:8000';
         $accessToken = 'pass';
 

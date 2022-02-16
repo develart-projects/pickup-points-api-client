@@ -24,9 +24,10 @@ class GuzzleHttpClientTest extends BaseTestCase
     /**
      * Tests integration with Guzzle HTTP client
      */
-
     public function testGuzzle(): void
     {
+        $this->markTestSkipped('Not isolated.');
+
         $url = 'http://127.0.0.1:8000';
         $accessToken = 'pass';
 
