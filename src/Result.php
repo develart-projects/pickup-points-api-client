@@ -259,14 +259,14 @@ class Result
         return $this;
     }
 
-    protected ?string $message = null;
+    protected string $message = '';
 
-    public function getMessage(): ?string
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    protected function setMessage(?string $message): self
+    protected function setMessage(string $message): self
     {
         $this->message = $message;
         return $this;

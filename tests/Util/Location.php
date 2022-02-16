@@ -223,7 +223,7 @@ class Location
     /**
      * Returns distance (in meters) to $other location.
      *
-     * @param \App\Util\Location $other Location to calculate distance to.
+     * @param Location $other Location to calculate distance to.
      *
      * @return float
      * @throws \Exception
@@ -234,6 +234,13 @@ class Location
         $myLongitude = $this->getLongitude();
         $otherLatitude = $other->getLatitude();
         $otherLongitude = $other->getLongitude();
+
+        if ($myLatitude === null || $myLongitude === null) {
+            throw new \RuntimeException('Invalid my location coordinates');
+        }
+        if ($otherLatitude === null || $otherLongitude === null) {
+            throw new \RuntimeException('Invalid other location coordinates');
+        }
 
         $earthRadiusMeters = 6371000;
 
