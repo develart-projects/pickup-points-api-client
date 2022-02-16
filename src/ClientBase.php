@@ -175,7 +175,7 @@ abstract class ClientBase implements ClientContract
     /**
      * PP-API access token
      *
-     * @var string|null
+     * @var string
      */
     protected string $accessToken;
 
@@ -203,7 +203,7 @@ abstract class ClientBase implements ClientContract
     /**
      * Network client for API communication.
      *
-     * @var \Psr\Http\Client\ClientInterface|null
+     * @var \Psr\Http\Client\ClientInterface
      */
     protected ClientInterface $httpClient;
 
@@ -286,7 +286,6 @@ abstract class ClientBase implements ClientContract
     protected function createRequest(string $method, string $uri,
                                      ?array $queryArgs = null): RequestInterface
     {
-        /** @var string[string]|null */
         $queryArgs ??= [];
         if (!empty($queryArgs)) {
             $uri .= '?' . \http_build_query($queryArgs);
@@ -307,7 +306,7 @@ abstract class ClientBase implements ClientContract
      *
      * @param string      $endPoint                  Endpoint to call (i.e. '/pp/find')
      * @param Params|null $apiParams                 Instance of Params container with valid API params.
-     * @param callback    $processResponseCallback   Callback that will be called to map response data
+     * @param callable    $processResponseCallback   Callback that will be called to map response data
      *                                               to Result object.
      *
      * @return \OlzaLogistic\PpApi\Client\Result

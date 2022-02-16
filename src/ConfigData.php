@@ -27,6 +27,12 @@ class ConfigData extends Data
         return $this->config;
     }
 
+    /**
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return $this
+     */
     public function addConfigItem(string $key, $value): self
     {
         $this->config[ $key ] = $value;
