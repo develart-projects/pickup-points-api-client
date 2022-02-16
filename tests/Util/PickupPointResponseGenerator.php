@@ -14,13 +14,14 @@ namespace OlzaLogistic\PpApi\Client\Tests\Util;
  */
 
 use OlzaLogistic\PpApi\Client\Model\PickupPoint as PP;
+use OlzaLogistic\PpApi\Client\Tests\Traits\GeneratorsTrait;
 
 /**
  * Generates array with the structure as PP API response
  */
 class PickupPointResponseGenerator
 {
-    use \OlzaLogistic\PpApi\Client\Tests\Traits\TestHelpersTrait;
+    use GeneratorsTrait;
 
     public static function data(): self
     {
