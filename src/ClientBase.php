@@ -165,7 +165,7 @@ abstract class ClientBase implements ClientContract
 
     /* ****************************************************************************************** */
 
-    protected function __construct(string $apiUrl)
+    final protected function __construct(string $apiUrl)
     {
         $this->setApiUrl($apiUrl);
     }

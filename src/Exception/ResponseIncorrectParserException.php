@@ -14,7 +14,7 @@ namespace OlzaLogistic\PpApi\Client\Exception;
  */
 class ResponseIncorrectParserException extends \RuntimeException
 {
-    public function __construct(?string $msg = null, int $code = 0, Throwable $previous = null)
+    public function __construct(?string $msg = null, int $code = 0, \Throwable $previous = null)
     {
         $msg ??= "Unexpected data structure. Most likely wrong parser is used.";
         parent::__construct($msg, $code, $previous);
