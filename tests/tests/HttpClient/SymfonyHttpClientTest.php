@@ -27,25 +27,27 @@ class SymfonyHttpClientTest extends BaseTestCase
      */
     public function testSymfonyHttpClient(): void
     {
-        $url = 'http://127.0.0.1:8000';
-        $accessToken = 'pass';
+        $this->markTestSkipped('Not isolated.');
 
-        $apiClient = Client::useApi($url)
-            ->withAccessToken($accessToken)
-            ->withSymfonyHttpClient()
-            ->build();
-
-        $sped = $this->getRandomString('sped');
-        $filter = Params::create()
-            ->withCountry(Country::CZECH)
-            ->withSpedition($sped)
-            ->addField(FieldType::NAME)
-            ->addField(FieldType::LOCATION);
-
-        $response = $apiClient->find($filter);
-        $apiMsg = $response->getMessage();
-        $this->assertTrue($response->success(), $apiMsg);
-        $this->assertInstanceOf(Data::class, $response->getData(), $apiMsg);
+//        $url = 'http://127.0.0.1:8000';
+//        $accessToken = 'pass';
+//
+//        $apiClient = Client::useApi($url)
+//            ->withAccessToken($accessToken)
+//            ->withSymfonyHttpClient()
+//            ->build();
+//
+//        $sped = $this->getRandomString('sped');
+//        $filter = Params::create()
+//            ->withCountry(Country::CZECH)
+//            ->withSpedition($sped)
+//            ->addField(FieldType::NAME)
+//            ->addField(FieldType::LOCATION);
+//
+//        $response = $apiClient->find($filter);
+//        $apiMsg = $response->getMessage();
+//        $this->assertTrue($response->success(), $apiMsg);
+//        $this->assertInstanceOf(Data::class, $response->getData(), $apiMsg);
     }
 
 } // end of class

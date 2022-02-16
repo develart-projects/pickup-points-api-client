@@ -1,6 +1,8 @@
 # pickup-points-api-client
 
-A PickupPoint API Client PHP library. It is HTTP client agnostic library, and it will work with
+Olza Logistic's Pickup Point API Client PHP library.
+
+It is HTTP client agnostic library, and it will work with
 any [PSR-7](https://www.php-fig.org/psr/psr-7/) compatible HTTP client,
 incl. [Guzzle](https://guzzlephp.org/).
 
@@ -157,14 +159,14 @@ public function getData(): ?Data
 
 Returns API returned payload.
 
-#### Data class methods
+### Data class methods
 
 ```php
 public function getItems(): ?array
 ```
 
-Some endpoints return list of items (i.e. list of Pickup Points). In such case you can 
-obtain the list of items using `getItems()` method on `Data` class instance.
+Some endpoints return list of items (i.e. list of Pickup Points). In such case you can obtain the
+list of items using `getItems()` method on `Data` class instance.
 
 ### Examples
 
@@ -211,9 +213,10 @@ $result = $client->find($params);
 Return details about specific Pickup Point.
 
 Required arguments:
-* `country` - **[required]** country code (use Country::xxx consts)
-* `spedition` - **[required]** one (string) or more (array of strings)
-* `id` - **[required]** Pickup point identifier
+
+* `country` - **(required)** country code (use Country::xxx consts)
+* `spedition` - **(required)** one (string) or more (array of strings)
+* `id` - **(required)** Pickup point identifier
 
 ```php
 $params = Params::create()
@@ -240,6 +243,7 @@ if($result->success()) {
 Looks for available pickup points matching provided parameters.
 
 Required arguments:
+
 * `country` - **[required]** country code (use Country::xxx consts)
 * `spedition` - **[required]** one (string) or more (array of strings)
 * `search` - (optional) search string that will be additionally matched against pickup point names,
@@ -264,14 +268,14 @@ if($result->success()) {
 ...
 ```
 
-
 ### `nearby(Params $params): Result;`
 
 Looks for pickup points located nearby specified geographic location.
+
 * `country` - **[required]** country code (use Country::xxx consts)
 * `spedition` - **[required]** one (string) or more (array of strings)
-* `coords` - **[required]** search string that will be additionally matched against pickup point names,
-  identifiers, addresses, etc.
+* `coords` - **[required]** search string that will be additionally matched against pickup point
+  names, identifiers, addresses, etc.
 
 ```php
 $lat = 50.087;
