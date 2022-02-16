@@ -72,6 +72,15 @@ trait AccessHelpersTrait
         $property = $reflection->getProperty($name);
         $property->setAccessible(true);
 
+
+        /**
+         * TODO: Add proper type hinting (as per comment below)
+         *
+         * I am not sure how to properly typehint first argument to reflect the PHP's signature
+         * change too, so for now I am just muting PHPStan here.
+         *
+         * @phpstan-ignore-next-line
+         */
         return $property->getValue(is_object($objectOrClass) ? $objectOrClass : null);
     }
 
@@ -98,4 +107,3 @@ trait AccessHelpersTrait
     }
 
 } // end of class
-
