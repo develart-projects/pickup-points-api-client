@@ -100,9 +100,6 @@ class Params
 
     protected ?array $speditions = null;
 
-    /**
-     * @param string|string[] $speditions
-     */
     public function withSpeditions(array $speditions): self
     {
         $this->speditions = $speditions;
@@ -253,10 +250,16 @@ class Params
                     Validator::assertNotEmpty($field, $this->getFields());
                     break;
                 case self::LOCATION:
-                    Validator::assertNotEmpty($field, $this->getLatitude());
-                    Validator::assertNotEmpty($field, $this->getLongitude());
-                    Validator::assertIsInRange('latitude', $this->getLatitude(), -90, 90);
-                    Validator::assertIsInRange('longitude', $this->getLongitude(), -180, 180);
+                    $lat = $this->getLatitude();
+                    $long = $this->getLongitude();
+                    Validator::assertNotEmpty($field, $lat);
+                    Validator::assertNotEmpty($field, $long);
+                    /**
+                     * @var float $lat
+                     * @var float $long
+                     */
+                    Validator::assertIsInRange('latitude', $lat, -90, 90);
+                    Validator::assertIsInRange('longitude', $long, -180, 180);
                     break;
                 default:
                     throw new \RuntimeException("Unknown field: {$field}");
@@ -278,7 +281,6 @@ class Params
     public function toQueryString(?array $requiredFields = null): string
     {
         $requiredFields = $requiredFields ?? $this->getRequiredFields();
-        $requiredFields = $requiredFields ?? [];
         $this->validate($requiredFields);
 
         $speditions = $this->getSpeditions();

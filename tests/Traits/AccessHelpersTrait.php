@@ -38,7 +38,7 @@ trait AccessHelpersTrait
          * got problems figuring that out, so this (partially correct) var declaration is
          * to make them believe.
          *
-         * @var object $objectOrClass
+         * @var object|class-string<object> $objectOrClass
          */
         $reflection = new \ReflectionClass($objectOrClass);
         $method = $reflection->getMethod($methodName);
@@ -66,7 +66,7 @@ trait AccessHelpersTrait
          * got problems figuring that out, so this (partially correct) var declaration is
          * to make them believe.
          *
-         * @var object $objectOrClass
+         * @var object|class-string<object> $objectOrClass
          */
         $reflection = new \ReflectionClass($objectOrClass);
         $property = $reflection->getProperty($name);

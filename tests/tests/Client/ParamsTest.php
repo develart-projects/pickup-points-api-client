@@ -58,6 +58,7 @@ class ParamsTest extends BaseTestCase
         $p = Params::create()->withSpedition($expected);
         $value = $this->callProtectedMethod($p, 'getSpeditions');
         $this->assertIsArray($value);
+        /** @var array $value */
         $this->assertCount(1, $value);
         $this->assertEquals($expected, $value[0]);
     }
@@ -93,6 +94,11 @@ class ParamsTest extends BaseTestCase
         }
         $p = Params::create()->withFields($fields);
         $value = $this->callProtectedMethod($p, 'getFields');
+        $this->assertIsArray($value);
+        /**
+         * @var array $fields
+         * @var array $value
+         */
         $this->assertArrayEquals($fields, $value);
     }
 
@@ -122,6 +128,8 @@ class ParamsTest extends BaseTestCase
             $fields[] = $field;
         }
         $value = $this->callProtectedMethod($p, 'getFields');
+        $this->assertIsArray($value);
+        /** @var array $value */
         $this->assertArrayEquals($fields, $value);
     }
 

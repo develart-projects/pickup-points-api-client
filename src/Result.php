@@ -64,11 +64,14 @@ class Result
         $body = $response->getBody();
         $body->rewind();
         $jsonStr = $body->getContents();
+
+        /** @var array $json */
         $json = \json_decode($jsonStr, true, 32, \JSON_THROW_ON_ERROR);
         if (!static::isApiResponseArrayValid($json, $extraKeys)) {
             throw new ResponseIncorrectParserException();
         }
 
+        /** @var string $message */
         $message = $json[ ApiResponse::KEY_MESSAGE ];
         if ($message === '') {
             $message = "HTTP error #{$code}";
@@ -99,6 +102,7 @@ class Result
             $body = $response->getBody();
             $body->rewind();
             $respJsonStr = $body->getContents();
+            /** @var array $json */
             $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
 
             $requiredKeys = [
@@ -120,6 +124,7 @@ class Result
             $result = (static::asError())
                 ->setMessage($ex->getMessage());
         }
+        /** @var static $result */
         return $result;
     }
 
@@ -127,6 +132,7 @@ class Result
     {
         try {
             $respJsonStr = $response->getBody()->getContents();
+            /** @var array $json */
             $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
 
             $requiredKeys = [
@@ -190,21 +196,23 @@ class Result
         }
 
         // if DATA node is provided it must be an array.
-        $data = $json[ ApiResponse::KEY_DATA ];
-        if ($data !== null && !\is_array($data)) {
+        $dataNode = $json[ ApiResponse::KEY_DATA ];
+        if ($dataNode !== null && !\is_array($dataNode)) {
             return false;
         }
 
-        // Extra key presence check
+        // extraDataKeys contains keys that we expect to be present in "data" node.
         $extraDataKeys ??= [];
         if (!empty($extraDataKeys)) {
+            // if extra keys are required, "data" node must be present and not empty.
+            if ($dataNode === null) {
+                return false;
+            }
             foreach ($extraDataKeys as $key) {
-                if (!\array_key_exists($key, $data)) {
+                if (!\array_key_exists($key, $dataNode)) {
                     return false;
                 }
             }
-        } elseif ($data === null) {
-            return false;
         }
 
         return true;
@@ -251,14 +259,14 @@ class Result
         return $this;
     }
 
-    protected ?string $message = null;
+    protected string $message = '';
 
-    public function getMessage(): ?string
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    protected function setMessage(?string $message): self
+    protected function setMessage(string $message): self
     {
         $this->message = $message;
         return $this;

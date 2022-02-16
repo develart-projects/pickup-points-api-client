@@ -237,7 +237,7 @@ class PickupPoint
         return $this->name2;
     }
 
-    protected function setName2(?string $name2)
+    protected function setName2(?string $name2): self
     {
         $this->name2 = ($name2 !== null) ? \trim($name2) : null;
         return $this;
@@ -413,8 +413,6 @@ class PickupPoint
 
     /**
      * Helper methods that groups all pickup point contact types into single array.
-     *
-     * @return string[]
      */
     public function getContacts(): array
     {
