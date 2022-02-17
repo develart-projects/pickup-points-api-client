@@ -1,6 +1,10 @@
+![Olza Logistic Logo](img/olza-logo.png)
+
 # pickup-points-api-client
 
 Olza Logistic's Pickup Point API Client PHP library.
+
+---
 
 It is HTTP client agnostic library, and it will work with
 any [PSR-7](https://www.php-fig.org/psr/psr-7/) compatible HTTP client,
@@ -11,6 +15,8 @@ incl. [Guzzle](https://guzzlephp.org/).
 * PHP 7.4+ or PHP 8.x (or newer),
 * Any PSR-7 compatible HTTP Client library (e.g. [Guzzle](https://guzzlephp.org/),
   [Symfony's HTTP Client](https://symfony.com/doc/current/http_client.html), etc.).
+
+---
 
 ## Installation
 
