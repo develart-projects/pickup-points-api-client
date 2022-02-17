@@ -15,50 +15,6 @@ namespace OlzaLogistic\PpApi\Client\Model;
 class Spedition
 {
     /**
-     * @var string
-     */
-    public const CZECH_POST = 'cp-bal';
-
-    /**
-     * @var string
-     */
-    public const GLS = 'gls-ps';
-
-    /**
-     * @var string
-     */
-    public const PPL = 'ppl-ps';
-
-    /**
-     * @var string
-     */
-    public const SLOVAK_POST = 'sp-box';
-
-    /**
-     * @var string
-     */
-    public const SPS = 'sps-pp';
-
-    /**
-     * @var string
-     */
-    public const WEDO = 'bmcg-int-pp';
-
-    /**
-     * Hungarian Post: Parcel Terminal (Parcel Box)
-     *
-     * @var string
-     */
-    public const HUNGARIAN_POST_PARCEL_BOX = 'hup-cs';
-
-    /**
-     * Hungarian Post: Post Office, shops, gas station etc
-     *
-     * @var string
-     */
-    public const HUNGARIAN_POST_OTHERS = 'hup-pp';
-
-    /**
      * Packeta: internal pickup points (IPPs)
      *
      * @var string
@@ -100,19 +56,12 @@ class Spedition
      */
     public const PACKETA_EPP_SAMEDAY_EASYBOX = 'zas-saeb';
 
-    /**
-     * Sameday Easybox
-     *
-     * @type string
-     */
-    public const SAEB = 'saeb-box';
-
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
     /**
-     * Code of the spedition (i.e. 'CP-BAL' for 'Ceska Posta').
+     * Code (identifier) of the spedition.
      *
      * @ORM\Column(type="string", nullable=false)
      */
