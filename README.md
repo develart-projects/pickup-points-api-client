@@ -63,10 +63,10 @@ The following public methods serve as you gateway to PP API:
 
 Returns current vital information abour PP API environment.
 
-> **NOTE:** It's highy recommended to invoke `config/` method as your very first method during your 
-> PP API communication session. This method is expected to return vital runtime parametera back to 
+> **NOTE:** It's highy recommended to invoke `config/` method as your very first method during your
+> PP API communication session. This method is expected to return vital runtime parametera back to
 > the client so you can act accordingly. For example, `config/` will return list of all currently
-> available speditions (and their IDs) so you can know in advance what to expect from other, 
+> available speditions (and their IDs) so you can know in advance what to expect from other,
 > spedition dependent methods.
 
 Required arguments:
@@ -204,7 +204,16 @@ $response = $client->find($params);
 public static function create(): self
 ```
 
-Create empty instance of Params class
+Create empty instance of Params class. That should be the your starting point for most of the cases.
+
+```php
+public function throwOnError(): self
+```
+
+By default all public API methods called always returned `Result` object. To see if command
+succeded or not, you need to call `success()` method on the returned object and then branch your
+code logic accordingly. This can lead to ugly and less readable code, so alternatively, you can
+order the client to always throw the `MethodFailedException` instead.
 
 ```php
 public function withCountry(string $country): self
@@ -343,9 +352,9 @@ $result = $client->find($params);
 
 ### Accessing response payload
 
-Most methods return additional data back as as additional payload. The structure may differ
-per method, yet all the methods return the payload the same way via instance of `Data` class
-embedded in `Result` object:
+Most methods return additional data back as as additional payload. The structure may differ per
+method, yet all the methods return the payload the same way via instance of `Data` class embedded
+in `Result` object:
 
 ```php
 $params = Params::create()
