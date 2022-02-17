@@ -17,46 +17,95 @@ class Spedition
     /**
      * @var string
      */
-    public const CZECH_POST = 'CP-BAL';
+    public const CZECH_POST = 'cp-bal';
 
     /**
      * @var string
      */
-    public const GLS = 'GLS-PS';
+    public const GLS = 'gls-ps';
 
     /**
      * @var string
      */
-    public const PPL = 'PPL-PS';
+    public const PPL = 'ppl-ps';
 
     /**
      * @var string
      */
-    public const SLOVAK_POST = 'SP-BOX';
+    public const SLOVAK_POST = 'sp-box';
 
     /**
      * @var string
      */
-    public const SPS = 'SPS-PP';
+    public const SPS = 'sps-pp';
 
     /**
      * @var string
      */
-    public const WEDO = 'BMCG-INT-PP';
+    public const WEDO = 'bmcg-int-pp';
 
     /**
      * Hungarian Post: Parcel Terminal (Parcel Box)
      *
      * @var string
      */
-    public const HUNGARIAN_POST_PARCEL_BOX = 'HUP-CS';
+    public const HUNGARIAN_POST_PARCEL_BOX = 'hup-cs';
 
     /**
      * Hungarian Post: Post Office, shops, gas station etc
      *
      * @var string
      */
-    public const HUNGARIAN_POST_OTHERS = 'HUP-PP';
+    public const HUNGARIAN_POST_OTHERS = 'hup-pp';
+
+    /**
+     * Packeta: internal pickup points (IPPs)
+     *
+     * @var string
+     */
+    public const PACKETA_IPP = 'zas';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_ECONT_PP = 'zas-econt-pp';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_ECONT_BOX = 'zas-econt-box';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_SPEEDY_PP = 'zas-speedy-pp';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_ACS_BOX = 'zas-acs-pp';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_SAMEDAY_EASYBOX = 'zas-saeb';
+
+    /**
+     * Sameday Easybox
+     *
+     * @type string
+     */
+    public const SAEB = 'saeb-box';
 
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
