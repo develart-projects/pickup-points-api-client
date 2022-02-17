@@ -15,7 +15,7 @@ namespace OlzaLogistic\PpApi\Client;
 class Country
 {
     /** @var string */
-    public const CZECH = 'cz';
+    public const CZECH_REPUBLIC = 'cz';
     /** @var string */
     public const SLOVAKIA = 'sk';
     /** @var string */

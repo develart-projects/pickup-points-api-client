@@ -85,7 +85,7 @@ class ConfigTest extends BaseTestCase
             ->withPsrClient($httpClientStub, $requestFactoryStub)
             ->build();
 
-        $apiParams = Params::create()->withCountry(Country::CZECH);
+        $apiParams = Params::create()->withCountry(Country::CZECH_REPUBLIC);
 
         // Call the method
         $result = $apiClient->config($apiParams);
