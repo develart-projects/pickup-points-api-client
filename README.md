@@ -39,10 +39,141 @@ composer require symfony/http-client nyholm/psr7
 ## Usage
 
 To simplify library usage, all public methods exposed by the library are expecting arguments to be
-handed with use of `Params` class and all the response data is returned wrapped in `Result` class
-instance.
+handed with use of `Params` class. All the response data is also returned wrapped in unified
+`Result` class object.
 
-### Params - passing methods arguments
+* [Public API methods](#public-api-methods)
+* [`Params` class - passing methods arguments](#passing-methods-arguments)
+* [`ApiResponse` class - response data](#consuming-response-data)
+* [`Data` class - accessing response payload](#accessing-response-payload)
+
+---
+
+## Public API methods
+
+The following public methods serve as you gateway to PP API:
+
+### `config(Params $params): Result;`
+
+Returns current vital information abour PP API environment.
+
+> **NOTE:** It's highy recommended to invoke `config/` method as your very first method during your 
+> PP API communication session. This method is expected to return vital runtime parametera back to 
+> the client so you can act accordingly. For example, `config/` will return list of all currently
+> available speditions (and their IDs) so you can know in advance what to expect from other, 
+> spedition dependent methods.
+
+Required arguments:
+
+* `country` - **(required)** country code (use Country::xxx consts)
+
+```php
+$params = Params::create()
+                  ->withCountry(Country::CZECH);
+$result = $client->config($params);
+if($result->success()) {
+    $configItems = $result->getData();
+
+    ...
+} else {
+    // Error occurred
+    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+...
+```
+
+### `details(Params $params): Result;`
+
+Return details about specific Pickup Point.
+
+Required arguments:
+
+* `country` - **(required)** country code (use Country::xxx consts)
+* `spedition` - **(required)** one (string) or more (array of strings)
+* `id` - **(required)** Pickup point identifier
+
+```php
+$params = Params::create()
+                  ->withCountry(Country::CZECH)
+                  ->withSpedition(Spedition::CZECH_POST)
+                  ->withSpeditionId('12345');
+$result = $client->details($params);
+if($result->success()) {
+    $items = $result->getData();
+    foreach($items as $pp) {
+        echo $pp->getSpeditionId() . PHP_EOL;
+    }
+    ...
+} else {
+    // Error occurred
+    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+...
+```
+
+### `find(Params $params): Result;`
+
+Looks for available pickup points matching provided parameters.
+
+Required arguments:
+
+* `country` - **[required]** country code (use Country::xxx consts)
+* `spedition` - **[required]** one (string) or more (array of strings)
+* `search` - (optional) search string that will be additionally matched against pickup point names,
+  identifiers, addresses, etc.
+
+```php
+$params = Params::create()
+                  ->withCountry(Country::CZECH)
+                  ->withSpedition(Spedition::CZECH_POST);
+$result = $client->find($params);
+if($result->success()) {
+    $items = $result->getData() ?? [];
+    foreach($items as $pp) {
+        echo $pp->getSpeditionId() . PHP_EOL;
+    }
+    ...
+} else {
+    // Error occurred
+    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+...
+```
+
+### `nearby(Params $params): Result;`
+
+Looks for pickup points located nearby specified geographic location.
+
+* `country` - **[required]** country code (use Country::xxx consts)
+* `spedition` - **[required]** one (string) or more (array of strings)
+* `coords` - **[required]** search string that will be additionally matched against pickup point
+  names, identifiers, addresses, etc.
+
+```php
+$lat = 50.087;
+$long = 14.421;
+$params = Params::create()
+                  ->withCountry(Country::CZECH)
+                  ->withSpedition(Spedition::CZECH_POST)
+                  ->withLocation($lat, $long);
+$result = $client->find($params);
+if($result->success()) {
+    /** @var ?Data $data */
+    $items = $result->getData() ?? [];
+    foreach($items as $pp) {
+        echo $pp->getSpeditionId() . PHP_EOL;
+    }
+    ...
+} else {
+    // Error occurred
+    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+...
+```
+
+---
+
+### Passing methods arguments
 
 All public client methods requiring arguments expect instance of `Params` class as argument, with
 all the method required arguments set using all exposed `withXXX()` helper methods. For
@@ -202,52 +333,13 @@ $result = $client->find($params);
 ...
 ```
 
-## Client methods
+---
 
-* details()
-* find()
-* nearby()
+### Accessing response payload
 
-### `details(Params $params): Result;`
-
-Return details about specific Pickup Point.
-
-Required arguments:
-
-* `country` - **(required)** country code (use Country::xxx consts)
-* `spedition` - **(required)** one (string) or more (array of strings)
-* `id` - **(required)** Pickup point identifier
-
-```php
-$params = Params::create()
-                  ->withCountry(Country::CZECH)
-                  ->withSpedition(Spedition::CZECH_POST)
-                  ->withId('12345');
-$result = $client->details($params);
-if($result->success()) {
-    /** @var ?Data $data */
-    $items = $result->getData() ?? [];
-    foreach($items as $pp) {
-        echo $pp->getSpeditionId() . PHP_EOL;
-    }
-    ...
-} else {
-    // Error occurred
-    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
-}
-...
-```
-
-### `find(Params $params): Result;`
-
-Looks for available pickup points matching provided parameters.
-
-Required arguments:
-
-* `country` - **[required]** country code (use Country::xxx consts)
-* `spedition` - **[required]** one (string) or more (array of strings)
-* `search` - (optional) search string that will be additionally matched against pickup point names,
-  identifiers, addresses, etc.
+Most methods return additional data back as as additional payload. The structure may differ
+per method, yet all the methods return the payload the same way via instance of `Data` class
+embedded in `Result` object:
 
 ```php
 $params = Params::create()
@@ -255,39 +347,10 @@ $params = Params::create()
                   ->withSpedition(Spedition::CZECH_POST);
 $result = $client->find($params);
 if($result->success()) {
-    /** @var ?Data $data */
-    $items = $result->getData() ?? [];
-    foreach($items as $pp) {
-        echo $pp->getSpeditionId() . PHP_EOL;
-    }
-    ...
-} else {
-    // Error occurred
-    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
-}
-...
-```
-
-### `nearby(Params $params): Result;`
-
-Looks for pickup points located nearby specified geographic location.
-
-* `country` - **[required]** country code (use Country::xxx consts)
-* `spedition` - **[required]** one (string) or more (array of strings)
-* `coords` - **[required]** search string that will be additionally matched against pickup point
-  names, identifiers, addresses, etc.
-
-```php
-$lat = 50.087;
-$long = 14.421;
-$params = Params::create()
-                  ->withCountry(Country::CZECH)
-                  ->withSpedition(Spedition::CZECH_POST)
-                  ->withLocation($lat, $long);
-$result = $client->find($params);
-if($result->success()) {
-    /** @var ?Data $data */
-    $items = $result->getData() ?? [];
+    // It's safe not to check for `null` as we always get the `Data` object no matter
+    // we got any matching Pickup Point or not. In case of no data you will get empty
+    // Data instance.
+    $items = $result->getData();
     foreach($items as $pp) {
         echo $pp->getSpeditionId() . PHP_EOL;
     }
