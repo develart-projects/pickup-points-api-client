@@ -15,55 +15,53 @@ namespace OlzaLogistic\PpApi\Client\Model;
 class Spedition
 {
     /**
-     * @var string
-     */
-    public const CZECH_POST = 'CP-BAL';
-
-    /**
-     * @var string
-     */
-    public const GLS = 'GLS-PS';
-
-    /**
-     * @var string
-     */
-    public const PPL = 'PPL-PS';
-
-    /**
-     * @var string
-     */
-    public const SLOVAK_POST = 'SP-BOX';
-
-    /**
-     * @var string
-     */
-    public const SPS = 'SPS-PP';
-
-    /**
-     * @var string
-     */
-    public const WEDO = 'BMCG-INT-PP';
-
-    /**
-     * Hungarian Post: Parcel Terminal (Parcel Box)
+     * Packeta: internal pickup points (IPPs)
      *
      * @var string
      */
-    public const HUNGARIAN_POST_PARCEL_BOX = 'HUP-CS';
+    public const PACKETA_IPP = 'zas';
 
     /**
-     * Hungarian Post: Post Office, shops, gas station etc
+     * Packeta's 2nd tier (external) carrier.
      *
-     * @var string
+     * @type string
      */
-    public const HUNGARIAN_POST_OTHERS = 'HUP-PP';
+    public const PACKETA_EPP_ECONT_PP = 'zas-econt-pp';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_ECONT_BOX = 'zas-econt-box';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_SPEEDY_PP = 'zas-speedy-pp';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_ACS_BOX = 'zas-acs-pp';
+
+    /**
+     * Packeta's 2nd tier (external) carrier.
+     *
+     * @type string
+     */
+    public const PACKETA_EPP_SAMEDAY_EASYBOX = 'zas-saeb';
 
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
     /**
-     * Code of the spedition (i.e. 'CP-BAL' for 'Ceska Posta').
+     * Code (identifier) of the spedition.
      *
      * @ORM\Column(type="string", nullable=false)
      */

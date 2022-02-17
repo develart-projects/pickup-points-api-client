@@ -15,7 +15,7 @@ namespace OlzaLogistic\PpApi\Client\Tests\Endpoint;
 
 use OlzaLogistic\PpApi\Client\ApiResponse;
 use OlzaLogistic\PpApi\Client\Client;
-use OlzaLogistic\PpApi\Client\Country;
+use OlzaLogistic\PpApi\Client\Model\Country;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
 
@@ -85,7 +85,7 @@ class ConfigTest extends BaseTestCase
             ->withPsrClient($httpClientStub, $requestFactoryStub)
             ->build();
 
-        $apiParams = Params::create()->withCountry(Country::CZECH);
+        $apiParams = Params::create()->withCountry(Country::CZECH_REPUBLIC);
 
         // Call the method
         $result = $apiClient->config($apiParams);

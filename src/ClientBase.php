@@ -15,6 +15,7 @@ namespace OlzaLogistic\PpApi\Client;
  */
 
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
+use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
 use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -122,6 +123,13 @@ abstract class ClientBase implements ClientContract
 
         $this->setHttpClient($httpClient);
         $this->setRequestFactory($requestFactory);
+        return $this;
+    }
+
+
+    public function throwOnError(): self
+    {
+        $this->setThrowOnError(true);
         return $this;
     }
 
@@ -272,6 +280,20 @@ abstract class ClientBase implements ClientContract
         return $this;
     }
 
+
+    protected bool $throwOnError = false;
+
+    protected function getThrowOnError(): bool
+    {
+        return $this->throwOnError;
+    }
+
+    protected function setThrowOnError(bool $throwOnError): self
+    {
+        $this->throwOnError = $throwOnError;
+        return $this;
+    }
+
     /**
      * Helper method that creates instance of Request object, set up according
      * to provided arguments.
@@ -293,6 +315,12 @@ abstract class ClientBase implements ClientContract
 
         $request = $this->getRequestFactory()->createRequest($method, $uri);
         if (!$request->hasHeader('User-Agent')) {
+            /**
+             * Some static analizers apparently believe the line
+             * below is unreachable. Most likely it's because
+             * the dummy implementation of invoked method
+             * is used as reference (and it just throws).
+             */
             $request = $request->withHeader('User-Agent', $this->getUserAgent());
         }
         return $request;
@@ -324,10 +352,21 @@ abstract class ClientBase implements ClientContract
             $client = $this->getHttpClient();
             $request = $this->createRequest('GET', $uri);
             $apiResponse = $client->sendRequest($request);
+            /**
+             * Some static analyzers apparently believe the line  below is unreachable. Most likely
+             * it's because the dummy implementation of invoked method is used as reference (and it
+             * just throws).
+             *
+             * @var Result $result
+             */
             $result = $processResponseCallback($apiResponse);
         } catch (\Throwable $ex) {
             // FIXME: log the exception
             $result = Result::fromThrowable($ex);
+        }
+
+        if ($this->getThrowOnError() && !$result->success()) {
+            throw new MethodFailedException($result->getMessage());
         }
 
         return $result;

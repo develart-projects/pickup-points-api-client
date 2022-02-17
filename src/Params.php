@@ -39,6 +39,15 @@ class Params
     /** @var string */
     public const LOCATION = 'location';
 
+    /** @var string */
+    public const LIMIT = 'limit';
+
+    /** @var string */
+    public const LANGUAGE = 'language';
+
+    /** @var string */
+    public const SEARCH = 'search';
+
     /* ****************************************************************************************** */
 
     protected function __construct()
@@ -220,6 +229,50 @@ class Params
 
     /* ****************************************************************************************** */
 
+    protected ?string $searchQuery = null;
+
+    public function withSearchQuery(string $searchQuery)
+    {
+        $this->searchQuery = $searchQuery;
+    }
+
+    protected function getSearchQuery(): ?string
+    {
+        return $this->searchQuery;
+    }
+
+    /* ****************************************************************************************** */
+
+    protected ?int $limit = null;
+
+    public function withLimit(int $limit): self
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    protected function getLimit(): ?int
+    {
+        return $this->limit;
+    }
+
+    /* ****************************************************************************************** */
+
+    protected ?string $language = null;
+
+    public function withLanguage(string $language): self
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    protected function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    /* ****************************************************************************************** */
+
     /**
      * Ensures parameter fields specified in $requiredArrays are set and are not empty.
      *
@@ -291,13 +344,17 @@ class Params
         }
 
         $queryArgs = [
+            // Keep keys sorted.
             self::ACCESS_TOKEN => $this->getAccessToken(),
-            self::COUNTRY      => $this->getCountry(),
-            self::SPEDITION    => $speditions,
             self::CITY         => $this->getCity(),
-            self::ID           => $this->getSpeditionId(),
+            self::COUNTRY      => $this->getCountry(),
             self::FIELDS       => $this->getFieldsAsString(),
+            self::ID           => $this->getSpeditionId(),
+            self::LANGUAGE     => $this->getLanguage(),
+            self::LIMIT        => $this->getLimit(),
             self::LOCATION     => $this->getLocationAsString(),
+            self::SEARCH       => $this->getSearchQuery(),
+            self::SPEDITION    => $speditions,
         ];
 
         if (!\array_key_exists(self::ACCESS_TOKEN, $queryArgs)) {
