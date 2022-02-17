@@ -15,7 +15,7 @@ namespace OlzaLogistic\PpApi\Client\Tests\Endpoint;
 
 use OlzaLogistic\PpApi\Client\ApiResponse;
 use OlzaLogistic\PpApi\Client\Client;
-use OlzaLogistic\PpApi\Client\Country;
+use OlzaLogistic\PpApi\Client\Model\Country;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
 
