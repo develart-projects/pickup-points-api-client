@@ -13,9 +13,9 @@ namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-use OlzaLogistic\PpApi\Client\Country;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Client;
+use OlzaLogistic\PpApi\Client\Model\Country;
 use OlzaLogistic\PpApi\Client\Data;
 use OlzaLogistic\PpApi\Client\FieldType;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
