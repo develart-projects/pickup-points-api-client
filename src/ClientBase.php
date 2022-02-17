@@ -353,10 +353,9 @@ abstract class ClientBase implements ClientContract
             $request = $this->createRequest('GET', $uri);
             $apiResponse = $client->sendRequest($request);
             /**
-             * Some static analizers apparently believe the line
-             * below is unreachable. Most likely it's because
-             * the dummy implementation of invoked method
-             * is used as reference (and it just throws).
+             * Some static analyzers apparently believe the line  below is unreachable. Most likely
+             * it's because the dummy implementation of invoked method is used as reference (and it
+             * just throws).
              *
              * @var Result $result
              */
@@ -366,7 +365,7 @@ abstract class ClientBase implements ClientContract
             $result = Result::fromThrowable($ex);
         }
 
-        if ($this->getThrowOnError() && !$result->isSuccess()) {
+        if ($this->getThrowOnError() && !$result->success()) {
             throw new MethodFailedException($result->getMessage());
         }
 
