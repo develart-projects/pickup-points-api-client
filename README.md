@@ -75,7 +75,7 @@ Required arguments:
 
 ```php
 $params = Params::create()
-                  ->withCountry(Country::CZECH);
+                  ->withCountry(Country::CZECH_REPUBLIC);
 $result = $client->config($params);
 if($result->success()) {
     $configItems = $result->getData();
@@ -330,6 +330,7 @@ Get instance of API client first:
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
                        ->withGuzzleHttpClient()
+                       ->throwOnError()
                        ->build();
 ```
 
@@ -341,9 +342,10 @@ instance of `Params` class that let us pass all these required information to th
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
                        ->withGuzzleHttpClient()
-                       ->get();
+                       ->throwOnError()
+                       ->build();
 $params = Params::create()
-                  ->withCountry(Country::CZECH);
+                  ->withCountry(Country::CZECH_REPUBLIC);
 $result = $client->find($params);
 ...
 ```
@@ -358,7 +360,7 @@ in `Result` object:
 
 ```php
 $params = Params::create()
-                  ->withCountry(Country::CZECH)
+                  ->withCountry(Country::CZECH_REPUBLIC)
                   ->withSpedition(Spedition::CZECH_POST);
 $result = $client->find($params);
 if($result->success()) {
