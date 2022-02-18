@@ -48,23 +48,88 @@ To simplify library usage, all public methods exposed by the library are expecti
 handed with use of `Params` class. All the response data is also returned wrapped in unified
 `Result` class object.
 
-* [Public API methods](#public-api-methods)
+* [`Client` class](#client-class)
+  * [Public API methods](#public-api-methods)
 * [`Params` class - passing methods arguments](#passing-methods-arguments)
 * [`ApiResponse` class - response data](#consuming-response-data)
 * [`Data` class - accessing response payload](#accessing-response-payload)
 
 ---
 
-## Public API methods
+## Client class
+
+The `Client` class is your gateway to PP API. It is a wrapper around the HTTP client library
+that deals with all the struggle talking to the API and processing responses. To start using
+the library you need to create instance of `Client` first:
+
+
+```php
+use OlzaLogistic\PpApi\Client as PpApiClient;
+
+$url = ...
+$accessToken = ...
+
+$client = PpApiClient::useApi($url)
+                       ->withAccessToken($token)
+                       ->withGuzzleHttpClient()
+                       ->throwOnError()
+                       ->build();
+```
+
+Assuming you got internet access, you know `$url` and your `$accessToken` is correct and valid you
+should now be able to access the API data. As API methods may require some arguments, we will need
+instance of `Params` class that let us pass all these required information to the method:
+
+```php
+$client = PpApiClient::useApi($url)
+                       ->withAccessToken($token)
+                       ->withGuzzleHttpClient()
+                       ->throwOnError()
+                       ->build();
+                       
+try {
+  $params = Params::create()
+                    ->withCountry(Country::CZECH_REPUBLIC);
+  $result = $client->find($params);
+  ...
+} catch (MethodFailedException $ex) {
+  ...
+}
+```
+
+Note the `throwOnError()` method invoked. If you prefer exceptions not to be thrown when
+API replied with failure response, you can do remove that method: 
+
+```php
+$client = PpApiClient::useApi($url)
+                       ->withAccessToken($token)
+                       ->withGuzzleHttpClient()
+                       ->throwOnError()
+                       ->build();
+
+$params = Params::create()
+                  ->withCountry(Country::CZECH_REPUBLIC);
+$result = $client->config($params);
+if($result->success()) {
+  $configItems = $result->getData();
+  ...
+} else {
+  echo "Oops, error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+}
+```
+
+---
+
+### Public API methods
 
 The following public methods serve as you gateway to PP API:
 
-### `config(Params $params): Result;`
+#### `config(Params $params): Result;`
 
-Returns current vital information abour PP API environment.
+Returns current vital information about PP API environment.
 
-> **NOTE:** It's highy recommended to invoke `config/` method as your very first method during your
-> PP API communication session. This method is expected to return vital runtime parametera back to
+> **NOTE:** It's highly recommended to invoke `config/` method as your very first method during your
+> PP API communication session. This method is expected to return vital runtime parameters back to
 > the client so you can act accordingly. For example, `config/` will return list of all currently
 > available speditions (and their IDs) so you can know in advance what to expect from other,
 > spedition dependent methods.
@@ -77,18 +142,12 @@ Required arguments:
 $params = Params::create()
                   ->withCountry(Country::CZECH_REPUBLIC);
 $result = $client->config($params);
-if($result->success()) {
-    $configItems = $result->getData();
-
-    ...
-} else {
-    // Error occurred
-    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
-}
+$configItems = $result->getData();
+...
 ...
 ```
 
-### `details(Params $params): Result;`
+#### `details(Params $params): Result;`
 
 Return details about specific Pickup Point.
 
@@ -104,20 +163,16 @@ $params = Params::create()
                   ->withSpedition(Spedition::CZECH_POST)
                   ->withSpeditionId('12345');
 $result = $client->details($params);
-if($result->success()) {
-    $items = $result->getData();
-    foreach($items as $pp) {
-        echo $pp->getSpeditionId() . PHP_EOL;
-    }
-    ...
-} else {
-    // Error occurred
-    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+$items = $result->getData();
+foreach($items as $pp) {
+  echo $pp->getSpeditionId() . PHP_EOL;
 }
+...
+
 ...
 ```
 
-### `find(Params $params): Result;`
+#### `find(Params $params): Result;`
 
 Looks for available pickup points matching provided parameters.
 
@@ -133,20 +188,14 @@ $params = Params::create()
                   ->withCountry(Country::CZECH)
                   ->withSpedition(Spedition::CZECH_POST);
 $result = $client->find($params);
-if($result->success()) {
-    $items = $result->getData() ?? [];
-    foreach($items as $pp) {
-        echo $pp->getSpeditionId() . PHP_EOL;
-    }
-    ...
-} else {
-    // Error occurred
-    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+$items = $result->getData() ?? [];
+foreach($items as $pp) {
+  echo $pp->getSpeditionId() . PHP_EOL;
 }
 ...
 ```
 
-### `nearby(Params $params): Result;`
+#### `nearby(Params $params): Result;`
 
 Looks for pickup points located nearby specified geographic location.
 
@@ -163,16 +212,10 @@ $params = Params::create()
                   ->withSpedition(Spedition::CZECH_POST)
                   ->withLocation($lat, $long);
 $result = $client->find($params);
-if($result->success()) {
-    /** @var ?Data $data */
-    $items = $result->getData() ?? [];
-    foreach($items as $pp) {
-        echo $pp->getSpeditionId() . PHP_EOL;
-    }
-    ...
-} else {
-    // Error occurred
-    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+/** @var ?Data $data */
+$items = $result->getData() ?? [];
+foreach($items as $pp) {
+  echo $pp->getSpeditionId() . PHP_EOL;
 }
 ...
 ```
@@ -271,12 +314,11 @@ methods also acts as regular array:
 ```php
 ...
 $result = $client->find('cz');
-if ($result->success()) {
-    $items = $result->getData();
-    foreach($items as $item) {
-        echo $item->getSpeditionId() . PHP_EOL;
-    }
+$items = $result->getData();
+foreach($items as $item) {
+    echo $item->getSpeditionId() . PHP_EOL;
 }
+...
 ```
 
 `Result` class exposes the following public methods:
@@ -314,41 +356,6 @@ public function getItems(): ?array
 Some endpoints return list of items (i.e. list of Pickup Points). In such case you can obtain the
 list of items using `getItems()` method on `Data` class instance.
 
-### Examples
-
-**NOTE:** It is assumed that each class that tries to use API client also contains all the
-required `use` clauses to import required symbols:
-
-```php
-use OlzaLogistic\PpApi\Client as PpApiClient;
-use OlzaLogistic\PpApi\Client\Country;
-```
-
-Get instance of API client first:
-
-```php
-$client = PpApiClient::useApi($url)
-                       ->withAccessToken($token)
-                       ->withGuzzleHttpClient()
-                       ->throwOnError()
-                       ->build();
-```
-
-Assuming you got internet access, you know `$url` and your `$accessToken` is correct and valid you
-should now be able to access the API data. As API methods may require some arguments, we will need
-instance of `Params` class that let us pass all these required information to the method:
-
-```php
-$client = PpApiClient::useApi($url)
-                       ->withAccessToken($token)
-                       ->withGuzzleHttpClient()
-                       ->throwOnError()
-                       ->build();
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC);
-$result = $client->find($params);
-...
-```
 
 ---
 
@@ -363,18 +370,14 @@ $params = Params::create()
                   ->withCountry(Country::CZECH_REPUBLIC)
                   ->withSpedition(Spedition::CZECH_POST);
 $result = $client->find($params);
-if($result->success()) {
-    // It's safe not to check for `null` as we always get the `Data` object no matter
-    // we got any matching Pickup Point or not. In case of no data you will get empty
-    // Data instance.
-    $items = $result->getData();
-    foreach($items as $pp) {
-        echo $pp->getSpeditionId() . PHP_EOL;
-    }
-    ...
-} else {
-    // Error occurred
-    echo "Error code #{$result->getCode()}: {$result->getMessage()} . PHP_EOL;
+
+/*
+ * It's safe not to check for `null` as we always get the `Data` object no matter we got any 
+ * matching Pickup Point or not. In case of no data you will get empty Data instance.
+ */
+$items = $result->getData();
+foreach($items as $pp) {
+    echo $pp->getSpeditionId() . PHP_EOL;
 }
 ...
 ```
