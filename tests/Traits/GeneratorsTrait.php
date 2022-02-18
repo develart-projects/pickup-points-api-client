@@ -18,16 +18,16 @@ use OlzaLogistic\PpApi\Client\ApiResponse;
 trait GeneratorsTrait
 {
     /**
-     * Generates random string, with optional prefix
+     * Generates random string, with optional prefix.
      *
      * @param string|null $prefix    Optional prefix to be added to generated string.
      * @param int         $length    Length of the string to be generated.
-     * @param string $separator Optional prefix separator.
+     * @param string      $separator Optional prefix separator.
      *
      * @return string
      */
     protected function getRandomString(?string $prefix = null, int $length = 24,
-                                       string $separator = '_'): string
+                                       string  $separator = '_'): string
     {
         if ($length < 1) {
             throw new \RuntimeException('Length must be greater than 0');
@@ -52,7 +52,7 @@ trait GeneratorsTrait
     }
 
     /**
-     * Generate Random float value
+     * Generates Random float value.
      *
      * @param float $min   Minimal value
      * @param float $max   Maximal value
@@ -67,6 +67,16 @@ trait GeneratorsTrait
         }
 
         return $result;
+    }
+
+    /**
+     * Generates Random boolean value
+     *
+     * @throws \Exception
+     */
+    public function getRandomBool(): bool
+    {
+        return \random_int(0, 1) === 1;
     }
 
 } // end of trait

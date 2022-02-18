@@ -17,7 +17,6 @@ namespace OlzaLogistic\PpApi\Client;
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
 use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
-use OlzaLogistic\PpApi\Client\Result;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -183,8 +182,6 @@ abstract class ClientBase implements ClientContract
 
     /**
      * PP-API access token
-     *
-     * @var string
      */
     protected string $accessToken;
 
@@ -197,8 +194,6 @@ abstract class ClientBase implements ClientContract
      * Sets access token to provided value. Must be a valid, non-empty string.
      *
      * @param string $accessToken PP-API access token.
-     *
-     * @return $this
      */
     protected function setAccessToken(string $accessToken): self
     {
@@ -247,8 +242,6 @@ abstract class ClientBase implements ClientContract
 
     /**
      * Base URL for the API
-     *
-     * @var string
      */
     protected string $apiUrl;
 
@@ -265,8 +258,6 @@ abstract class ClientBase implements ClientContract
 
     /**
      * User Agent string for API requests
-     *
-     * @var string
      */
     protected string $userAgent = 'Olza Logistic/PpApiClient';
 
@@ -303,8 +294,6 @@ abstract class ClientBase implements ClientContract
      * @param string     $uri       Target URI (ie. 'https://api.foo.com/v1/bar')
      * @param array|null $queryArgs Optional array of key-value pairs to be added
      *                              to query string prior making API request.
-     *
-     * @return \Psr\Http\Message\RequestInterface
      */
     protected function createRequest(string $method, string $uri,
                                      ?array $queryArgs = null): RequestInterface
@@ -333,12 +322,11 @@ abstract class ClientBase implements ClientContract
      * Calls API endpoint and builds proper Response instance either with returned
      * data or one indicating request failure.
      *
-     * @param string      $endPoint                  Endpoint to call (i.e. '/pp/find')
-     * @param Params|null $apiParams                 Instance of Params container with valid API params.
-     * @param callable    $processResponseCallback   Callback that will be called to map response data
-     *                                               to Result object.
+     * @param string      $endPoint                Endpoint to call (i.e. '/pp/find')
+     * @param Params|null $apiParams               Instance of Params container with valid API params.
+     * @param callable    $processResponseCallback Callback that will be called to map response data
+     *                                             to Result object.
      *
-     * @return Result
      * @throws MethodFailedException
      */
     protected function handleHttpRequest(string   $endPoint, ?Params $apiParams,

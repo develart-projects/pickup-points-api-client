@@ -86,13 +86,12 @@ class Result
     }
 
     /**
-     * Returns instance of Result filled with data from provided API response.
+     * Returns instance of Result filled with data from provided API response with "items"
+     * elements in Data node.
      *
      * NOTE: only results with with single "items" list in "data" node.
      *
      * @param \Psr\Http\Message\ResponseInterface $response
-     *
-     * @return static
      *
      * @throws \RuntimeException
      */
@@ -128,6 +127,12 @@ class Result
         return $result;
     }
 
+
+    /**
+     * Returns instance of Result filled with data from provided config/ API response.
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     */
     public static function fromConfigApiResponse(ResponseInterface $response): self
     {
         try {
