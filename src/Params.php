@@ -231,9 +231,10 @@ class Params
 
     protected ?string $searchQuery = null;
 
-    public function withSearchQuery(string $searchQuery)
+    public function withSearchQuery(string $searchQuery): self
     {
         $this->searchQuery = $searchQuery;
+        return $this;
     }
 
     protected function getSearchQuery(): ?string

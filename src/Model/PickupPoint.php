@@ -756,7 +756,7 @@ class PickupPoint
             ->setSpedition($ppData[ static::KEY_SPEDITION ]);
 
         if (\array_key_exists(static::KEY_GROUP_NAME, $ppData)) {
-            $pp->setName1($ppData[ static::KEY_GROUP_NAME ][0]);
+            $pp->setName1($ppData[ static::KEY_GROUP_NAME ][0] ?? '???');
             if (isset($ppData[ static::KEY_GROUP_NAME ][1])) {
                 $pp->setName2($ppData[ static::KEY_GROUP_NAME ][1]);
             }
@@ -765,12 +765,12 @@ class PickupPoint
         if (\array_key_exists(static::KEY_GROUP_ADDRESS, $ppData)) {
             $node = $ppData[ static::KEY_GROUP_ADDRESS ];
             $pp
-                ->setFullAddress($node[ static::KEY_FULL_ADDRESS ])
-                ->setStreet($node[ static::KEY_STREET ])
-                ->setZip($node[ static::KEY_ZIP ])
-                ->setCity($node[ static::KEY_CITY ])
-                ->setCounty($node[ static::KEY_COUNTY ])
-                ->setCountry($node[ static::KEY_COUNTRY ]);
+                ->setFullAddress($node[ static::KEY_FULL_ADDRESS ] ?? '???')
+                ->setStreet($node[ static::KEY_STREET ] ?? null)
+                ->setZip($node[ static::KEY_ZIP ] ?? null)
+                ->setCity($node[ static::KEY_CITY ] ?? null)
+                ->setCounty($node[ static::KEY_COUNTY ] ?? null)
+                ->setCountry($node[ static::KEY_COUNTRY ] ?? null);
         }
 
         if (\array_key_exists(static::KEY_GROUP_CONTACTS, $ppData)) {
@@ -784,43 +784,50 @@ class PickupPoint
         }
 
         if (\array_key_exists(static::KEY_GROUP_HOURS, $ppData)) {
-            $node = $ppData[ static::KEY_GROUP_HOURS ];
+            $hrsGroup = $ppData[ static::KEY_GROUP_HOURS ];
 
-            if (\array_key_exists(static::KEY_MONDAY, $node)) {
-                $pp->setMondayHours($node[ static::KEY_HOURS ]);
-                $pp->setMondayBreak($node[ static::KEY_BREAK ]);
+            if (\array_key_exists(static::KEY_MONDAY, $hrsGroup)) {
+                $hrsNode = $hrsGroup[ static::KEY_MONDAY ];
+                $pp->setMondayHours($hrsNode[ static::KEY_HOURS ] ?? null);
+                $pp->setMondayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
             }
-            if (\array_key_exists(static::KEY_TUESDAY, $node)) {
-                $pp->setTuesdayHours($node[ static::KEY_HOURS ]);
-                $pp->setTuesdayBreak($node[ static::KEY_BREAK ]);
+            if (\array_key_exists(static::KEY_TUESDAY, $hrsGroup)) {
+                $hrsNode = $hrsGroup[ static::KEY_TUESDAY ];
+                $pp->setTuesdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
+                $pp->setTuesdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
             }
-            if (\array_key_exists(static::KEY_WEDNESDAY, $node)) {
-                $pp->setWednesdayHours($node[ static::KEY_HOURS ]);
-                $pp->setWednesdayBreak($node[ static::KEY_BREAK ]);
+            if (\array_key_exists(static::KEY_WEDNESDAY, $hrsGroup)) {
+                $hrsNode = $hrsGroup[ static::KEY_WEDNESDAY ];
+                $pp->setWednesdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
+                $pp->setWednesdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
             }
-            if (\array_key_exists(static::KEY_THURSDAY, $node)) {
-                $pp->setThursdayHours($node[ static::KEY_HOURS ]);
-                $pp->setThursdayBreak($node[ static::KEY_BREAK ]);
+            if (\array_key_exists(static::KEY_THURSDAY, $hrsGroup)) {
+                $hrsNode = $hrsGroup[ static::KEY_THURSDAY ];
+                $pp->setThursdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
+                $pp->setThursdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
             }
-            if (\array_key_exists(static::KEY_FRIDAY, $node)) {
-                $pp->setFridayHours($node[ static::KEY_HOURS ]);
-                $pp->setFridayBreak($node[ static::KEY_BREAK ]);
+            if (\array_key_exists(static::KEY_FRIDAY, $hrsGroup)) {
+                $hrsNode = $hrsGroup[ static::KEY_FRIDAY ];
+                $pp->setFridayHours($hrsNode[ static::KEY_HOURS ] ?? null);
+                $pp->setFridayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
             }
-            if (\array_key_exists(static::KEY_SATURDAY, $node)) {
-                $pp->setSaturdayHours($node[ static::KEY_HOURS ]);
-                $pp->setSaturdayBreak($node[ static::KEY_BREAK ]);
+            if (\array_key_exists(static::KEY_SATURDAY, $hrsGroup)) {
+                $hrsNode = $hrsGroup[ static::KEY_SATURDAY ];
+                $pp->setSaturdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
+                $pp->setSaturdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
             }
-            if (\array_key_exists(static::KEY_SUNDAY, $node)) {
-                $pp->setSundayHours($node[ static::KEY_HOURS ]);
-                $pp->setSundayBreak($node[ static::KEY_BREAK ]);
+            if (\array_key_exists(static::KEY_SUNDAY, $hrsGroup)) {
+                $hrsNode = $hrsGroup[ static::KEY_SUNDAY ];
+                $pp->setSundayHours($hrsNode[ static::KEY_HOURS ] ?? null);
+                $pp->setSundayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
             }
         }
 
         if (\array_key_exists(static::KEY_GROUP_LOCATION, $ppData)) {
             $node = $ppData[ static::KEY_GROUP_LOCATION ];
             $pp->setLocation(
-                $node[ static::KEY_LATITUDE ],
-                $node[ static::KEY_LONGITUDE ]
+                $node[ static::KEY_LATITUDE ] ?? null,
+                $node[ static::KEY_LONGITUDE ] ?? null
             );
         }
 
