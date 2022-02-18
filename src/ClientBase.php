@@ -17,6 +17,7 @@ namespace OlzaLogistic\PpApi\Client;
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
 use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
+use OlzaLogistic\PpApi\Client\Result;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -337,7 +338,8 @@ abstract class ClientBase implements ClientContract
      * @param callable    $processResponseCallback   Callback that will be called to map response data
      *                                               to Result object.
      *
-     * @return \OlzaLogistic\PpApi\Client\Result
+     * @return Result
+     * @throws MethodFailedException
      */
     protected function handleHttpRequest(string   $endPoint, ?Params $apiParams,
                                          callable $processResponseCallback): Result
@@ -365,7 +367,7 @@ abstract class ClientBase implements ClientContract
             $result = Result::fromThrowable($ex);
         }
 
-        if ($this->getThrowOnError() && !$result->success()) {
+        if (!$result->success() && $this->getThrowOnError()) {
             throw new MethodFailedException($result->getMessage());
         }
 

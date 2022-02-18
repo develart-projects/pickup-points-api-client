@@ -16,11 +16,8 @@ class MethodFailedException extends \RuntimeException
 {
     public function __construct(?string $reason = null, int $code = 0, \Throwable $previous = null)
     {
-        if ($reason === null) {
-            $reason = 'Unknown reason';
-        }
-        $msg = "Method failed: {$reason}";
-        parent::__construct($msg, $code, $previous);
+        $reason ??= "Method failed";
+        parent::__construct($reason, $code, $previous);
     }
 
 } // end of class

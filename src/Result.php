@@ -201,16 +201,19 @@ class Result
             return false;
         }
 
-        // extraDataKeys contains keys that we expect to be present in "data" node.
-        $extraDataKeys ??= [];
-        if (!empty($extraDataKeys)) {
-            // if extra keys are required, "data" node must be present and not empty.
-            if ($dataNode === null) {
-                return false;
-            }
-            foreach ($extraDataKeys as $key) {
-                if (!\array_key_exists($key, $dataNode)) {
+        // extraDataKeys contains keys that we expect to be present in "data" node
+        // but only for successful responses, as otherwise data is usually null.
+        if ($json[ApiResponse::KEY_SUCCESS]) {
+            $extraDataKeys ??= [];
+            if (!empty($extraDataKeys)) {
+                // if extra keys are required, "data" node must be present and not empty.
+                if ($dataNode === null) {
                     return false;
+                }
+                foreach ($extraDataKeys as $key) {
+                    if (!\array_key_exists($key, $dataNode)) {
+                        return false;
+                    }
                 }
             }
         }
