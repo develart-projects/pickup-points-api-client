@@ -1,0 +1,10 @@
+/vendor/
+/.idea/
+.phpunit.result.cache
+*~
+*.bak
+*.swp
+*.iml
+
+# pre-commit
+.pre-commit-config.yaml
