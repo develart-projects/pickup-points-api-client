@@ -14,12 +14,25 @@ namespace OlzaLogistic\PpApi\Client\Model;
  */
 class Spedition
 {
-    public const PACKETA_IPP                 = 'zas';
-    public const PACKETA_EPP_ECONT_PP        = 'zas-econt-pp';
-    public const PACKETA_EPP_ECONT_BOX       = 'zas-econt-box';
-    public const PACKETA_EPP_SPEEDY_PP       = 'zas-speedy-pp';
-    public const PACKETA_EPP_ACS_BOX         = 'zas-acs-pp';
-    public const PACKETA_EPP_SAMEDAY_EASYBOX = 'zas-saeb';
+    public const COLETARIA                 = 'zas-col';
+    public const CZECH_POST                = 'cp-bal';
+    public const GLS                       = 'gls-ps';
+    public const HUNGARIAN_POST_OFFICE     = 'hup-pm';
+    public const HUNGARIAN_POST_OTHERS     = 'hup-pp';
+    public const HUNGARIAN_POST_PARCEL_BOX = 'hup-cs';
+    public const INPOST                    = 'bmcg-ipkp';
+    public const OMNIVA                    = 'omni-pm';
+    public const PACKETA_EPP_ACS_BOX       = 'zas-acs-pp';
+    public const PACKETA_EPP_ECONT_BOX     = 'zas-econt-box';
+    public const PACKETA_EPP_ECONT_PP      = 'zas-econt-pp';
+    public const PACKETA_EPP_SPEEDY_PP     = 'zas-speedy-pp';
+    public const PACKETA_IPP               = 'zas';
+    public const PPL                       = 'ppl-ps';
+    public const SAEB_BOX                  = 'zas-saeb';
+    public const SLOVAK_POST               = 'sp-box';
+    public const SPS                       = 'sps-ps';
+    public const VENIPAK                   = 'venip-pp';
+    public const WEDO                      = 'bmcg-int-pp';
 
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
