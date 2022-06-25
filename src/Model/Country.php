@@ -14,13 +14,13 @@ namespace OlzaLogistic\PpApi\Client\Model;
  */
 class Country
 {
-    public const BULGARIA       = 'bg';
-    public const CZECH_REPUBLIC = 'cz';
-    public const GREECE         = 'gr';
-    public const HUNGARY        = 'hu';
-    public const POLAND         = 'pl';
-    public const ROMANIA        = 'ro';
-    public const SLOVAKIA       = 'sk';
+    public const BULGARIA = 'bg';
+    public const CZECHIA  = 'cz';
+    public const GREECE   = 'gr';
+    public const HUNGARY  = 'hu';
+    public const POLAND   = 'pl';
+    public const ROMANIA  = 'ro';
+    public const SLOVAKIA = 'sk';
 
     /** ********************************************************************************************* **/
 

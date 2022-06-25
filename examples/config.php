@@ -23,7 +23,7 @@ $client = PpApiClient::useApi($apiUrl)
                        ->build();
 
 $params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC);
+                  ->withCountry(Country::CZECHIA);
 
 $apiResponse = $client->config($params);
 
