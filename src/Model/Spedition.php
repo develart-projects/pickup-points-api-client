@@ -14,46 +14,11 @@ namespace OlzaLogistic\PpApi\Client\Model;
  */
 class Spedition
 {
-    /**
-     * Packeta: internal pickup points (IPPs)
-     *
-     * @var string
-     */
-    public const PACKETA_IPP = 'zas';
-
-    /**
-     * Packeta's 2nd tier (external) carrier.
-     *
-     * @type string
-     */
-    public const PACKETA_EPP_ECONT_PP = 'zas-econt-pp';
-
-    /**
-     * Packeta's 2nd tier (external) carrier.
-     *
-     * @type string
-     */
-    public const PACKETA_EPP_ECONT_BOX = 'zas-econt-box';
-
-    /**
-     * Packeta's 2nd tier (external) carrier.
-     *
-     * @type string
-     */
-    public const PACKETA_EPP_SPEEDY_PP = 'zas-speedy-pp';
-
-    /**
-     * Packeta's 2nd tier (external) carrier.
-     *
-     * @type string
-     */
-    public const PACKETA_EPP_ACS_BOX = 'zas-acs-pp';
-
-    /**
-     * Packeta's 2nd tier (external) carrier.
-     *
-     * @type string
-     */
+    public const PACKETA_IPP                 = 'zas';
+    public const PACKETA_EPP_ECONT_PP        = 'zas-econt-pp';
+    public const PACKETA_EPP_ECONT_BOX       = 'zas-econt-box';
+    public const PACKETA_EPP_SPEEDY_PP       = 'zas-speedy-pp';
+    public const PACKETA_EPP_ACS_BOX         = 'zas-acs-pp';
     public const PACKETA_EPP_SAMEDAY_EASYBOX = 'zas-saeb';
 
     /* ****************************************************************************************** */
@@ -154,16 +119,11 @@ class Spedition
 
     /* ****************************************************************************************** */
 
-    /** @var string */
-    public const KEY_COUNTRY = 'country';
-    /** @var string */
+    public const KEY_COUNTRY   = 'country';
     public const KEY_SPEDITION = 'spedition';
-    /** @var string */
-    public const KEY_CODE = 'code';
-    /** @var string */
-    public const KEY_LABEL = 'label';
-    /** @var string */
-    public const KEY_NAMES = 'names';
+    public const KEY_CODE      = 'code';
+    public const KEY_LABEL     = 'label';
+    public const KEY_NAMES     = 'names';
 
     /**
      * Returns instance of Spedition, instantiated using data from provided source array.

@@ -6,153 +6,52 @@ class PickupPoint
 {
     /* ****************************************************************************************** */
 
-    /**
-     * @var string
-     */
-    public const KEY_ID = 'id';
-
-    /**
-     * @var string
-     */
+    public const KEY_ID        = 'id';
     public const KEY_SPEDITION = 'spedition';
 
     /* ****************************************************************************************** */
 
     /**
      * Max number of name rows that can be returned in KEY_GROUP_NAME list.
-     *
-     * @var int
      */
     public const MAX_NAME_LINES = 2;
-
-    /**
-     * @var string
-     */
     public const KEY_GROUP_NAME = 'name';
 
     /* ****************************************************************************************** */
 
-    /**
-     * @var string
-     */
     public const KEY_GROUP_ADDRESS = 'address';
-
-    /**
-     * @var string
-     */
-    public const KEY_FULL_ADDRESS = 'full';
-
-    /**
-     * @var string
-     */
-    public const KEY_STREET = 'street';
-
-    /**
-     * @var string
-     */
-    public const KEY_ZIP = 'zip';
-
-    /**
-     * @var string
-     */
-    public const KEY_CITY = 'city';
-
-    /**
-     * @var string
-     */
-    public const KEY_COUNTY = 'county';
-
-    /**
-     * @var string
-     */
-    public const KEY_COUNTRY = 'country';
+    public const KEY_FULL_ADDRESS  = 'full';
+    public const KEY_STREET        = 'street';
+    public const KEY_ZIP           = 'zip';
+    public const KEY_CITY          = 'city';
+    public const KEY_COUNTY        = 'county';
+    public const KEY_COUNTRY       = 'country';
 
     /* ****************************************************************************************** */
 
-    /**
-     * @var string
-     */
     public const KEY_GROUP_CONTACTS = 'contacts';
-
-    /**
-     * @var string
-     */
-    public const KEY_PHONE = 'phone';
-
-    /**
-     * @var string
-     */
-    public const KEY_EMAIL = 'email';
+    public const KEY_PHONE          = 'phone';
+    public const KEY_EMAIL          = 'email';
 
     /* ****************************************************************************************** */
 
-    /**
-     * @var string
-     */
     public const KEY_GROUP_HOURS = 'hours';
+    public const KEY_MONDAY      = 'monday';
+    public const KEY_TUESDAY     = 'tuesday';
+    public const KEY_WEDNESDAY   = 'wednesday';
+    public const KEY_THURSDAY    = 'thursday';
+    public const KEY_FRIDAY      = 'friday';
+    public const KEY_SATURDAY    = 'saturday';
+    public const KEY_SUNDAY      = 'sunday';
 
-    /**
-     * @var string
-     */
-    public const KEY_MONDAY = 'monday';
-
-    /**
-     * @var string
-     */
-    public const KEY_TUESDAY = 'tuesday';
-
-    /**
-     * @var string
-     */
-    public const KEY_WEDNESDAY = 'wednesday';
-
-    /**
-     * @var string
-     */
-    public const KEY_THURSDAY = 'thursday';
-
-    /**
-     * @var string
-     */
-    public const KEY_FRIDAY = 'friday';
-
-    /**
-     * @var string
-     */
-    public const KEY_SATURDAY = 'saturday';
-
-    /**
-     * @var string
-     */
-    public const KEY_SUNDAY = 'sunday';
-
-
-    /**
-     * @var string
-     */
     public const KEY_HOURS = 'hours';
-
-    /**
-     * @var string
-     */
     public const KEY_BREAK = 'break';
 
     /* ****************************************************************************************** */
 
-    /**
-     * @var string
-     */
     public const KEY_GROUP_LOCATION = 'location';
-
-    /**
-     * @var string
-     */
-    public const KEY_LATITUDE = 'latitude';
-
-    /**
-     * @var string
-     */
-    public const KEY_LONGITUDE = 'longitude';
+    public const KEY_LATITUDE       = 'latitude';
+    public const KEY_LONGITUDE      = 'longitude';
 
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
