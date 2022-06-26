@@ -9,8 +9,7 @@
          convertDeprecationsToExceptions="false"
          failOnRisky="false"
          failOnWarning="false"
-         verbose="true"
->
+         verbose="true">
     <php>
         <ini name="display_errors" value="1"/>
         <ini name="error_reporting" value="-1"/>
@@ -22,5 +21,11 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
 
 </phpunit>

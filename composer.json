@@ -35,6 +35,7 @@
         "symfony/http-client": "^5.4",
         "nyholm/psr7": "^1.4",
         "marcin-orlowski/phpunit-extra-asserts": "^2.0",
-        "phpstan/phpstan": "^1.4"
+        "phpstan/phpstan": "^1.4",
+        "phpunit/php-code-coverage": "^9.2"
     }
 }
