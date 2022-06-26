@@ -254,15 +254,24 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected array $payments = [];
+    protected ?array $payments = null;
 
-    public function withPayments(?array $payments): self
+    public function withPayment(string $payment): self
     {
-        $this->payments = $payments ?? [];
+        if ($this->payments === null) {
+            $this->payments = [];
+        }
+        $this->payments[] = $payment;
         return $this;
     }
 
-    protected function getPayments(): array
+    public function withPayments(?array $payments): self
+    {
+        $this->payments = $payments;
+        return $this;
+    }
+
+    protected function getPayments(): ?array
     {
         return $this->payments;
     }
@@ -274,15 +283,24 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected array $services = [];
+    protected ?array $services = null;
 
-    public function withServices(?array $services): self
+    public function withService(string $service): self
     {
-        $this->services = $services ?? [];
+        if ($this->services === null) {
+            $this->services = [];
+        }
+        $this->services[] = $service;
         return $this;
     }
 
-    protected function getServices(): array
+    public function withServices(?array $services): self
+    {
+        $this->services = $services;
+        return $this;
+    }
+
+    protected function getServices(): ?array
     {
         return $this->services;
     }

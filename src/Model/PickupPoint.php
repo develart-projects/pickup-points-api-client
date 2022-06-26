@@ -44,8 +44,9 @@ class PickupPoint
     public const KEY_SATURDAY    = 'saturday';
     public const KEY_SUNDAY      = 'sunday';
 
-    public const KEY_HOURS = 'hours';
-    public const KEY_BREAK = 'break';
+    public const KEY_HOURS    = 'hours';
+    public const KEY_BREAK    = 'break';
+    public const KEY_OPEN_247 = 'open247';
 
     /* ****************************************************************************************** */
 
@@ -352,6 +353,20 @@ class PickupPoint
 
     /* ****************************************************************************************** */
 
+    protected bool $open247 = false;
+
+    public function isOpen247(): bool
+    {
+        return $this->open247;
+    }
+
+    public function setOpen247(bool $open247): self
+    {
+        $this->open247 = $open247;
+        return $this;
+    }
+
+
     protected ?string $mondayHours = null;
 
     public function getMondayHours(): ?string
@@ -538,6 +553,7 @@ class PickupPoint
     public function getHours(): array
     {
         $hours = [
+            static::KEY_OPEN_247  => $this->isOpen247(),
             static::KEY_MONDAY    => [
                 static::KEY_HOURS => $this->getMondayHours(),
                 static::KEY_BREAK => $this->getMondayBreak(),
@@ -569,8 +585,10 @@ class PickupPoint
         ];
 
         // Remove days without opening hours given
-        return array_filter($hours, static function($item) {
-            return $item[ static::KEY_HOURS ] !== null;
+        return \array_filter($hours, static function($item) {
+            return \is_array($item)
+                ? $item[static::KEY_HOURS] !== null
+                : $item !== null;
         });
     }
 
