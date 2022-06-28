@@ -27,14 +27,12 @@ class ResultTest extends BaseTestCase
      */
     public function testIsApiResponseValid(array $data): void
     {
-//        var_dump($data);
         $expected = $data['expected'];
         $json = $data['json'];
         $extraDataKeys = $data['extraKeys'] ?? null;
 
         $result = Result::asSuccess();
 
-        /** @var bool $result */
         $args = [
             $json,
             $extraDataKeys,
