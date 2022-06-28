@@ -126,7 +126,10 @@ abstract class ClientBase implements ClientContract
         return $this;
     }
 
-
+    /**
+     * Configures client to throw exception when any API connection failure happened.
+     * Useful for "exception driven" code approach.
+     */
     public function throwOnError(): self
     {
         $this->setThrowOnError(true);
@@ -144,11 +147,18 @@ abstract class ClientBase implements ClientContract
 
     /* ****************************************************************************************** */
 
-    protected bool $clientInitialized = false;
+    /**
+     * Indicates if client configuration phase is completed.
+     */
+    protected bool $isClientInitialized = false;
 
+    /**
+     * Closes ability to further configure the client. Once seal() is called no further
+     * changes to the client are allowed.
+     */
     protected function seal(): void
     {
-        $this->clientInitialized = true;
+        $this->isClientInitialized = true;
     }
 
     /**
@@ -156,7 +166,7 @@ abstract class ClientBase implements ClientContract
      */
     protected function assertConfigurationSealed(): void
     {
-        if (!$this->clientInitialized) {
+        if (!$this->isClientInitialized) {
             throw new \RuntimeException('Client not initialized.');
         }
     }
@@ -166,7 +176,7 @@ abstract class ClientBase implements ClientContract
      */
     protected function assertClientNotConfigured(): void
     {
-        if ($this->clientInitialized) {
+        if ($this->isClientInitialized) {
             throw new \RuntimeException('Client already initialized.');
         }
     }

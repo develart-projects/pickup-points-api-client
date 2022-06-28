@@ -18,35 +18,18 @@ use OlzaLogistic\PpApi\Client\Util\Validator;
 
 class Params
 {
-    /** @var string */
     public const ACCESS_TOKEN = 'access_token';
-
-    /** @var string */
-    public const SPEDITION = 'spedition';
-
-    /** @var string */
-    public const COUNTRY = 'country';
-
-    /** @var string */
-    public const CITY = 'city';
-
-    /** @var string */
-    public const FIELDS = 'fields';
-
-    /** @var string */
-    public const ID = 'id';
-
-    /** @var string */
-    public const LOCATION = 'location';
-
-    /** @var string */
-    public const LIMIT = 'limit';
-
-    /** @var string */
-    public const LANGUAGE = 'language';
-
-    /** @var string */
-    public const SEARCH = 'search';
+    public const CITY         = 'city';
+    public const COUNTRY      = 'country';
+    public const FIELDS       = 'fields';
+    public const ID           = 'id';
+    public const LANGUAGE     = 'language';
+    public const LIMIT        = 'limit';
+    public const LOCATION     = 'location';
+    public const PAYMENTS     = 'payments';
+    public const SEARCH       = 'search';
+    public const SERVICES     = 'services';
+    public const SPEDITION    = 'spedition';
 
     /* ****************************************************************************************** */
 
@@ -193,10 +176,7 @@ class Params
 
     protected function getFieldsAsString(): ?string
     {
-        $fields = $this->getFields();
-        return ($fields !== null)
-            ? \implode(',', $fields)
-            : null;
+        return $this->arrayToString($this->getFields());
     }
 
     public function addField(string $field): self
@@ -274,6 +254,64 @@ class Params
 
     /* ****************************************************************************************** */
 
+    protected ?array $payments = null;
+
+    public function withPayment(string $payment): self
+    {
+        if ($this->payments === null) {
+            $this->payments = [];
+        }
+        $this->payments[] = $payment;
+        return $this;
+    }
+
+    public function withPayments(?array $payments): self
+    {
+        $this->payments = $payments;
+        return $this;
+    }
+
+    protected function getPayments(): ?array
+    {
+        return $this->payments;
+    }
+
+    protected function getPaymentsAsString(): ?string
+    {
+        return $this->arrayToString($this->getPayments());
+    }
+
+    /* ****************************************************************************************** */
+
+    protected ?array $services = null;
+
+    public function withService(string $service): self
+    {
+        if ($this->services === null) {
+            $this->services = [];
+        }
+        $this->services[] = $service;
+        return $this;
+    }
+
+    public function withServices(?array $services): self
+    {
+        $this->services = $services;
+        return $this;
+    }
+
+    protected function getServices(): ?array
+    {
+        return $this->services;
+    }
+
+    protected function getServicesAsString(): ?string
+    {
+        return $this->arrayToString($this->getServices());
+    }
+
+    /* ****************************************************************************************** */
+
     /**
      * Ensures parameter fields specified in $requiredArrays are set and are not empty.
      *
@@ -303,6 +341,12 @@ class Params
                 case self::FIELDS:
                     Validator::assertNotEmpty($field, $this->getFields());
                     break;
+                case self::SERVICES:
+                    Validator::assertNotEmpty($field, $this->getServices());
+                    break;
+                case self::PAYMENTS:
+                    Validator::assertNotEmpty($field, $this->getPayments());
+                    break;
                 case self::LOCATION:
                     $lat = $this->getLatitude();
                     $long = $this->getLongitude();
@@ -319,6 +363,15 @@ class Params
                     throw new \RuntimeException("Unknown field: {$field}");
             }
         }
+    }
+
+    /* ****************************************************************************************** */
+
+    protected function arrayToString(?array $data): ?string
+    {
+        return ($data !== null)
+            ? \implode(',', $data)
+            : null;
     }
 
     /* ****************************************************************************************** */
@@ -354,7 +407,9 @@ class Params
             self::LANGUAGE     => $this->getLanguage(),
             self::LIMIT        => $this->getLimit(),
             self::LOCATION     => $this->getLocationAsString(),
+            self::PAYMENTS     => $this->getPaymentsAsString(),
             self::SEARCH       => $this->getSearchQuery(),
+            self::SERVICES     => $this->getServicesAsString(),
             self::SPEDITION    => $speditions,
         ];
 

@@ -14,6 +14,8 @@ namespace OlzaLogistic\PpApi\Client\Tests\Util;
  */
 
 use OlzaLogistic\PpApi\Client\Model\PickupPoint as PP;
+use OlzaLogistic\PpApi\Client\PaymentType;
+use OlzaLogistic\PpApi\Client\ServiceType;
 use OlzaLogistic\PpApi\Client\Tests\Traits\GeneratorsTrait;
 
 /**
@@ -102,6 +104,37 @@ class PickupPointResponseGenerator
 
     public function withHours(): self
     {
+        // TODO: not implemented
+
+        return $this;
+    }
+
+    public function withServices(?array $services = null): self
+    {
+        $services ??= [
+            ServiceType::COD,
+        ];
+
+        if (\array_key_exists(ServiceType::COD, $services)) {
+            $this->data[ PP::KEY_GROUP_SERVICES ][ ServiceType::COD ] = [
+                PP::KEY_AVAILABLE      => true,
+                PP::KEY_GROUP_PAYMENTS => [],
+            ];
+        }
+        return $this;
+    }
+
+    public function withPayments(?array $paymentTypes = null): self
+    {
+        $paymentTypes ??= [
+            PaymentType::CASH,
+            PaymentType::CARD,
+        ];
+
+        if (!empty($paymentTypes)) {
+            $this->withServices([ServiceType::COD]);
+            $this->data[ PP::KEY_GROUP_SERVICES ][ ServiceType::COD ][ PP::KEY_GROUP_PAYMENTS ] = $paymentTypes;
+        }
         return $this;
     }
 
@@ -124,7 +157,9 @@ class PickupPointResponseGenerator
             ->withAddress()
             ->withContacts()
             ->withHours()
-            ->withLocation();
+            ->withLocation()
+            ->withServices()
+            ->withPayments();
     }
 
     public function get(): array

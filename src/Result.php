@@ -93,7 +93,7 @@ class Result
      *
      * @param \Psr\Http\Message\ResponseInterface $response
      *
-     * @throws \RuntimeException
+     * @return Result
      */
     public static function fromApiResponseWithItems(ResponseInterface $response): self
     {
@@ -132,6 +132,8 @@ class Result
      * Returns instance of Result filled with data from provided config/ API response.
      *
      * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return Result
      */
     public static function fromConfigApiResponse(ResponseInterface $response): self
     {
@@ -208,7 +210,7 @@ class Result
 
         // extraDataKeys contains keys that we expect to be present in "data" node
         // but only for successful responses, as otherwise data is usually null.
-        if ($json[ApiResponse::KEY_SUCCESS]) {
+        if ($json[ ApiResponse::KEY_SUCCESS ]) {
             $extraDataKeys ??= [];
             if (!empty($extraDataKeys)) {
                 // if extra keys are required, "data" node must be present and not empty.

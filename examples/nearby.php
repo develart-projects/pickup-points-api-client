@@ -26,7 +26,7 @@ $client = PpApiClient::useApi($apiUrl)
 $lat = 50.087;
 $long = 14.421;
 $params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
+                  ->withCountry(Country::CZECHIA)
                   ->withSpedition(Spedition::PACKETA_IPP)
                   ->withLocation($lat, $long);
 

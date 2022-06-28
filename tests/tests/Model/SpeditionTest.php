@@ -23,6 +23,7 @@ class SpeditionTest extends BaseTestCase
         $country = $this->getRandomString('ctry');
         $count = $this->getRandomInt(1, 10);
         foreach ($this->generateSpeditionData($country, $count) as $spedData) {
+            /** @var array $spedData */
             $code = $spedData[ Spedition::KEY_CODE ];
             $label = $spedData[ Spedition::KEY_LABEL ];
 

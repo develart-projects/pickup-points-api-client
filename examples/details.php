@@ -24,7 +24,7 @@ $client = PpApiClient::useApi($apiUrl)
                        ->build();
 
 $params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
+                  ->withCountry(Country::CZECHIA)
                   ->withSpedition(Spedition::PACKETA_IPP)
                   ->withSpeditionId('135');
 

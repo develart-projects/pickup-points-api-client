@@ -12,7 +12,7 @@ incl. [Guzzle](https://guzzlephp.org/).
 
 ## Requirements
 
-* PHP 7.4+ or PHP 8.x (or newer),
+* PHP 7.4+ or newer,
 * Any PSR-7 compatible HTTP Client library (e.g. [Guzzle](https://guzzlephp.org/),
   [Symfony's HTTP Client](https://symfony.com/doc/current/http_client.html), etc.).
 
@@ -34,7 +34,7 @@ Next, install PSR compatible HTTP client library of your choice.
 $ composer require guzzlehttp/guzzle
 ```
 
-### Symfony PSR18 HTTP Client
+### Symfony HTTP Client
 
 ```bash
 composer require symfony/http-client nyholm/psr7
@@ -62,7 +62,6 @@ The `Client` class is your gateway to PP API. It is a wrapper around the HTTP cl
 that deals with all the struggle talking to the API and processing responses. To start using
 the library you need to create instance of `Client` first:
 
-
 ```php
 use OlzaLogistic\PpApi\Client as PpApiClient;
 
@@ -86,7 +85,7 @@ $client = PpApiClient::useApi($url)
                        ->withGuzzleHttpClient()
                        ->throwOnError()
                        ->build();
-                       
+
 try {
   $params = Params::create()
                     ->withCountry(Country::CZECH_REPUBLIC);
@@ -98,7 +97,7 @@ try {
 ```
 
 Note the `throwOnError()` method invoked. If you prefer exceptions not to be thrown when
-API replied with failure response, you can do remove that method: 
+API replied with failure response, you can do remove that method:
 
 ```php
 $client = PpApiClient::useApi($url)
@@ -182,6 +181,13 @@ Required arguments:
 * `spedition` - **[required]** one (string) or more (array of strings)
 * `search` - (optional) search string that will be additionally matched against pickup point names,
   identifiers, addresses, etc.
+* `services` - (optional) list of services (see `ServiceType::*`) that given pickup point must
+  support to be included in returned dataset. **NOTE: services are `OR`ed, so supporting just one
+  suffices.**
+* `payments` - (optional) list of payment types (see `PaymentType::*`) that given pickup point
+  must support to be included in returned dataset. **NOTE: payment types are `OR`ed, so supporting
+  just one suffices.**
+* `limit` - (optional) max number of items to be returned. Default is to return all matching items.
 
 ```php
 $params = Params::create()
@@ -372,7 +378,7 @@ $params = Params::create()
 $result = $client->find($params);
 
 /*
- * It's safe not to check for `null` as we always get the `Data` object no matter we got any 
+ * It's safe not to check for `null` as we always get the `Data` object no matter we got any
  * matching Pickup Point or not. In case of no data you will get empty Data instance.
  */
 $items = $result->getData();
