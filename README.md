@@ -63,7 +63,7 @@ that deals with all the struggle talking to the API and processing responses. To
 the library you need to create instance of `Client` first:
 
 ```php
-use OlzaLogistic\PpApi\Client as PpApiClient;
+use OlzaLogistic\PpApi\Client\Client as PpApiClient;
 
 $url = ...
 $accessToken = ...
