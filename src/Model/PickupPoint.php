@@ -15,7 +15,7 @@ class PickupPoint
      * Max number of name rows that can be returned in KEY_GROUP_NAME list.
      */
     public const MAX_NAME_LINES = 2;
-    public const KEY_GROUP_NAME = 'name';
+    public const KEY_GROUP_NAME = 'names';
 
     /* ****************************************************************************************** */
 
@@ -126,7 +126,7 @@ class PickupPoint
 
     private string $name1;
 
-    protected function getName1(): string
+    public function getName1(): string
     {
         return $this->name1;
     }
@@ -139,7 +139,7 @@ class PickupPoint
 
     private ?string $name2 = null;
 
-    protected function getName2(): ?string
+    public function getName2(): ?string
     {
         return $this->name2;
     }
