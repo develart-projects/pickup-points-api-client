@@ -103,7 +103,6 @@ API replied with failure response, you can do remove that method:
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
                        ->withGuzzleHttpClient()
-                       ->throwOnError()
                        ->build();
 
 $params = Params::create()
