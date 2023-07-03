@@ -1,4 +1,14 @@
 <?php
+declare(strict_types=1);
+
+/*
+ * Olza Logistic's Pickup Points API client
+ *
+ * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
+ * @copyright 2021-2023 DevelArt
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      https://github.com/develart-projects/pickup-points-api-client/
+ */
 
 namespace OlzaLogistic\PpApi\Client\Model;
 
@@ -126,11 +136,19 @@ class PickupPoint
 
     private string $name1;
 
+    /**
+     * Returns first name line of the pickup point.
+     */
     public function getName1(): string
     {
         return $this->name1;
     }
 
+    /**
+     * Sets first name line of the pickup point.
+     *
+     * @param string $name1 Name line 1
+     */
     protected function setName1(string $name1): self
     {
         $this->name1 = \trim($name1);
@@ -139,11 +157,19 @@ class PickupPoint
 
     private ?string $name2 = null;
 
+    /**
+     * Returns second name line of the pickup point.
+     */
     public function getName2(): ?string
     {
         return $this->name2;
     }
 
+    /**
+     * Sets second name line of the pickup point.
+     *
+     * @param string|null $name2 Name line 2
+     */
     protected function setName2(?string $name2): self
     {
         $this->name2 = ($name2 !== null) ? \trim($name2) : null;
@@ -159,7 +185,7 @@ class PickupPoint
             $this->getName1(),
             $this->getName2(),
         ];
-        return array_filter($names, static function(?string $name) {
+        return array_filter($names, static function (?string $name) {
             return !empty($name);
         });
     }
@@ -170,6 +196,9 @@ class PickupPoint
 
     protected ?string $fullAddress = null;
 
+    /**
+     * Returns full address of the pickup point.
+     */
     public function getFullAddress(): string
     {
         if ($this->fullAddress === null) {
@@ -178,6 +207,11 @@ class PickupPoint
         return $this->fullAddress;
     }
 
+    /**
+     * Sets full address of the pickup point.
+     *
+     * @param string $fullAddress Full address
+     */
     protected function setFullAddress(string $fullAddress): self
     {
         $this->fullAddress = \trim($fullAddress);
@@ -188,11 +222,19 @@ class PickupPoint
 
     protected ?string $street = null;
 
+    /**
+     * Returns street name of the pickup point.
+     */
     public function getStreet(): ?string
     {
         return $this->street;
     }
 
+    /**
+     * Sets street name of the pickup point.
+     *
+     * @param string|null $street Street name
+     */
     protected function setStreet(?string $street): self
     {
         $this->street = ($street !== null) ? \trim($street) : null;
@@ -203,11 +245,19 @@ class PickupPoint
 
     protected ?string $zip = null;
 
+    /**
+     * Returns ZIP code of the pickup point.
+     */
     public function getZip(): ?string
     {
         return $this->zip;
     }
 
+    /**
+     * Sets ZIP code of the pickup point.
+     *
+     * @param string|null $zip ZIP code
+     */
     protected function setZip(?string $zip): self
     {
         $this->zip = ($zip !== null) ? \trim($zip) : null;
@@ -218,11 +268,19 @@ class PickupPoint
 
     protected ?string $city = null;
 
+    /**
+     * Returns city of the pickup point.
+     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
+    /**
+     * Sets city of the pickup point.
+     *
+     * @param string|null $city City name
+     */
     protected function setCity(?string $city): self
     {
         $this->city = ($city !== null) ? \trim($city) : null;
@@ -233,11 +291,19 @@ class PickupPoint
 
     protected ?string $county = null;
 
+    /**
+     * Returns county of the pickup point.
+     */
     public function getCounty(): ?string
     {
         return $this->county;
     }
 
+    /**
+     * Sets county of the pickup point.
+     *
+     * @param string|null $county County name
+     */
     protected function setCounty(?string $county): self
     {
         $this->county = ($county !== null) ? \trim($county) : null;
@@ -253,11 +319,19 @@ class PickupPoint
      */
     protected ?string $country = null;
 
+    /**
+     * Returns country of the pickup point.
+     */
     public function getCountry(): ?string
     {
         return $this->country;
     }
 
+    /**
+     * Sets country of the pickup point.
+     *
+     * @param string|null $country Country name
+     */
     protected function setCountry(?string $country): self
     {
         $this->country = ($country !== null) ? \strtolower(\trim($country)) : null;
@@ -268,7 +342,7 @@ class PickupPoint
      * Returns all pickup point location address. Except for "full", all other
      * keys are not present if there's no data.
      *
-     * @return null[]|string[]
+     * @return string[]
      */
     public function getAddress(): array
     {
@@ -282,7 +356,7 @@ class PickupPoint
         ];
 
         // Filter out empty entries
-        return array_filter($result, static function($value) {
+        return array_filter($result, static function ($value) {
             return !empty($value);
         });
     }
@@ -293,30 +367,47 @@ class PickupPoint
 
     protected ?string $phone = null;
 
+    /**
+     * Returns phone number of the pickup point.
+     */
     public function getPhone(): ?string
     {
         return $this->phone;
     }
 
+    /**
+     * Sets phone number of the pickup point.
+     *
+     * @param string|null $phone Phone number
+     */
     protected function setPhone(?string $phone): self
     {
         $this->phone = ($phone !== null) ? \trim($phone) : null;
         return $this;
     }
 
+    /* ****************************************************************************************** */
+
     protected ?string $email = null;
 
+    /**
+     * Returns email address of the pickup point.
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * Sets email address of the pickup point.
+     *
+     * @param string|null $email Email address
+     */
     protected function setEmail(?string $email): self
     {
         $this->email = ($email !== null) ? \trim($email) : null;
         return $this;
     }
-
 
     /**
      * Helper methods that groups all pickup point contact types into single array.
@@ -355,11 +446,21 @@ class PickupPoint
 
     protected bool $open247 = false;
 
+    /**
+     * Returns true if pickup point is open 24/7.
+     *
+     * @return bool
+     */
     public function isOpen247(): bool
     {
         return $this->open247;
     }
 
+    /**
+     * Sets if pickup point is open 24/7.
+     *
+     * @param bool $open247 True if open 24/7, false otherwise
+     */
     public function setOpen247(bool $open247): self
     {
         $this->open247 = $open247;
@@ -369,11 +470,19 @@ class PickupPoint
 
     protected ?string $mondayHours = null;
 
+    /**
+     * Returns opening hours for Monday.
+     */
     public function getMondayHours(): ?string
     {
         return $this->mondayHours;
     }
 
+    /**
+     * Sets opening hours for Monday.
+     *
+     * @param string|null $mondayHours Opening hours
+     */
     protected function setMondayHours(?string $mondayHours): self
     {
         $this->mondayHours = $this->sanitizeHours($mondayHours);
@@ -382,11 +491,19 @@ class PickupPoint
 
     protected ?string $mondayBreak = null;
 
+    /**
+     * Returns break hours for Monday.
+     */
     public function getMondayBreak(): ?string
     {
         return $this->mondayBreak;
     }
 
+    /**
+     * Sets break hours for Monday.
+     *
+     * @param string|null $mondayBreak Break hours
+     */
     protected function setMondayBreak(?string $mondayBreak): self
     {
         $this->mondayBreak = $this->sanitizeHours($mondayBreak);
@@ -395,11 +512,19 @@ class PickupPoint
 
     protected ?string $tuesdayHours = null;
 
+    /**
+     * Returns opening hours for Tuesday.
+     */
     public function getTuesdayHours(): ?string
     {
         return $this->tuesdayHours;
     }
 
+    /**
+     * Sets opening hours for Tuesday.
+     *
+     * @param string|null $tuesdayHours Opening hours
+     */
     protected function setTuesdayHours(?string $tuesdayHours): self
     {
         $this->tuesdayHours = $this->sanitizeHours($tuesdayHours);
@@ -408,11 +533,19 @@ class PickupPoint
 
     protected ?string $tuesdayBreak = null;
 
+    /**
+     * Returns break hours for Tuesday.
+     */
     public function getTuesdayBreak(): ?string
     {
         return $this->tuesdayBreak;
     }
 
+    /**
+     * Sets break hours for Tuesday.
+     *
+     * @param string|null $tuesdayBreak Break hours
+     */
     protected function setTuesdayBreak(?string $tuesdayBreak): self
     {
         $this->tuesdayBreak = $this->sanitizeHours($tuesdayBreak);
@@ -421,11 +554,19 @@ class PickupPoint
 
     protected ?string $wednesdayHours = null;
 
+    /**
+     * Returns opening hours for Wednesday.
+     */
     public function getWednesdayHours(): ?string
     {
         return $this->wednesdayHours;
     }
 
+    /**
+     * Sets opening hours for Wednesday.
+     *
+     * @param string|null $wednesdayHours Opening hours
+     */
     protected function setWednesdayHours(?string $wednesdayHours): self
     {
         $this->wednesdayHours = $this->sanitizeHours($wednesdayHours);
@@ -434,11 +575,19 @@ class PickupPoint
 
     protected ?string $wednesdayBreak = null;
 
+    /**
+     * Returns break hours for Wednesday.
+     */
     public function getWednesdayBreak(): ?string
     {
         return $this->wednesdayBreak;
     }
 
+    /**
+     * Sets break hours for Wednesday.
+     *
+     * @param string|null $wednesdayBreak Break hours
+     */
     protected function setWednesdayBreak(?string $wednesdayBreak): self
     {
         $this->wednesdayBreak = $this->sanitizeHours($wednesdayBreak);
@@ -448,11 +597,19 @@ class PickupPoint
 
     protected ?string $thursdayHours = null;
 
+    /**
+     * Returns opening hours for Thursday.
+     */
     public function getThursdayHours(): ?string
     {
         return $this->thursdayHours;
     }
 
+    /**
+     * Sets opening hours for Thursday.
+     *
+     * @param string|null $thursdayHours Opening hours
+     */
     protected function setThursdayHours(?string $thursdayHours): self
     {
         $this->thursdayHours = $this->sanitizeHours($thursdayHours);
@@ -461,11 +618,19 @@ class PickupPoint
 
     protected ?string $thursdayBreak = null;
 
+    /**
+     * Returns break hours for Thursday.
+     */
     public function getThursdayBreak(): ?string
     {
         return $this->thursdayBreak;
     }
 
+    /**
+     * Sets break hours for Thursday.
+     *
+     * @param string|null $thursdayBreak Break hours
+     */
     protected function setThursdayBreak(?string $thursdayBreak): self
     {
         $this->thursdayBreak = $this->sanitizeHours($thursdayBreak);
@@ -474,11 +639,19 @@ class PickupPoint
 
     protected ?string $fridayHours = null;
 
+    /**
+     * Returns opening hours for Friday.
+     */
     public function getFridayHours(): ?string
     {
         return $this->fridayHours;
     }
 
+    /**
+     * Sets opening hours for Friday.
+     *
+     * @param string|null $fridayHours Opening hours
+     */
     protected function setFridayHours(?string $fridayHours): self
     {
         $this->fridayHours = $this->sanitizeHours($fridayHours);
@@ -487,11 +660,19 @@ class PickupPoint
 
     protected ?string $fridayBreak = null;
 
+    /**
+     * Returns break hours for Friday.
+     */
     public function getFridayBreak(): ?string
     {
         return $this->fridayBreak;
     }
 
+    /**
+     * Sets break hours for Friday.
+     *
+     * @param string|null $fridayBreak Break hours
+     */
     protected function setFridayBreak(?string $fridayBreak): self
     {
         $this->fridayBreak = $this->sanitizeHours($fridayBreak);
@@ -500,11 +681,19 @@ class PickupPoint
 
     protected ?string $saturdayHours = null;
 
+    /**
+     * Returns opening hours for Saturday.
+     */
     public function getSaturdayHours(): ?string
     {
         return $this->saturdayHours;
     }
 
+    /**
+     * Sets opening hours for Saturday.
+     *
+     * @param string|null $saturdayHours Opening hours
+     */
     protected function setSaturdayHours(?string $saturdayHours): self
     {
         $this->saturdayHours = $this->sanitizeHours($saturdayHours);
@@ -513,11 +702,19 @@ class PickupPoint
 
     protected ?string $saturdayBreak = null;
 
+    /**
+     * Returns break hours for Saturday.
+     */
     public function getSaturdayBreak(): ?string
     {
         return $this->saturdayBreak;
     }
 
+    /**
+     * Sets break hours for Saturday.
+     *
+     * @param string|null $saturdayBreak Break hours
+     */
     protected function setSaturdayBreak(?string $saturdayBreak): self
     {
         $this->saturdayBreak = $this->sanitizeHours($saturdayBreak);
@@ -526,11 +723,19 @@ class PickupPoint
 
     protected ?string $sundayHours = null;
 
+    /**
+     * Returns opening hours for Sunday.
+     */
     public function getSundayHours(): ?string
     {
         return $this->sundayHours;
     }
 
+    /**
+     * Sets opening hours for Sunday.
+     *
+     * @param string|null $sundayHours Opening hours
+     */
     protected function setSundayHours(?string $sundayHours): self
     {
         $this->sundayHours = $this->sanitizeHours($sundayHours);
@@ -539,11 +744,19 @@ class PickupPoint
 
     protected ?string $sundayBreak = null;
 
+    /**
+     * Returns break hours for Sunday.
+     */
     public function getSundayBreak(): ?string
     {
         return $this->sundayBreak;
     }
 
+    /**
+     * Sets break hours for Sunday.
+     *
+     * @param string|null $sundayBreak Break hours
+     */
     protected function setSundayBreak(?string $sundayBreak): self
     {
         $this->sundayBreak = $this->sanitizeHours($sundayBreak);
@@ -585,7 +798,7 @@ class PickupPoint
         ];
 
         // Remove days without opening hours given
-        return \array_filter($hours, static function($item) {
+        return \array_filter($hours, static function ($item) {
             return \is_array($item)
                 ? $item[static::KEY_HOURS] !== null
                 : $item !== null;
@@ -596,6 +809,9 @@ class PickupPoint
 
     protected ?string $latitude = null;
 
+    /**
+     * Returns latitude.
+     */
     public function getLatitude(): ?string
     {
         return $this->latitude;
@@ -603,6 +819,9 @@ class PickupPoint
 
     protected ?string $longitude = null;
 
+    /**
+     * Returns longitude.
+     */
     public function getLongitude(): ?string
     {
         return $this->longitude;
@@ -627,13 +846,25 @@ class PickupPoint
         return $result;
     }
 
-    protected function setLocation(?string $latitude, ?string $longitude): self
+    /**
+     * @param string|int|float|null $latitude  Latitude value to set
+     * @param string|int|float|null $longitude Longitude value to set
+     */
+    protected function setLocation($latitude, $longitude): self
     {
-        if (\is_string($latitude) && \trim($latitude) === '') {
+        $this->assertValidCoord($latitude);
+        $this->assertValidCoord($longitude);
+
+        if ($latitude === null || (\is_string($latitude) && \trim($latitude) === '')) {
             $latitude = null;
+        } else {
+            $latitude = (string)$latitude;
         }
-        if (\is_string($longitude) && \trim($longitude) === '') {
+
+        if ($longitude === null || (\is_string($longitude) && \trim($longitude) === '')) {
             $longitude = null;
+        } else {
+            $longitude = (string)$longitude;
         }
 
         $this->latitude = $latitude;
@@ -641,10 +872,30 @@ class PickupPoint
         return $this;
     }
 
+    /**
+     * @param string|int|float|null $val Coordinate value to check
+     */
+    protected function assertValidCoord($val): void
+    {
+        if ($val !== null) {
+            if (\is_string($val) || \is_int($val) || \is_float($val)) {
+                $val = (string)$val;
+                if (\trim($val) === '') {
+                    throw new \InvalidArgumentException('Invalid coordinate value given.');
+                }
+            } else {
+                throw new \InvalidArgumentException('Invalid coordinate value given.');
+            }
+        }
+    }
+
     /* ****************************************************************************************** */
 
     protected ?string $notes = null;
 
+    /**
+     * Returns notes.
+     */
     public function getNotes(): ?string
     {
         return $this->notes;
@@ -670,88 +921,86 @@ class PickupPoint
     /**
      * Constructs instance of PickupPoint filled PP with data returned in API response.
      * NOTE: $ppData must point to single PP data node (element of 'data/items' array).
-     *
-     * @param array $ppData Single PP data.
      */
     public static function fromApiResponse(array $ppData): self
     {
         $pp = (new static())
-            ->setSpeditionId($ppData[ static::KEY_ID ])
-            ->setSpedition($ppData[ static::KEY_SPEDITION ]);
+            ->setSpeditionId($ppData[static::KEY_ID])
+            ->setSpedition($ppData[static::KEY_SPEDITION]);
 
         if (\array_key_exists(static::KEY_GROUP_NAME, $ppData)) {
-            $pp->setName1($ppData[ static::KEY_GROUP_NAME ][0] ?? '???');
-            if (isset($ppData[ static::KEY_GROUP_NAME ][1])) {
-                $pp->setName2($ppData[ static::KEY_GROUP_NAME ][1]);
+            $pp->setName1($ppData[static::KEY_GROUP_NAME][0] ?? '???');
+            if (isset($ppData[static::KEY_GROUP_NAME][1])) {
+                $pp->setName2($ppData[static::KEY_GROUP_NAME][1]);
             }
         }
 
         if (\array_key_exists(static::KEY_GROUP_ADDRESS, $ppData)) {
-            $node = $ppData[ static::KEY_GROUP_ADDRESS ];
+            $node = $ppData[static::KEY_GROUP_ADDRESS];
             $pp
-                ->setFullAddress($node[ static::KEY_FULL_ADDRESS ] ?? '???')
-                ->setStreet($node[ static::KEY_STREET ] ?? null)
-                ->setZip($node[ static::KEY_ZIP ] ?? null)
-                ->setCity($node[ static::KEY_CITY ] ?? null)
-                ->setCounty($node[ static::KEY_COUNTY ] ?? null)
-                ->setCountry($node[ static::KEY_COUNTRY ] ?? null);
+                ->setFullAddress($node[static::KEY_FULL_ADDRESS] ?? '???')
+                ->setStreet($node[static::KEY_STREET] ?? null)
+                ->setZip($node[static::KEY_ZIP] ?? null)
+                ->setCity($node[static::KEY_CITY] ?? null)
+                ->setCounty($node[static::KEY_COUNTY] ?? null)
+                ->setCountry($node[static::KEY_COUNTRY] ?? null);
         }
 
         if (\array_key_exists(static::KEY_GROUP_CONTACTS, $ppData)) {
-            $node = $ppData[ static::KEY_GROUP_CONTACTS ];
+            $node = $ppData[static::KEY_GROUP_CONTACTS];
             if (\array_key_exists(static::KEY_PHONE, $node)) {
-                $pp->setPhone($node[ static::KEY_PHONE ]);
+                $pp->setPhone($node[static::KEY_PHONE]);
             }
             if (\array_key_exists(static::KEY_EMAIL, $node)) {
-                $pp->setEmail($node[ static::KEY_EMAIL ]);
+                $pp->setEmail($node[static::KEY_EMAIL]);
             }
         }
 
         if (\array_key_exists(static::KEY_GROUP_HOURS, $ppData)) {
-            $hrsGroup = $ppData[ static::KEY_GROUP_HOURS ];
+            $hrsGroup = $ppData[static::KEY_GROUP_HOURS];
 
             if (\array_key_exists(static::KEY_MONDAY, $hrsGroup)) {
-                $hrsNode = $hrsGroup[ static::KEY_MONDAY ];
-                $pp->setMondayHours($hrsNode[ static::KEY_HOURS ] ?? null);
-                $pp->setMondayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
+                $hrsNode = $hrsGroup[static::KEY_MONDAY];
+                $pp->setMondayHours($hrsNode[static::KEY_HOURS] ?? null);
+                $pp->setMondayBreak($hrsNode[static::KEY_BREAK] ?? null);
             }
             if (\array_key_exists(static::KEY_TUESDAY, $hrsGroup)) {
-                $hrsNode = $hrsGroup[ static::KEY_TUESDAY ];
-                $pp->setTuesdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
-                $pp->setTuesdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
+                $hrsNode = $hrsGroup[static::KEY_TUESDAY];
+                $pp->setTuesdayHours($hrsNode[static::KEY_HOURS] ?? null);
+                $pp->setTuesdayBreak($hrsNode[static::KEY_BREAK] ?? null);
             }
             if (\array_key_exists(static::KEY_WEDNESDAY, $hrsGroup)) {
-                $hrsNode = $hrsGroup[ static::KEY_WEDNESDAY ];
-                $pp->setWednesdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
-                $pp->setWednesdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
+                $hrsNode = $hrsGroup[static::KEY_WEDNESDAY];
+                $pp->setWednesdayHours($hrsNode[static::KEY_HOURS] ?? null);
+                $pp->setWednesdayBreak($hrsNode[static::KEY_BREAK] ?? null);
             }
             if (\array_key_exists(static::KEY_THURSDAY, $hrsGroup)) {
-                $hrsNode = $hrsGroup[ static::KEY_THURSDAY ];
-                $pp->setThursdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
-                $pp->setThursdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
+                $hrsNode = $hrsGroup[static::KEY_THURSDAY];
+                $pp->setThursdayHours($hrsNode[static::KEY_HOURS] ?? null);
+                $pp->setThursdayBreak($hrsNode[static::KEY_BREAK] ?? null);
             }
             if (\array_key_exists(static::KEY_FRIDAY, $hrsGroup)) {
-                $hrsNode = $hrsGroup[ static::KEY_FRIDAY ];
-                $pp->setFridayHours($hrsNode[ static::KEY_HOURS ] ?? null);
-                $pp->setFridayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
+                $hrsNode = $hrsGroup[static::KEY_FRIDAY];
+                $pp->setFridayHours($hrsNode[static::KEY_HOURS] ?? null);
+                $pp->setFridayBreak($hrsNode[static::KEY_BREAK] ?? null);
             }
             if (\array_key_exists(static::KEY_SATURDAY, $hrsGroup)) {
-                $hrsNode = $hrsGroup[ static::KEY_SATURDAY ];
-                $pp->setSaturdayHours($hrsNode[ static::KEY_HOURS ] ?? null);
-                $pp->setSaturdayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
+                $hrsNode = $hrsGroup[static::KEY_SATURDAY];
+                $pp->setSaturdayHours($hrsNode[static::KEY_HOURS] ?? null);
+                $pp->setSaturdayBreak($hrsNode[static::KEY_BREAK] ?? null);
             }
             if (\array_key_exists(static::KEY_SUNDAY, $hrsGroup)) {
-                $hrsNode = $hrsGroup[ static::KEY_SUNDAY ];
-                $pp->setSundayHours($hrsNode[ static::KEY_HOURS ] ?? null);
-                $pp->setSundayBreak($hrsNode[ static::KEY_BREAK ] ?? null);
+                $hrsNode = $hrsGroup[static::KEY_SUNDAY];
+                $pp->setSundayHours($hrsNode[static::KEY_HOURS] ?? null);
+                $pp->setSundayBreak($hrsNode[static::KEY_BREAK] ?? null);
             }
         }
 
         if (\array_key_exists(static::KEY_GROUP_LOCATION, $ppData)) {
-            $node = $ppData[ static::KEY_GROUP_LOCATION ];
+            $node = $ppData[static::KEY_GROUP_LOCATION];
             $pp->setLocation(
-                $node[ static::KEY_LATITUDE ] ?? null,
-                $node[ static::KEY_LONGITUDE ] ?? null
+                $node[static::KEY_LATITUDE] ?? null,
+                $node[static::KEY_LONGITUDE] ?? null
             );
         }
 

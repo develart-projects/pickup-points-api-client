@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-/**
+/*
  * Find nearby PPs
  */
 
@@ -35,8 +36,3 @@ $apiResponse = $client->nearby($params);
 echo '<pre>';
 print_r($apiResponse);
 echo '</pre>';
-
-
-
-
-

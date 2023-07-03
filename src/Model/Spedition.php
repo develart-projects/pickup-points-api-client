@@ -1,17 +1,16 @@
 <?php
+declare(strict_types=1);
 
-namespace OlzaLogistic\PpApi\Client\Model;
-
-/**
+/*
  * Olza Logistic's Pickup Points API client
  *
- * @package   OlzaLogistic\PpApi\Client
- *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
- * @copyright 2021-2022 DevelArt
+ * @copyright 2021-2023 DevelArt
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+namespace OlzaLogistic\PpApi\Client\Model;
+
 class Spedition
 {
     public const COLETARIA                 = 'zas-col';
@@ -63,6 +62,11 @@ class Spedition
      */
     protected bool $isEnabled = false;
 
+    /**
+     * Returns TRUE if spedition is enabled.
+     *
+     * @return bool
+     */
     public function isEnabled(): bool
     {
         return $this->isEnabled;
@@ -72,11 +76,23 @@ class Spedition
 
     protected string $code;
 
+    /**
+     * Returns spedition's code (identifier).
+     *
+     * @return string
+     */
     public function getCode(): string
     {
         return $this->code;
     }
 
+    /**
+     * Sets spedition's code (identifier).
+     *
+     * @param string $code
+     *
+     * @return Spedition
+     */
     public function setCode(string $code): self
     {
         $this->code = $code;
@@ -87,11 +103,23 @@ class Spedition
 
     protected string $label;
 
+    /**
+     * Returns spedition's label (name).
+     *
+     * @return string
+     */
     public function getLabel(): string
     {
         return $this->label;
     }
 
+    /**
+     * Sets spedition's label (name).
+     *
+     * @param string $label
+     *
+     * @return Spedition
+     */
     public function setLabel(string $label): self
     {
         $this->label = $label;
@@ -102,17 +130,33 @@ class Spedition
 
     protected array $names = [];
 
+    /**
+     * Returns spedition's names in all supported languages.
+     *
+     * @return array<string, string>
+     */
     public function getNames(): array
     {
         return $this->names;
     }
 
+    /**
+     * Adds single translated spedition name.
+     *
+     * @param string $languageCode Language code for the $name string
+     * @param string $name         Translated name
+     */
     public function addName(string $languageCode, string $name): self
     {
-        $this->names[ $languageCode ] = $name;
+        $this->names[$languageCode] = $name;
         return $this;
     }
 
+    /**
+     * Add new names to spedition's name list.
+     *
+     * @param array<string, string> $names Names to be added.
+     */
     public function addNames(array $names): self
     {
         foreach ($names as $languageCode => $name) {
@@ -125,10 +169,10 @@ class Spedition
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
-    final protected function __construct()
-    {
-        // dummy
-    }
+    /**
+     * NOTE: intentionally protected.
+     */
+    final protected function __construct() {}
 
     /* ****************************************************************************************** */
 
@@ -148,13 +192,13 @@ class Spedition
         $spedition = new static();
 
         if (\array_key_exists(static::KEY_CODE, $spedData)) {
-            $spedition->setCode($spedData[ static::KEY_CODE ]);
+            $spedition->setCode($spedData[static::KEY_CODE]);
         }
         if (\array_key_exists(static::KEY_LABEL, $spedData)) {
-            $spedition->setLabel($spedData[ static::KEY_LABEL ]);
+            $spedition->setLabel($spedData[static::KEY_LABEL]);
         }
         if (\array_key_exists(static::KEY_NAMES, $spedData)) {
-            $spedition->addNames($spedData[ static::KEY_NAMES ]);
+            $spedition->addNames($spedData[static::KEY_NAMES]);
         }
 
         return $spedition;

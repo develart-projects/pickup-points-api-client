@@ -1,18 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace OlzaLogistic\PpApi\Client;
-
-/**
+/*
  * Olza Logistic's Pickup Points API client
  *
- * @package   OlzaLogistic\PpApi\Client
- *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
- * @copyright 2021-2022 DevelArt
+ * @copyright 2021-2023 DevelArt
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+namespace OlzaLogistic\PpApi\Client;
 
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
@@ -21,7 +19,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
-abstract class ClientBase implements ClientContract
+abstract class  ClientBase implements ClientContract
 {
     /**
      * Configures client to use specific API URL

@@ -1,18 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace OlzaLogistic\PpApi\Client;
-
-/**
+/*
  * Olza Logistic's Pickup Points API client
  *
- * @package   OlzaLogistic\PpApi\Client
- *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
- * @copyright 2021-2022 DevelArt
+ * @copyright 2021-2023 DevelArt
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+namespace OlzaLogistic\PpApi\Client;
 
 use OlzaLogistic\PpApi\Client\Exception\ResponseIncorrectParserException;
 use OlzaLogistic\PpApi\Client\Model\PickupPoint;
@@ -72,14 +70,14 @@ class Result
         }
 
         /** @var string $message */
-        $message = $json[ ApiResponse::KEY_MESSAGE ];
+        $message = $json[ApiResponse::KEY_MESSAGE];
         if ($message === '') {
             $message = "HTTP error #{$code}";
         }
 
-        $result = $json[ ApiResponse::KEY_SUCCESS ] ? self::asSuccess() : self::asError();
+        $result = $json[ApiResponse::KEY_SUCCESS] ? self::asSuccess() : self::asError();
         $result
-            ->setCode($json[ ApiResponse::KEY_CODE ])
+            ->setCode($json[ApiResponse::KEY_CODE])
             ->setMessage($message);
 
         return $result;
@@ -110,8 +108,8 @@ class Result
             $result = static::getConfiguredResponseObject($response, $requiredKeys);
 
             $data = null;
-            if ($json[ ApiResponse::KEY_DATA ] !== null) {
-                $dataSrc = $json[ ApiResponse::KEY_DATA ][ ApiResponse::KEY_ITEMS ];
+            if ($json[ApiResponse::KEY_DATA] !== null) {
+                $dataSrc = $json[ApiResponse::KEY_DATA][ApiResponse::KEY_ITEMS];
                 $data = new Data();
                 foreach ($dataSrc as $item) {
                     $data[] = PickupPoint::fromApiResponse($item);
@@ -147,11 +145,11 @@ class Result
             ];
             $result = static::getConfiguredResponseObject($response, $requiredKeys);
 
-            $apiData = $json[ ApiResponse::KEY_DATA ];
+            $apiData = $json[ApiResponse::KEY_DATA];
 
             // All speditions found
             $data = new ConfigData();
-            foreach ($apiData[ ApiResponse::KEY_SPEDITIONS ] as $speditionData) {
+            foreach ($apiData[ApiResponse::KEY_SPEDITIONS] as $speditionData) {
                 $spedition = Spedition::fromApiResponse($speditionData);
                 $data->addSpedition($spedition);
             }
@@ -195,22 +193,22 @@ class Result
         }
 
         // Values of these elements must have expected type.
-        if (!\is_bool($json[ ApiResponse::KEY_SUCCESS ])
-            || !\is_string($json[ ApiResponse::KEY_MESSAGE ])
-            || !\is_int($json[ ApiResponse::KEY_CODE ])
+        if (!\is_bool($json[ApiResponse::KEY_SUCCESS])
+            || !\is_string($json[ApiResponse::KEY_MESSAGE])
+            || !\is_int($json[ApiResponse::KEY_CODE])
         ) {
             return false;
         }
 
         // if DATA node is provided it must be an array.
-        $dataNode = $json[ ApiResponse::KEY_DATA ];
+        $dataNode = $json[ApiResponse::KEY_DATA];
         if ($dataNode !== null && !\is_array($dataNode)) {
             return false;
         }
 
         // extraDataKeys contains keys that we expect to be present in "data" node
         // but only for successful responses, as otherwise data is usually null.
-        if ($json[ ApiResponse::KEY_SUCCESS ]) {
+        if ($json[ApiResponse::KEY_SUCCESS]) {
             $extraDataKeys ??= [];
             if (!empty($extraDataKeys)) {
                 // if extra keys are required, "data" node must be present and not empty.
@@ -242,11 +240,21 @@ class Result
      */
     protected bool $success = false;
 
+    /**
+     * Returns TRUE if result relates to successful action's response, FALSE otherwise.
+     */
     public function success(): bool
     {
         return $this->success;
     }
 
+    /**
+     * Sets result to be successful or not.
+     *
+     * @param bool $success
+     *
+     * @return Result
+     */
     protected function setSuccess(bool $success): self
     {
         $this->success = $success;
@@ -258,11 +266,19 @@ class Result
      */
     protected int $code = 0;
 
+    /**
+     * Returns API code associated with the response.
+     */
     public function getCode(): int
     {
         return $this->code;
     }
 
+    /**
+     * Sets API code associated with the response.
+     *
+     * @param int $apiCode API code associated with the response.
+     */
     protected function setCode(int $apiCode): self
     {
         $this->code = $apiCode;
@@ -271,11 +287,19 @@ class Result
 
     protected string $message = '';
 
+    /**
+     * Returns message associated with the response.
+     */
     public function getMessage(): string
     {
         return $this->message;
     }
 
+    /**
+     * Sets message associated with the response.
+     *
+     * @param string $message Message associated with the response.
+     */
     protected function setMessage(string $message): self
     {
         $this->message = $message;
@@ -284,11 +308,19 @@ class Result
 
     protected ?Data $data = null;
 
+    /**
+     * Returns data associated with the response.
+     */
     public function getData(): ?Data
     {
         return $this->data;
     }
 
+    /**
+     * Sets data associated with the response.
+     *
+     * @param Data|null $data Data associated with the response.
+     */
     protected function setData(?Data $data): self
     {
         $this->data = $data;

@@ -1,17 +1,15 @@
 <?php
 
-namespace OlzaLogistic\PpApi\Client\Tests\Model;
-
-/**
+/*
  * Olza Logistic's Pickup Points API client
  *
- * @package   OlzaLogistic\PpApi\Client
- *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
- * @copyright 2021-2022 DevelArt
+ * @copyright 2021-2023 DevelArt
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+namespace OlzaLogistic\PpApi\Client\Tests\Model;
 
 use OlzaLogistic\PpApi\Client\Model\PickupPoint as PP;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
@@ -56,8 +54,8 @@ class PickupPointTest extends BaseTestCase
 
         if (\array_key_exists(PP::KEY_GROUP_LOCATION, $expected)) {
             $node = $expected[ PP::KEY_GROUP_LOCATION ];
-            $this->assertEquals($node[ PP::KEY_LATITUDE ], $pp->getLatitude());
-            $this->assertEquals($node[ PP::KEY_LONGITUDE ], $pp->getLongitude());
+            $this->assertEquals((string)$node[ PP::KEY_LATITUDE ], $pp->getLatitude());
+            $this->assertEquals((string)$node[ PP::KEY_LONGITUDE ], $pp->getLongitude());
         }
     }
 

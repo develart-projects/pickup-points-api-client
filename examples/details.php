@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-/**
+/*
  * PP Detail
  */
 
@@ -33,8 +34,3 @@ $apiResponse = $client->details($params);
 echo '<pre>';
 print_r($apiResponse);
 echo '</pre>';
-
-
-
-
-

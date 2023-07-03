@@ -2,10 +2,8 @@
 #
 # Olza Logistic's Pickup Points API client
 #
-# @package   OlzaLogistic\PpApi\Client
-#
 # @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
-# @copyright 2022 DevelArt
+# @copyright 2022-2023 DevelArt
 # @license   http://www.opensource.org/licenses/mit-license.php MIT
 # @link      https://github.com/develart-projects/pickup-points-api-client/
 #
@@ -28,29 +26,22 @@ on:
 jobs:
   tests:
     strategy:
-      # do not stop the workflow if single run failed
+      # do not stop the workflow if a single run failed
       fail-fast: false
       matrix:
         # quotes are needed it is treated as a number and zero at decimal part is gone at runtime
-        php: ["7.4", "8.0", "8.1"]
+        php: ["7.4", "8.0", "8.1", "8.2"]
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-      - name: "Checkout repository..."
-        uses: actions/checkout@v2
+      # https://github.com/marketplace/actions/checkout
+      - name: "Checkout repository…"
+        uses: actions/checkout@v3
 
-      # https://github.com/marketplace/actions/composer-php-actions
-      - name: "Installing dependencies..."
-        uses: php-actions/composer@v6
-        with:
-          version: 2
-          php_version: "${{ matrix.php }}"
-          dev: yes
-
-      # https://github.com/marketplace/actions/phpunit-php-actions
-      - name: "Running PHPUnit..."
-        uses: php-actions/phpunit@v3
-        with:
-          bootstrap: "vendor/autoload.php"
-          configuration: "phpunit.xml.dist"
+      - name: "Running PHPUnit…"
+        shell: bash
+        run: |
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          /usr/local/bin/composer install --dev
+          /usr/local/bin/composer test

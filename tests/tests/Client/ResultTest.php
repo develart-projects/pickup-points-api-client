@@ -1,17 +1,15 @@
 <?php
 
-namespace OlzaLogistic\PpApi\Client\Tests\Model;
-
-/**
+/*
  * Olza Logistic's Pickup Points API client
- *
- * @package   OlzaLogistic\PpApi\Client
  *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
  * @copyright 2022 DevelArt
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+namespace OlzaLogistic\PpApi\Client\Tests\Model;
 
 use OlzaLogistic\PpApi\Client\ApiResponse;
 use OlzaLogistic\PpApi\Client\Result;
