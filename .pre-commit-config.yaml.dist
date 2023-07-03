@@ -1,10 +1,8 @@
 #
 # Olza Logistic's Pickup Points API (server)
 #
-# @package   OlzaLogistic\PpApi\Server
-#
 # @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
-# @copyright 2022 DevelArt
+# @copyright 2022-2023 DevelArt
 # @license   Proprietary
 #
 # See https://pre-commit.com for more information about pre-commit.
