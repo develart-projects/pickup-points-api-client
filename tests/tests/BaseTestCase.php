@@ -1,7 +1,5 @@
 <?php
 
-namespace OlzaLogistic\PpApi\Client\Tests;
-
 /**
  * Olza Logistic's Pickup Points API client
  *
@@ -12,6 +10,9 @@ namespace OlzaLogistic\PpApi\Client\Tests;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+namespace OlzaLogistic\PpApi\Client\Tests;
+
 abstract class BaseTestCase extends \PHPUnit\Framework\TestCase
 {
     use Traits\TestHelpersTrait;

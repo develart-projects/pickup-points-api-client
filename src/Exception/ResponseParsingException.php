@@ -1,17 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace OlzaLogistic\PpApi\Client\Exception;
-
 /**
  * Olza Logistic's Pickup Points API (server)
  *
- * @package   OlzaLogistic\PpApi\Server
- *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
- * @copyright 2022 DevelArt
+ * @copyright 2022-2023 DevelArt
  * @license   Proprietary
  */
+
+namespace OlzaLogistic\PpApi\Client\Exception;
 
 class ResponseParsingException extends \RuntimeException
 {

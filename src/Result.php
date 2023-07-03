@@ -1,18 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace OlzaLogistic\PpApi\Client;
-
 /**
  * Olza Logistic's Pickup Points API client
- *
- * @package   OlzaLogistic\PpApi\Client
  *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
  * @copyright 2021-2023 DevelArt
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+namespace OlzaLogistic\PpApi\Client;
 
 use OlzaLogistic\PpApi\Client\Exception\ResponseIncorrectParserException;
 use OlzaLogistic\PpApi\Client\Model\PickupPoint;
@@ -254,6 +252,8 @@ class Result
      * Sets result to be successful or not.
      *
      * @param bool $success
+     *
+     * @return Result
      */
     protected function setSuccess(bool $success): self
     {

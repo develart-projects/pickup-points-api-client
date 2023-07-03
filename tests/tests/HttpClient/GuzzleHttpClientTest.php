@@ -1,7 +1,5 @@
 <?php
 
-namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
-
 /**
  * Olza Logistic's Pickup Points API client
  *
@@ -12,6 +10,8 @@ namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
+namespace OlzaLogistic\PpApi\Client\Tests\HttpClient;
 
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Client;
