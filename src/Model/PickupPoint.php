@@ -138,8 +138,6 @@ class PickupPoint
 
     /**
      * Returns first name line of the pickup point.
-     *
-     * @return string
      */
     public function getName1(): string
     {
@@ -150,8 +148,6 @@ class PickupPoint
      * Sets first name line of the pickup point.
      *
      * @param string $name1 Name line 1
-     *
-     * @return PickupPoint
      */
     protected function setName1(string $name1): self
     {
@@ -163,8 +159,6 @@ class PickupPoint
 
     /**
      * Returns second name line of the pickup point.
-     *
-     * @return string|null
      */
     public function getName2(): ?string
     {
@@ -175,8 +169,6 @@ class PickupPoint
      * Sets second name line of the pickup point.
      *
      * @param string|null $name2 Name line 2
-     *
-     * @return PickupPoint
      */
     protected function setName2(?string $name2): self
     {
@@ -206,8 +198,6 @@ class PickupPoint
 
     /**
      * Returns full address of the pickup point.
-     *
-     * @return string
      */
     public function getFullAddress(): string
     {
@@ -221,8 +211,6 @@ class PickupPoint
      * Sets full address of the pickup point.
      *
      * @param string $fullAddress Full address
-     *
-     * @return PickupPoint
      */
     protected function setFullAddress(string $fullAddress): self
     {
@@ -236,8 +224,6 @@ class PickupPoint
 
     /**
      * Returns street name of the pickup point.
-     *
-     * @return string|null
      */
     public function getStreet(): ?string
     {
@@ -248,8 +234,6 @@ class PickupPoint
      * Sets street name of the pickup point.
      *
      * @param string|null $street Street name
-     *
-     * @return PickupPoint
      */
     protected function setStreet(?string $street): self
     {
@@ -263,8 +247,6 @@ class PickupPoint
 
     /**
      * Returns ZIP code of the pickup point.
-     *
-     * @return string|null
      */
     public function getZip(): ?string
     {
@@ -275,8 +257,6 @@ class PickupPoint
      * Sets ZIP code of the pickup point.
      *
      * @param string|null $zip ZIP code
-     *
-     * @return PickupPoint
      */
     protected function setZip(?string $zip): self
     {
@@ -290,8 +270,6 @@ class PickupPoint
 
     /**
      * Returns city of the pickup point.
-     *
-     * @return string|null
      */
     public function getCity(): ?string
     {
@@ -301,9 +279,7 @@ class PickupPoint
     /**
      * Sets city of the pickup point.
      *
-     * @param string|null $city City
-     *
-     * @return PickupPoint
+     * @param string|null $city City name
      */
     protected function setCity(?string $city): self
     {
@@ -317,8 +293,6 @@ class PickupPoint
 
     /**
      * Returns county of the pickup point.
-     *
-     * @return string|null
      */
     public function getCounty(): ?string
     {
@@ -328,9 +302,7 @@ class PickupPoint
     /**
      * Sets county of the pickup point.
      *
-     * @param string|null $county County
-     *
-     * @return PickupPoint
+     * @param string|null $county County name
      */
     protected function setCounty(?string $county): self
     {
@@ -349,8 +321,6 @@ class PickupPoint
 
     /**
      * Returns country of the pickup point.
-     *
-     * @return string|null
      */
     public function getCountry(): ?string
     {
@@ -360,9 +330,7 @@ class PickupPoint
     /**
      * Sets country of the pickup point.
      *
-     * @param string|null $country Country
-     *
-     * @return PickupPoint
+     * @param string|null $country Country name
      */
     protected function setCountry(?string $country): self
     {
@@ -374,7 +342,7 @@ class PickupPoint
      * Returns all pickup point location address. Except for "full", all other
      * keys are not present if there's no data.
      *
-     * @return null[]|string[]
+     * @return string[]
      */
     public function getAddress(): array
     {
@@ -401,8 +369,6 @@ class PickupPoint
 
     /**
      * Returns phone number of the pickup point.
-     *
-     * @return string|null
      */
     public function getPhone(): ?string
     {
@@ -413,8 +379,6 @@ class PickupPoint
      * Sets phone number of the pickup point.
      *
      * @param string|null $phone Phone number
-     *
-     * @return PickupPoint
      */
     protected function setPhone(?string $phone): self
     {
@@ -428,8 +392,6 @@ class PickupPoint
 
     /**
      * Returns email address of the pickup point.
-     *
-     * @return string|null
      */
     public function getEmail(): ?string
     {
@@ -440,8 +402,6 @@ class PickupPoint
      * Sets email address of the pickup point.
      *
      * @param string|null $email Email address
-     *
-     * @return PickupPoint
      */
     protected function setEmail(?string $email): self
     {
@@ -500,8 +460,6 @@ class PickupPoint
      * Sets if pickup point is open 24/7.
      *
      * @param bool $open247 True if open 24/7, false otherwise
-     *
-     * @return PickupPoint
      */
     public function setOpen247(bool $open247): self
     {
@@ -514,8 +472,6 @@ class PickupPoint
 
     /**
      * Returns opening hours for Monday.
-     *
-     * @return string|null
      */
     public function getMondayHours(): ?string
     {
@@ -526,8 +482,6 @@ class PickupPoint
      * Sets opening hours for Monday.
      *
      * @param string|null $mondayHours Opening hours
-     *
-     * @return PickupPoint
      */
     protected function setMondayHours(?string $mondayHours): self
     {
@@ -539,8 +493,6 @@ class PickupPoint
 
     /**
      * Returns break hours for Monday.
-     *
-     * @return string|null
      */
     public function getMondayBreak(): ?string
     {
@@ -551,8 +503,6 @@ class PickupPoint
      * Sets break hours for Monday.
      *
      * @param string|null $mondayBreak Break hours
-     *
-     * @return PickupPoint
      */
     protected function setMondayBreak(?string $mondayBreak): self
     {
@@ -564,8 +514,6 @@ class PickupPoint
 
     /**
      * Returns opening hours for Tuesday.
-     *
-     * @return string|null
      */
     public function getTuesdayHours(): ?string
     {
@@ -576,8 +524,6 @@ class PickupPoint
      * Sets opening hours for Tuesday.
      *
      * @param string|null $tuesdayHours Opening hours
-     *
-     * @return PickupPoint
      */
     protected function setTuesdayHours(?string $tuesdayHours): self
     {
@@ -589,8 +535,6 @@ class PickupPoint
 
     /**
      * Returns break hours for Tuesday.
-     *
-     * @return string|null
      */
     public function getTuesdayBreak(): ?string
     {
@@ -601,8 +545,6 @@ class PickupPoint
      * Sets break hours for Tuesday.
      *
      * @param string|null $tuesdayBreak Break hours
-     *
-     * @return PickupPoint
      */
     protected function setTuesdayBreak(?string $tuesdayBreak): self
     {
@@ -614,8 +556,6 @@ class PickupPoint
 
     /**
      * Returns opening hours for Wednesday.
-     *
-     * @return string|null
      */
     public function getWednesdayHours(): ?string
     {
@@ -626,8 +566,6 @@ class PickupPoint
      * Sets opening hours for Wednesday.
      *
      * @param string|null $wednesdayHours Opening hours
-     *
-     * @return PickupPoint
      */
     protected function setWednesdayHours(?string $wednesdayHours): self
     {
@@ -639,8 +577,6 @@ class PickupPoint
 
     /**
      * Returns break hours for Wednesday.
-     *
-     * @return string|null
      */
     public function getWednesdayBreak(): ?string
     {
@@ -651,8 +587,6 @@ class PickupPoint
      * Sets break hours for Wednesday.
      *
      * @param string|null $wednesdayBreak Break hours
-     *
-     * @return PickupPoint
      */
     protected function setWednesdayBreak(?string $wednesdayBreak): self
     {
@@ -665,8 +599,6 @@ class PickupPoint
 
     /**
      * Returns opening hours for Thursday.
-     *
-     * @return string|null
      */
     public function getThursdayHours(): ?string
     {
@@ -677,8 +609,6 @@ class PickupPoint
      * Sets opening hours for Thursday.
      *
      * @param string|null $thursdayHours Opening hours
-     *
-     * @return PickupPoint
      */
     protected function setThursdayHours(?string $thursdayHours): self
     {
@@ -690,8 +620,6 @@ class PickupPoint
 
     /**
      * Returns break hours for Thursday.
-     *
-     * @return string|null
      */
     public function getThursdayBreak(): ?string
     {
@@ -702,8 +630,6 @@ class PickupPoint
      * Sets break hours for Thursday.
      *
      * @param string|null $thursdayBreak Break hours
-     *
-     * @return PickupPoint
      */
     protected function setThursdayBreak(?string $thursdayBreak): self
     {
@@ -715,8 +641,6 @@ class PickupPoint
 
     /**
      * Returns opening hours for Friday.
-     *
-     * @return string|null
      */
     public function getFridayHours(): ?string
     {
@@ -727,8 +651,6 @@ class PickupPoint
      * Sets opening hours for Friday.
      *
      * @param string|null $fridayHours Opening hours
-     *
-     * @return PickupPoint
      */
     protected function setFridayHours(?string $fridayHours): self
     {
@@ -740,8 +662,6 @@ class PickupPoint
 
     /**
      * Returns break hours for Friday.
-     *
-     * @return string|null
      */
     public function getFridayBreak(): ?string
     {
@@ -752,8 +672,6 @@ class PickupPoint
      * Sets break hours for Friday.
      *
      * @param string|null $fridayBreak Break hours
-     *
-     * @return PickupPoint
      */
     protected function setFridayBreak(?string $fridayBreak): self
     {
@@ -765,8 +683,6 @@ class PickupPoint
 
     /**
      * Returns opening hours for Saturday.
-     *
-     * @return string|null
      */
     public function getSaturdayHours(): ?string
     {
@@ -777,8 +693,6 @@ class PickupPoint
      * Sets opening hours for Saturday.
      *
      * @param string|null $saturdayHours Opening hours
-     *
-     * @return PickupPoint
      */
     protected function setSaturdayHours(?string $saturdayHours): self
     {
@@ -790,8 +704,6 @@ class PickupPoint
 
     /**
      * Returns break hours for Saturday.
-     *
-     * @return string|null
      */
     public function getSaturdayBreak(): ?string
     {
@@ -802,8 +714,6 @@ class PickupPoint
      * Sets break hours for Saturday.
      *
      * @param string|null $saturdayBreak Break hours
-     *
-     * @return PickupPoint
      */
     protected function setSaturdayBreak(?string $saturdayBreak): self
     {
@@ -815,8 +725,6 @@ class PickupPoint
 
     /**
      * Returns opening hours for Sunday.
-     *
-     * @return string|null
      */
     public function getSundayHours(): ?string
     {
@@ -827,8 +735,6 @@ class PickupPoint
      * Sets opening hours for Sunday.
      *
      * @param string|null $sundayHours Opening hours
-     *
-     * @return PickupPoint
      */
     protected function setSundayHours(?string $sundayHours): self
     {
@@ -840,8 +746,6 @@ class PickupPoint
 
     /**
      * Returns break hours for Sunday.
-     *
-     * @return string|null
      */
     public function getSundayBreak(): ?string
     {
@@ -852,8 +756,6 @@ class PickupPoint
      * Sets break hours for Sunday.
      *
      * @param string|null $sundayBreak Break hours
-     *
-     * @return PickupPoint
      */
     protected function setSundayBreak(?string $sundayBreak): self
     {
@@ -909,8 +811,6 @@ class PickupPoint
 
     /**
      * Returns latitude.
-     *
-     * @return string|null
      */
     public function getLatitude(): ?string
     {
@@ -921,8 +821,6 @@ class PickupPoint
 
     /**
      * Returns longitude.
-     *
-     * @return string|null
      */
     public function getLongitude(): ?string
     {
@@ -949,8 +847,8 @@ class PickupPoint
     }
 
     /**
-     * @param string|int|float|null $latitude
-     * @param string|int|float|null $longitude
+     * @param string|int|float|null $latitude  Latitude value to set
+     * @param string|int|float|null $longitude Longitude value to set
      */
     protected function setLocation($latitude, $longitude): self
     {
@@ -975,7 +873,7 @@ class PickupPoint
     }
 
     /**
-     * @param string|int|float|null $val
+     * @param string|int|float|null $val Coordinate value to check
      */
     protected function assertValidCoord($val): void
     {
@@ -997,8 +895,6 @@ class PickupPoint
 
     /**
      * Returns notes.
-     *
-     * @return string|null
      */
     public function getNotes(): ?string
     {
@@ -1025,8 +921,6 @@ class PickupPoint
     /**
      * Constructs instance of PickupPoint filled PP with data returned in API response.
      * NOTE: $ppData must point to single PP data node (element of 'data/items' array).
-     *
-     * @param array $ppData Single PP data.
      */
     public static function fromApiResponse(array $ppData): self
     {
