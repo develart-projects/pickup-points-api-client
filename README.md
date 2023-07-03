@@ -51,7 +51,7 @@ handed with use of `Params` class. All the response data is also returned wrappe
 * [`Client` class](#client-class)
   * [Public API methods](#public-api-methods)
 * [`Params` class - passing methods arguments](#passing-methods-arguments)
-* [`ApiResponse` class - response data](#consuming-response-data)
+* [`Result` class - accessing response data](#accessing-response-data)
 * [`Data` class - accessing response payload](#accessing-response-payload)
 
 ---
@@ -309,7 +309,7 @@ public function addField(string $field): self
 withAccessToken(string $accessToken): self
 ```
 
-## Result class
+## Accessing response data
 
 Client response are always handed as instance of `Result` class. The object is inmutable, and for
 ease of use, `Result` is subclass
