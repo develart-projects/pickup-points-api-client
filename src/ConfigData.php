@@ -29,17 +29,22 @@ class ConfigData extends Data
     }
 
     /**
-     * @param string $key
-     * @param mixed  $value
+     * Adds single configuration item to the list.
      *
-     * @return $this
+     * @param string $key   Configuration item key
+     * @param mixed  $value Configuration item value
      */
     public function addConfigItem(string $key, $value): self
     {
-        $this->config[ $key ] = $value;
+        $this->config[$key] = $value;
         return $this;
     }
 
+    /**
+     * Adds multiple configuration items to the list.
+     *
+     * @param array<string,mixed> $items Associative array of configuration items
+     */
     public function addConfigItems(array $items): self
     {
         foreach ($items as $key => $value) {
@@ -52,19 +57,24 @@ class ConfigData extends Data
 
     protected array $speditions = [];
 
+    /**
+     * Returns list of Spedition objects.
+     *
+     * @return Spedition[]
+     */
     public function getSpeditions(): array
     {
         return $this->speditions;
     }
 
     /**
-     * @param Spedition $spedition
+     * Adds Spedition object to the list.
      *
-     * @return $this
+     * @param Spedition $spedition Spedition object to add
      */
     public function addSpedition(Spedition $spedition): self
     {
-        $this->speditions[ $spedition->getCode() ] = $spedition;
+        $this->speditions[$spedition->getCode()] = $spedition;
         return $this;
     }
 

@@ -19,7 +19,9 @@ namespace OlzaLogistic\PpApi\Client;
  */
 class ServiceType
 {
-    // Cash on Delivery
+    /**
+     * Cash on Delivery
+     */
     public const COD = 'cod';
 
 } // end of class

@@ -21,7 +21,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
-abstract class ClientBase implements ClientContract
+abstract class  ClientBase implements ClientContract
 {
     /**
      * Configures client to use specific API URL

@@ -38,6 +38,9 @@ class Params
         // dummy
     }
 
+    /**
+     * Returns new instance of Params
+     */
     public static function create(): self
     {
         return new self();
@@ -47,12 +50,20 @@ class Params
 
     protected ?string $accessToken = null;
 
+    /**
+     * Sets access token to be used with API calls.
+     *
+     * @param string $accessToken Access token to be used with API calls.
+     */
     public function withAccessToken(string $accessToken): self
     {
         $this->accessToken = $accessToken;
         return $this;
     }
 
+    /**
+     * Returns access token to be used with API calls.
+     */
     protected function getAccessToken(): ?string
     {
         return $this->accessToken;
@@ -62,12 +73,20 @@ class Params
 
     protected ?string $country = null;
 
+    /**
+     * Sets country code to be used with API calls.
+     *
+     * @param string $country Country code to be used with API calls.
+     */
     public function withCountry(string $country): self
     {
         $this->country = $country;
         return $this;
     }
 
+    /**
+     * Returns country code to be used with API calls.
+     */
     protected function getCountry(): ?string
     {
         return $this->country;
@@ -77,12 +96,20 @@ class Params
 
     protected ?string $city = null;
 
+    /**
+     * Sets city name to be used with API calls.
+     *
+     * @param string $city City name to be used with API calls.
+     */
     public function withCity(string $city): self
     {
         $this->city = $city;
         return $this;
     }
 
+    /**
+     * Returns city name to be used with API calls.
+     */
     protected function getCity(): ?string
     {
         return $this->city;
@@ -92,12 +119,22 @@ class Params
 
     protected ?array $speditions = null;
 
+    /**
+     * Sets list of spedition codes to be used with API calls.
+     *
+     * @param array $speditions List of spedition codes to be used with API calls.
+     */
     public function withSpeditions(array $speditions): self
     {
         $this->speditions = $speditions;
         return $this;
     }
 
+    /**
+     * Returns list of spedition codes to be used with API calls.
+     *
+     * @param string $spedition Spedition code to be added to the list.
+     */
     public function withSpedition(string $spedition): self
     {
         if ($this->speditions === null) {
@@ -108,6 +145,9 @@ class Params
         return $this;
     }
 
+    /**
+     * Returns list of spedition codes to be used with API calls.
+     */
     protected function getSpeditions(): ?array
     {
         return $this->speditions;
@@ -117,12 +157,20 @@ class Params
 
     protected ?string $speditionId = null;
 
+    /**
+     * Sets spedition ID to be used with API calls.
+     *
+     * @param string $speditionId Spedition ID to be used with API calls.
+     */
     public function withSpeditionId(string $speditionId): self
     {
         $this->speditionId = $speditionId;
         return $this;
     }
 
+    /**
+     * Returns spedition ID to be used with API calls.
+     */
     protected function getSpeditionId(): ?string
     {
         return $this->speditionId;
@@ -133,6 +181,12 @@ class Params
     protected ?float $latitude  = null;
     protected ?float $longitude = null;
 
+    /**
+     * Sets location to be used with API calls.
+     *
+     * @param float|null $latitude  Latitude to be used with API calls.
+     * @param float|null $longitude Longitude to be used with API calls.
+     */
     public function withLocation(?float $latitude, ?float $longitude): self
     {
         $this->latitude = $latitude;
@@ -140,16 +194,25 @@ class Params
         return $this;
     }
 
+    /**
+     * Returns latitude to be used with API calls.
+     */
     protected function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
+    /**
+     * Returns longitude to be used with API calls.
+     */
     protected function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
+    /**
+     * Returns location to be used with API calls.
+     */
     protected function getLocationAsString(): ?string
     {
         if ($this->latitude === null || $this->longitude === null) {
@@ -162,6 +225,11 @@ class Params
 
     protected array $fields = [];
 
+    /**
+     * Sets list of fields to be used with API calls.
+     *
+     * @param array|null $fields List of fields to be used with API calls.
+     */
     public function withFields(?array $fields): self
     {
         $fields = $fields ?? [];
@@ -169,16 +237,27 @@ class Params
         return $this;
     }
 
+    /**
+     * Returns list of fields to be used with API calls.
+     */
     protected function getFields(): ?array
     {
         return (empty($this->fields)) ? null : $this->fields;
     }
 
+    /**
+     * Returns list of fields to be used with API calls as string.
+     */
     protected function getFieldsAsString(): ?string
     {
         return $this->arrayToString($this->getFields());
     }
 
+    /**
+     * Adds field to the list of fields to be used with API calls.
+     *
+     * @param string $field Field to be added to the list.
+     */
     public function addField(string $field): self
     {
         $fields = $this->getFields();
@@ -196,12 +275,20 @@ class Params
 
     protected ?array $requiredFields = null;
 
+    /**
+     * Sets list of required fields to be used with API calls.
+     *
+     * @param array|null $requiredFields List of required fields to be used with API calls.
+     */
     public function setRequiredFields(?array $requiredFields): self
     {
         $this->requiredFields = $requiredFields;
         return $this;
     }
 
+    /**
+     * Returns list of required fields to be used with API calls.
+     */
     protected function getRequiredFields(): array
     {
         return $this->requiredFields ?? [];
@@ -211,12 +298,20 @@ class Params
 
     protected ?string $searchQuery = null;
 
+    /**
+     * Sets search query to be used with API calls.
+     *
+     * @param string $searchQuery Search query to be used with API calls.
+     */
     public function withSearchQuery(string $searchQuery): self
     {
         $this->searchQuery = $searchQuery;
         return $this;
     }
 
+    /**
+     * Returns search query to be used with API calls.
+     */
     protected function getSearchQuery(): ?string
     {
         return $this->searchQuery;
@@ -226,12 +321,20 @@ class Params
 
     protected ?int $limit = null;
 
+    /**
+     * Sets limit to be used with API calls.
+     *
+     * @param int $limit Limit to be used with API calls.
+     */
     public function withLimit(int $limit): self
     {
         $this->limit = $limit;
         return $this;
     }
 
+    /**
+     * Returns limit to be used with API calls.
+     */
     protected function getLimit(): ?int
     {
         return $this->limit;
@@ -241,12 +344,20 @@ class Params
 
     protected ?string $language = null;
 
+    /**
+     * Sets language to be used with API calls.
+     *
+     * @param string $language Language to be used with API calls.
+     */
     public function withLanguage(string $language): self
     {
         $this->language = $language;
         return $this;
     }
 
+    /**
+     * Returns language to be used with API calls.
+     */
     protected function getLanguage(): ?string
     {
         return $this->language;
@@ -256,6 +367,11 @@ class Params
 
     protected ?array $payments = null;
 
+    /**
+     * Sets payment to be used with API calls.
+     *
+     * @param string $payment Payment to be used with API calls.
+     */
     public function withPayment(string $payment): self
     {
         if ($this->payments === null) {
@@ -265,17 +381,28 @@ class Params
         return $this;
     }
 
+    /**
+     * Sets payments to be used with API calls.
+     *
+     * @param array|null $payments Payments to be used with API calls.
+     */
     public function withPayments(?array $payments): self
     {
         $this->payments = $payments;
         return $this;
     }
 
+    /**
+     * Returns payments to be used with API calls.
+     */
     protected function getPayments(): ?array
     {
         return $this->payments;
     }
 
+    /**
+     * Returns payments to be used with API calls as string.
+     */
     protected function getPaymentsAsString(): ?string
     {
         return $this->arrayToString($this->getPayments());
@@ -285,6 +412,11 @@ class Params
 
     protected ?array $services = null;
 
+    /**
+     * Sets service to be used with API calls.
+     *
+     * @param string $service Service to be used with API calls.
+     */
     public function withService(string $service): self
     {
         if ($this->services === null) {
@@ -294,17 +426,28 @@ class Params
         return $this;
     }
 
+    /**
+     * Sets services to be used with API calls.
+     *
+     * @param array|null $services Services to be used with API calls.
+     */
     public function withServices(?array $services): self
     {
         $this->services = $services;
         return $this;
     }
 
+    /**
+     * Returns services to be used with API calls.
+     */
     protected function getServices(): ?array
     {
         return $this->services;
     }
 
+    /**
+     * Returns services to be used with API calls as string.
+     */
     protected function getServicesAsString(): ?string
     {
         return $this->arrayToString($this->getServices());
@@ -367,6 +510,11 @@ class Params
 
     /* ****************************************************************************************** */
 
+    /**
+     * Returns array of Param::XXX types that are mandatory (must be non-empty).
+     *
+     * @param array|null $data Optional array to be converted to string orr NULL if $array is NULL
+     */
     protected function arrayToString(?array $data): ?string
     {
         return ($data !== null)
@@ -416,7 +564,7 @@ class Params
         if (!\array_key_exists(self::ACCESS_TOKEN, $queryArgs)) {
             $accessToken = $this->getAccessToken();
             if ($accessToken !== null) {
-                $queryArgs[ self::ACCESS_TOKEN ] = $accessToken;
+                $queryArgs[self::ACCESS_TOKEN] = $accessToken;
             }
         }
 

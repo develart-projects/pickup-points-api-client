@@ -19,8 +19,18 @@ namespace OlzaLogistic\PpApi\Client;
  */
 class PaymentType
 {
-
+    /**
+     * Cash payment
+     *
+     * @var string
+     */
     public const CASH = 'cash';
+
+    /**
+     * Card payment
+     *
+     * @var string
+     */
     public const CARD = 'card';
 
 } // end of class
