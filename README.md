@@ -47,7 +47,7 @@ composer require symfony/http-client nyholm/psr7
 See [detailed documentation](docs/README.md) for more information about the library, its methods
 and usage examples.
 
-## License ##
+## License
 
 * Copyright &copy;2011-2023 by DevelArt, s.r.o.
 * This is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
