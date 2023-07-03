@@ -15,7 +15,7 @@ handed with use of `Params` class. All the response data is also returned wrappe
   * [`find(Params $params): Result;`](api.md#findparams-params-result)
   * [`search(Params $params): Result;`](api.md#searchparams-params-result)
 * [`Params` class - passing methods arguments](params.md#passing-methods-arguments)
-* [`Result` class - accessing response data](#response.mdaccessing-response-data)
+* [`Result` class - accessing response data](response.md#accessing-response-data)
 * [`Data` class - accessing response payload](response.md#accessing-response-payload)
 
 ---
