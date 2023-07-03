@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * find PPs for given country
@@ -32,8 +33,3 @@ $apiResponse = $client->find($params);
 echo '<pre>';
 print_r($apiResponse);
 echo '</pre>';
-
-
-
-
-

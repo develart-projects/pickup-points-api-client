@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Configuration for given country
@@ -30,8 +31,3 @@ $apiResponse = $client->config($params);
 echo '<pre>';
 print_r($apiResponse);
 echo '</pre>';
-
-
-
-
-
