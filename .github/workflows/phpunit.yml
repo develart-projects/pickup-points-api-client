@@ -41,7 +41,7 @@ jobs:
 
       - name: "Running PHPUnit…"
         shell: bash
-        run:
-          - "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer"
-          - "/usr/local/bin/composer install --dev"
-          - "/usr/local/bin/composer test"
+        run: |
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          /usr/local/bin/composer install --dev
+          /usr/local/bin/composer test
