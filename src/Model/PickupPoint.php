@@ -628,18 +628,47 @@ class PickupPoint
         return $result;
     }
 
-    protected function setLocation(?string $latitude, ?string $longitude): self
+    /**
+     * @param string|int|float|null $latitude
+     * @param string|int|float|null $longitude
+     */
+    protected function setLocation($latitude, $longitude): self
     {
-        if (\is_string($latitude) && \trim($latitude) === '') {
+        $this->assertValidCoord($latitude);
+        $this->assertValidCoord($longitude);
+
+        if ($latitude === null || (\is_string($latitude) && \trim($latitude) === '')) {
             $latitude = null;
+        } else {
+            $latitude = (string) $latitude;
         }
-        if (\is_string($longitude) && \trim($longitude) === '') {
+
+        if ($longitude === null || (\is_string($longitude) && \trim($longitude) === '')) {
             $longitude = null;
+        } else {
+            $longitude = (string) $longitude;
         }
 
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         return $this;
+    }
+
+    /**
+     * @param string|int|float|null $val
+     */
+    protected function assertValidCoord($val): void
+    {
+        if ($val !== null) {
+            if (\is_string($val) || \is_int($val) || \is_float($val)) {
+                $val = (string) $val;
+                if (\trim($val) === '') {
+                    throw new \InvalidArgumentException('Invalid coordinate value given.');
+                }
+            } else {
+                throw new \InvalidArgumentException('Invalid coordinate value given.');
+            }
+        }
     }
 
     /* ****************************************************************************************** */

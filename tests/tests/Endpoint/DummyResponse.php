@@ -13,77 +13,84 @@ namespace OlzaLogistic\PpApi\Client\Tests\Endpoint;
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
 class DummyResponse implements ResponseInterface
 {
-    public function getProtocolVersion()
+    /*
+     * MessageInterface
+     */
+    public function getProtocolVersion(): string
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function withProtocolVersion($version)
+    public function withProtocolVersion($version): MessageInterface
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getHeaders()
+    public function getHeaders(): array
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function hasHeader($name)
+    public function hasHeader($name): bool
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getHeader($name)
+    public function getHeader($name): array
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getHeaderLine($name)
+    public function getHeaderLine($name): string
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function withHeader($name, $value)
+    public function withHeader($name, $value): MessageInterface
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function withAddedHeader($name, $value)
+    public function withAddedHeader($name, $value): MessageInterface
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function withoutHeader($name)
+    public function withoutHeader($name): MessageInterface
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getBody()
+    public function getBody(): StreamInterface
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function withBody(StreamInterface $body)
+    public function withBody(StreamInterface $body): MessageInterface
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getStatusCode()
+    /*
+     * ResponseInterface implementation
+     */
+    public function getStatusCode(): int
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function withStatus($code, $reasonPhrase = '')
+    public function withStatus($code, $reasonPhrase = ''): ResponseInterface
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getReasonPhrase()
+    public function getReasonPhrase(): string
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }

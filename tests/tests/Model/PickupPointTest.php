@@ -56,8 +56,8 @@ class PickupPointTest extends BaseTestCase
 
         if (\array_key_exists(PP::KEY_GROUP_LOCATION, $expected)) {
             $node = $expected[ PP::KEY_GROUP_LOCATION ];
-            $this->assertEquals($node[ PP::KEY_LATITUDE ], $pp->getLatitude());
-            $this->assertEquals($node[ PP::KEY_LONGITUDE ], $pp->getLongitude());
+            $this->assertEquals((string)$node[ PP::KEY_LATITUDE ], $pp->getLatitude());
+            $this->assertEquals((string)$node[ PP::KEY_LONGITUDE ], $pp->getLongitude());
         }
     }
 

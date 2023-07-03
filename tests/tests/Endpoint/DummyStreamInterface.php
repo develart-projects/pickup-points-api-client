@@ -22,7 +22,7 @@ class DummyStreamInterface implements StreamInterface
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function close()
+    public function close(): void
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
@@ -32,66 +32,57 @@ class DummyStreamInterface implements StreamInterface
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getSize()
+    public function getSize(): ?int
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function tell()
+    public function tell(): int
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function eof()
+    public function eof(): bool
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function isSeekable()
+    public function isSeekable(): bool
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    /**
-     * @param int $offset
-     * @param int $whence
-     *
-     * @return int
-     */
-    public function seek($offset, $whence = SEEK_SET)
+    public function seek($offset, $whence = SEEK_SET): void
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    /**
-     * @return int
-     */
-    public function rewind()
+    public function rewind(): void
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function isWritable()
+    public function isWritable(): bool
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function write($string)
+    public function write($string): int
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function isReadable()
+    public function isReadable(): bool
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function read($length)
+    public function read($length): string
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
 
-    public function getContents()
+    public function getContents(): string
     {
         throw new \RuntimeException('Method not implemented: ' . __METHOD__);
     }
