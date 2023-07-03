@@ -2,7 +2,7 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\Util;
 
-/**
+/*
  * Olza Logistic's Pickup Points API client
  *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>

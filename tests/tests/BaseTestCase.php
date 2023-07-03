@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Olza Logistic's Pickup Points API client
  *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>

@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Olza Logistic's Pickup Points API (server)
+/*
+ * Olza Logistic's Pickup Points API client
  *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
  * @copyright 2022-2023 DevelArt

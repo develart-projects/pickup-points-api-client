@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-/**
+/*
  * Configuration for given country
  */
 

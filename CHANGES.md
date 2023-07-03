@@ -6,6 +6,7 @@ Olza Logistic's Pickup Point API Client PHP library.
 
 * v1 2.0 (2023-??-??)
   * All files are now declaring strict types.
+  * Updated code comments
 
 * v1.1.3 (2023-06-20)
   * Fixed example in the docs
