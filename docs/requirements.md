@@ -25,9 +25,9 @@
 
 The PP API Client library has the following requirements:
 
-- PHP 7.4 or newer.
-- HTTP client library to handle HTTP requests and responses.
-- PSR-17 HTTP Factory library to create request/response objects, stream objects, and URI objects.
+* PHP 7.4 or newer.
+* One HTTP client library to handle HTTP requests and responses.
+* PSR-17 HTTP Factory library to create request/response objects, stream objects, and URI objects.
 
 ![Note](note.png) Though various HTTP clients are supported, only one is required to make the library functional. The
 choice of HTTP client can be based on the specific needs of your project. Aside from the solid
@@ -38,8 +38,8 @@ supported out of the box.
 
 The library directly supports and was tested with the following HTTP clients:
 
-- Guzzle (version 7.4 or newer)
-- Symfony HttpClient (version 5.4 or newer)
+* Guzzle (version 7.4 or newer)
+*Symfony HttpClient (version 5.4 or newer)
 
 It also supports
 [PSR compatible HTTP clients](https://packagist.org/providers/psr/http-client-implementation)

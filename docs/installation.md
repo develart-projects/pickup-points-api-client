@@ -21,19 +21,6 @@
 
 ---
 
-## Requirements
-
-The PP API Client library has the following requirements:
-
-* PHP 7.4 or newer.
-* One HTTP client library to handle HTTP requests and responses.
-* PSR-17 HTTP Factory library to create request/response objects, stream objects, and URI objects.
-
-Though various HTTP clients are supported, only one is required to make the library functional. The
-choice of HTTP client can be based on the specific needs of your project. Aside from the solid
-implementations provided, any future HTTP client adhering to the PSR standards will also be
-supported out of the box.
-
 ## Installation
 
 The library can be easily installed via Composer, a dependency manager for PHP.
