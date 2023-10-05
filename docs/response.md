@@ -18,6 +18,7 @@
   * [`Params` class - passing method arguments](params.md#passing-method-arguments)
   * [`Result` class - accessing response data](response.md#accessing-response-data)
     * [`Data` class - accessing response payload](response.md#accessing-response-payload)
+  * [Exceptions](exceptions.md)
 
 ---
 
@@ -51,6 +52,12 @@ public function getCode(): int
 ```
 
 Gets API returned status code associated with the response (this is not a HTTP status code).
+The expected values are:
+
+* `ApiCode::ERROR_OBJECT_NOT_FOUND` (`100`): API rejects the request due to invalid credentials (
+  like invalid or outdated access token)
+* `ApiCode::ERROR_ACCESS_DENIED` (`101`): API rejects the request due to invalid credentials (like
+  invalid or outdated access token).
 
 ```php
 public function getMessage(): ?string
