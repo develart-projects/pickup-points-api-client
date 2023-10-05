@@ -1,11 +1,22 @@
-# pickup-points-api-client
+![Olza Logistic Logo](docs/olza-logo-small.png)
 
 Olza Logistic's Pickup Point API Client PHP library.
 
+---
+
 ## Changelog
+
+* dev (????-??-??)
+  * Fixed API response code not being included in the thrown exception.
+  * Added dedicated exceptions to reflect API error codes (when `throwOnError` is enabled).
+  * Added dedicated `ApiCode` class to match API codes.
+  * Added `Exceptions` chapter to documentation.
+  * Renamed `ResponseIncorrectParserException` to `InvalidResponseStructureException`.
+
 
 * v1.2.1 (2023-10-05)
   * Updated library documentation
+
 
 * v1.2.0 (2023-06-03)
   * All files are now declaring strict types.

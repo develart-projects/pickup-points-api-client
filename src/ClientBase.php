@@ -13,7 +13,9 @@ declare(strict_types=1);
 namespace OlzaLogistic\PpApi\Client;
 
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
+use OlzaLogistic\PpApi\Client\Exception\AccessDeniedException;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
+use OlzaLogistic\PpApi\Client\Exception\ObjectNotFoundException;
 use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -331,8 +333,10 @@ abstract class  ClientBase implements ClientContract
      * data or one indicating request failure.
      *
      * @param string      $endPoint                Endpoint to call (i.e. '/pp/find')
-     * @param Params|null $apiParams               Instance of Params container with valid API params.
-     * @param callable    $processResponseCallback Callback that will be called to map response data
+     * @param Params|null $apiParams               Instance of Params container with valid API
+     *                                             params.
+     * @param callable    $processResponseCallback Callback that will be called to map response
+     *                                             data
      *                                             to Result object.
      *
      * @throws MethodFailedException
@@ -364,7 +368,18 @@ abstract class  ClientBase implements ClientContract
         }
 
         if (!$result->success() && $this->getThrowOnError()) {
-            throw new MethodFailedException($result->getMessage());
+            switch ($result->getCode()) {
+                case ApiCode::ERROR_OBJECT_NOT_FOUND:
+                    $ex = new ObjectNotFoundException();
+                    break;
+                case ApiCode::ERROR_ACCESS_DENIED:
+                    $ex = new AccessDeniedException();
+                    break;
+                default:
+                    $ex = new MethodFailedException($result->getMessage(), $result->getCode());
+                    break;
+            }
+            throw $ex;
         }
 
         return $result;
