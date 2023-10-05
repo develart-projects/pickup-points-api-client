@@ -1,19 +1,20 @@
-![Olza Logistic Logo](../img/olza-logo.png)
+![Olza Logistic Logo](olza-logo-small.png)
 
-# pickup-points-api-client
+---
 
-## Usage
+# PP API Client for PHP
 
-To simplify library usage, all public methods exposed by the library are expecting arguments to be
-handed with use of `Params` class. All the response data is also returned wrapped in unified
-`Result` class object.
-
-* [`Client` class](api.md#client-class)
-* [Public API methods](api.md#public-api-methods)
-  * [`config(Params $params): Result;`](api.md#configparams-params-result)
-  * [`details(Params $params): Result;`](api.md#detailsparams-params-result)
-  * [`find(Params $params): Result;`](api.md#findparams-params-result)
-  * [`search(Params $params): Result;`](api.md#searchparams-params-result)
-* [`Params` class - passing methods arguments](params.md#passing-methods-arguments)
-* [`Result` class - accessing response data](response.md#accessing-response-data)
-* [`Data` class - accessing response payload](response.md#accessing-response-payload)
+* **[« Go back](README.md)**
+* [Library requirements](requirements.md)
+* [Installation](installation.md)
+* Library API reference
+  * [`Client` class - gateway to the PP API](client.md#gateway-to-the-api)
+    * [Creating client instance](client.md#instantiation)
+    * Public API methods
+      * [`config(Params $params): Result;`](client.md#configparams-params-result)
+      * [`details(Params $params): Result;`](client.md#detailsparams-params-result)
+      * [`find(Params $params): Result;`](client.md#findparams-params-result)
+      * [`search(Params $params): Result;`](client.md#searchparams-params-result)
+  * [`Params` class - passing method arguments](params.md#passing-method-arguments)
+  * [`Result` class - accessing response data](response.md#accessing-response-data)
+    * [`Data` class - accessing response payload](response.md#accessing-response-payload)

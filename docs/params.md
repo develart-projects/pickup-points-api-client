@@ -1,16 +1,25 @@
-![Olza Logistic Logo](../img/olza-logo.png)
+![Olza Logistic Logo](olza-logo-small.png)
 
-# pickup-points-api-client
+---
 
-* [`Client` class](api.md#client-class)
-* [Public API methods](api.md#public-api-methods)
-  * [`config(Params $params): Result;`](api.md#configparams-params-result)
-  * [`details(Params $params): Result;`](api.md#detailsparams-params-result)
-  * [`find(Params $params): Result;`](api.md#findparams-params-result)
-  * [`search(Params $params): Result;`](api.md#searchparams-params-result)
-* [`Params` class - passing methods arguments](params.md#passing-methods-arguments)
-* [`Result` class - accessing response data](response.md#accessing-response-data)
-* [`Data` class - accessing response payload](response.md#accessing-response-payload)
+# PP API Client for PHP
+
+* **[« Go back](README.md)**
+* [Library requirements](requirements.md)
+* [Installation](installation.md)
+* Library API reference
+  * [`Client` class - gateway to the PP API](client.md#gateway-to-the-api)
+    * [Creating client instance](client.md#instantiation)
+    * Public API methods
+      * [`config(Params $params): Result;`](client.md#configparams-params-result)
+      * [`details(Params $params): Result;`](client.md#detailsparams-params-result)
+      * [`find(Params $params): Result;`](client.md#findparams-params-result)
+      * [`search(Params $params): Result;`](client.md#searchparams-params-result)
+  * [`Params` class - passing method arguments](params.md#passing-method-arguments)
+  * [`Result` class - accessing response data](response.md#accessing-response-data)
+    * [`Data` class - accessing response payload](response.md#accessing-response-payload)
+
+---
 
 ## Passing methods arguments
 
@@ -43,10 +52,10 @@ Create empty instance of Params class. That should be the your starting point fo
 public function throwOnError(): self
 ```
 
-By default all public API methods called always returned `Result` object. To see if command
-succeded or not, you need to call `success()` method on the returned object and then branch your
-code logic accordingly. This can lead to ugly and less readable code, so alternatively, you can
-order the client to always throw the `MethodFailedException` instead.
+By default, all public API methods return a `Result` object when called. To determine if the command
+succeeded or not, you need to call the `success()` method on the returned object and then branch
+your code logic accordingly. This approach can lead to less readable code, so alternatively, you can
+instruct the client to always throw a `MethodFailedException` instead.
 
 ```php
 public function withCountry(string $country): self
@@ -88,8 +97,8 @@ Adds given field type (FieldType::xxx) to the list of requested fields.
 public function addField(string $field): self
 ```
 
-// Sets API access token to be used. Set automatically by the client library. public function
+Sets API access token to be used.
 
 ```php
-withAccessToken(string $accessToken): self
+public function withAccessToken(string $accessToken): self
 ```

@@ -1,23 +1,32 @@
-![Olza Logistic Logo](../img/olza-logo.png)
+![Olza Logistic Logo](olza-logo-small.png)
 
-# pickup-points-api-client
+---
 
-* [`Client` class](api.md#client-class)
-* [Public API methods](api.md#public-api-methods)
-  * [`config(Params $params): Result;`](api.md#configparams-params-result)
-  * [`details(Params $params): Result;`](api.md#detailsparams-params-result)
-  * [`find(Params $params): Result;`](api.md#findparams-params-result)
-  * [`search(Params $params): Result;`](api.md#searchparams-params-result)
-* [`Params` class - passing methods arguments](params.md#passing-methods-arguments)
-* [`Result` class - accessing response data](response.md#accessing-response-data)
-* [`Data` class - accessing response payload](response.md#accessing-response-payload)
+# PP API Client for PHP
+
+* **[« Go back](README.md)**
+* [Library requirements](requirements.md)
+* [Installation](installation.md)
+* Library API reference
+  * [`Client` class - gateway to the PP API](client.md#gateway-to-the-api)
+    * [Creating client instance](client.md#instantiation)
+    * Public API methods
+      * [`config(Params $params): Result;`](client.md#configparams-params-result)
+      * [`details(Params $params): Result;`](client.md#detailsparams-params-result)
+      * [`find(Params $params): Result;`](client.md#findparams-params-result)
+      * [`search(Params $params): Result;`](client.md#searchparams-params-result)
+  * [`Params` class - passing method arguments](params.md#passing-method-arguments)
+  * [`Result` class - accessing response data](response.md#accessing-response-data)
+    * [`Data` class - accessing response payload](response.md#accessing-response-payload)
+
+---
 
 ## Accessing response data
 
-Client response are always handed as instance of `Result` class. The object is inmutable, and for
-ease of use, `Result` is subclass
-of [ArrayObject](https://www.php.net/manual/en/class.arrayobject.php) and aside from exposing useful
-methods also acts as regular array:
+Client responses are always provided as instances of the `Result` class. The object is immutable,
+and for ease of use, `Result` is a subclass
+of [ArrayObject](https://www.php.net/manual/en/class.arrayobject.php). Aside from exposing useful
+methods, it also acts as a regular array:
 
 ```php
 ...
@@ -61,14 +70,14 @@ Returns API returned payload.
 public function getItems(): ?array
 ```
 
-Some endpoints return list of items (i.e. list of Pickup Points). In such case you can obtain the
-list of items using `getItems()` method on `Data` class instance.
+Some endpoints return a list of items (e.g., a list of Pickup Points). In such cases, you can obtain
+the list of items using the `getItems()` method on the `Data` class instance.
 
 ### Accessing response payload
 
-Most methods return additional data back as as additional payload. The structure may differ per
-method, yet all the methods return the payload the same way via instance of `Data` class embedded
-in `Result` object:
+Most methods return additional data as an additional payload. The structure may vary per method, yet
+all methods return the payload in the same manner via an instance of the `Data` class embedded in
+the `Result` object:
 
 ```php
 $params = Params::create()
@@ -77,8 +86,9 @@ $params = Params::create()
 $result = $client->find($params);
 
 /*
- * It's safe not to check for `null` as we always get the `Data` object no matter we got any
- * matching Pickup Point or not. In case of no data you will get empty Data instance.
+ * It's safe to omit a `null` check as we always receive a `Data` object, regardless of whether
+ * we have any matching Pickup Points or not. In the case of no data, you will receive an empty
+ * `Data` instance.
  */
 $items = $result->getData();
 foreach($items as $pp) {
