@@ -41,6 +41,7 @@
     "scripts": {
         "test": "vendor/bin/phpunit -c phpunit.xml -c phpunit.xml.dist",
         "phpstan": "vendor/bin/phpstan analyze -c phpstan.neon.dist",
-        "lint": "@composer phpstan"
+        "lint": "@composer phpstan",
+        "mdlint": "markdownlint -c .markdownlint.yaml.dist docs README.md --ignore LICENSE.md"
     }
 }
