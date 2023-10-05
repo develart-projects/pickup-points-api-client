@@ -1,51 +1,33 @@
-![Olza Logistic Logo](img/olza-logo.png)
+![Olza Logistic Logo](docs/olza-logo.png)
 
-# pickup-points-api-client
+# PP API Client for PHP
 
-Olza Logistic's Pickup Point API Client PHP library.
+The PP API Client is a robust library for PHP 7.4 or newer, designed to interact with the Pickup
+Points (PP) API service offered by Olza Logistic, facilitating seamless access to a comprehensive
+database of parcel delivery pickup points. This library empowers developers to execute precise
+queries to fetch information about pickup points across various parameters. With the PP API Client,
+one can effortlessly:
 
----
+* search for pickup points in a specified country,
+* filter pickup points based on the courier service,
+* distinguish between different types of pickup points such as lockers or offices,
+* locate pickup points in proximity to a defined location,
+* retrieve detailed information about individual pickup points.
 
-It is HTTP client agnostic library, and it will work with
-any [PSR-7](https://www.php-fig.org/psr/psr-7/) compatible HTTP client,
-incl. [Guzzle](https://guzzlephp.org/).
-
-## Requirements
-
-* PHP 7.4+ or newer,
-* Any PSR-7 compatible HTTP Client library (e.g. [Guzzle](https://guzzlephp.org/),
-  [Symfony's HTTP Client](https://symfony.com/doc/current/http_client.html), etc.).
-
----
-
-## Installation
-
-Install the PickupPoint API client package first:
-
-```bash
-$ composer require develart-projects/pickup-points-api-client
-```
-
-Next, install PSR compatible HTTP client library of your choice.
-
-### Guzzle HTTP Client
-
-```bash
-$ composer require guzzlehttp/guzzle
-```
-
-### Symfony HTTP Client
-
-```bash
-composer require symfony/http-client nyholm/psr7
-```
+Whether integrating a parcel delivery system or enhancing the user experience by providing
+convenient pickup options, the PP API Client library is an indispensable tool that offers a
+streamlined interface to the PP API service, thereby simplifying the development process and
+augmenting the functionality of parcel delivery-related applications.
 
 ---
 
-## Usage
+## Documentation
 
-See [detailed documentation](docs/README.md) for more information about the library, its methods
-and usage examples.
+* [Requirements](docs/installation.md)
+* [Usage examples](examples.md)
+* [Library API reference](docs/README.md)
+
+---
 
 ## License
 
