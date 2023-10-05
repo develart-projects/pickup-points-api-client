@@ -17,7 +17,7 @@
       * [`search(Params $params): Result;`](client.md#searchparams-params-result)
   * [`Params` class - passing method arguments](params.md#passing-method-arguments)
   * [`Result` class - accessing response data](response.md#accessing-response-data)
-      * [`Data` class - accessing response payload](response.md#accessing-response-payload)
+    * [`Data` class - accessing response payload](response.md#accessing-response-payload)
 
 ---
 
@@ -34,7 +34,7 @@ choice of HTTP client can be based on the specific needs of your project. Aside 
 implementations provided, any future HTTP client adhering to the PSR standards will also be
 supported out of the box.
 
-#### HTTP Clients
+### HTTP Clients
 
 The library directly supports and was tested with the following HTTP clients:
 
