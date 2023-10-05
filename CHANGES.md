@@ -4,7 +4,7 @@ Olza Logistic's Pickup Point API Client PHP library.
 
 ---
 
-## Changelog
+# Changelog
 
 * dev (????-??-??)
   * Fixed API response code not being included in the thrown exception.
