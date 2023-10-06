@@ -6,7 +6,7 @@ Olza Logistic's Pickup Point API Client PHP library.
 
 # Changelog
 
-* dev (????-??-??)
+* v1.2.2 (2023-10-06)
   * Fixed API response code not being included in the thrown exception.
   * Added dedicated exceptions to reflect API error codes (when `throwOnError` is enabled).
   * Added dedicated `ApiCode` class to match API codes.
