@@ -22,25 +22,18 @@
 
 ---
 
-## Requirements
+## Exceptions
 
-The PP API Client library has the following requirements:
+The library throws exceptions of the following classes (all exceptions are in the
+`\OlzaLogistic\PpApi\Client\Exception` namespace):
 
-* PHP 7.4 or newer.
-* One HTTP client library to handle HTTP requests and responses.
-* PSR-17 HTTP Factory library to create request/response objects, stream objects, and URI objects.
+* `InvalidResponseStructureException` is thrown when the
+  response from the API is malformed (i.e. missing required fields, or having invalid values).
 
-![Note](note.png) Though various HTTP clients are supported, only one is required to make the library functional. The
-choice of HTTP client can be based on the specific needs of your project. Aside from the solid
-implementations provided, any future HTTP client adhering to the PSR standards will also be
-supported out of the box.
+When [`Client` object](client.md) is instantiated with `throwOnError()` option set, the following
+exceptions will be thrown on API errors:
 
-### HTTP Clients
-
-The library directly supports and was tested with the following HTTP clients:
-
-* Guzzle (version 7.4 or newer)
-*Symfony HttpClient (version 5.4 or newer)
-
-It also supports
-[PSR compatible HTTP clients](https://packagist.org/providers/psr/http-client-implementation)
+* `AccessDeniedException` - thrown when the API rejects the request due to invalid credentials (like
+  invalid or outdated access token).
+* `ObjectNotFoundException` - thrown when requested data was not found (i.e. invalid PP reference
+  ID, or invalid carrier ID etc.).

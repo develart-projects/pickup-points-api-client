@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client;
 
-use OlzaLogistic\PpApi\Client\Exception\ResponseIncorrectParserException;
+use OlzaLogistic\PpApi\Client\Exception\InvalidResponseStructureException;
 use OlzaLogistic\PpApi\Client\Model\PickupPoint;
 use OlzaLogistic\PpApi\Client\Model\Spedition;
 use Psr\Http\Message\ResponseInterface;
@@ -66,7 +66,7 @@ class Result
         /** @var array $json */
         $json = \json_decode($jsonStr, true, 32, \JSON_THROW_ON_ERROR);
         if (!static::isApiResponseArrayValid($json, $extraKeys)) {
-            throw new ResponseIncorrectParserException();
+            throw new InvalidResponseStructureException();
         }
 
         /** @var string $message */
@@ -118,10 +118,8 @@ class Result
             $result->setData($data);
 
         } catch (\Throwable $ex) {
-            $result = (static::asError())
-                ->setMessage($ex->getMessage());
+            $result = static::fromThrowable($ex);
         }
-        /** @var static $result */
         return $result;
     }
 
@@ -158,8 +156,7 @@ class Result
             $result->setData($data);
 
         } catch (\Throwable $ex) {
-            $result = (static::asError())
-                ->setMessage($ex->getMessage());
+            $result = static::fromThrowable($ex);
         }
         return $result;
     }

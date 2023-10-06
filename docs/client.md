@@ -18,6 +18,7 @@
   * [`Params` class - passing method arguments](params.md#passing-method-arguments)
   * [`Result` class - accessing response data](response.md#accessing-response-data)
     * [`Data` class - accessing response payload](response.md#accessing-response-payload)
+  * [Exceptions](exceptions.md)
 
 ---
 
