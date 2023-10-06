@@ -19,15 +19,16 @@ namespace OlzaLogistic\PpApi\Client;
  */
 class ApiCode
 {
+    
     /**
-     * API rejects the request due to invalid credentials (like invalid or outdated access token)
+     * Requested data was not found (i.e. invalid PP reference ID, or invalid carrier ID etc.).
      *
      * @var int
-     */
+     */    
     public const ERROR_OBJECT_NOT_FOUND = 100;
 
     /**
-     * Requested data was not found (i.e. invalid PP reference ID, or invalid carrier ID etc.).
+     * API rejects the request due to invalid credentials (like invalid or outdated access token)
      *
      * @var int
      */
