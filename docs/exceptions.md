@@ -27,3 +27,7 @@ exceptions will be thrown on API errors:
   invalid or outdated access token).
 * `ObjectNotFoundException` - thrown when requested data was not found (i.e. invalid PP reference
   ID, or invalid carrier ID etc.).
+
+The client can also throw `ClientNotSealedException` on attempts to use the client before it
+configuration was concluded with `build()`, and `ClientAlreadyInitializedException` on attempts to
+modify configuration of already initialized client.

@@ -14,6 +14,8 @@ namespace OlzaLogistic\PpApi\Client;
 
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
 use OlzaLogistic\PpApi\Client\Exception\AccessDeniedException;
+use OlzaLogistic\PpApi\Client\Exception\ClientAlreadyInitializedException;
+use OlzaLogistic\PpApi\Client\Exception\ClientNotSealedException;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
 use OlzaLogistic\PpApi\Client\Exception\ObjectNotFoundException;
 use Psr\Http\Client\ClientInterface;
@@ -44,8 +46,7 @@ abstract class ClientBase implements ClientContract
             throw new \InvalidArgumentException('Invalid API access token.');
         }
 
-        $this->setAccessToken($accessToken);
-        return $this;
+        return $this->setAccessToken($accessToken);
     }
 
     /**
@@ -55,8 +56,7 @@ abstract class ClientBase implements ClientContract
      */
     public function withUserAgent(string $userAgent): self
     {
-        $this->setUserAgent($userAgent);
-        return $this;
+        return $this->setUserAgent($userAgent);
     }
 
     /**
@@ -68,10 +68,8 @@ abstract class ClientBase implements ClientContract
     {
         $this->assertClientNotConfigured();
 
-        $this->setHttpClient($httpClient);
-        return $this;
+        return $this->setHttpClient($httpClient);
     }
-
 
 
     /**
@@ -83,8 +81,7 @@ abstract class ClientBase implements ClientContract
     {
         $this->assertClientNotConfigured();
 
-        $this->setRequestFactory($requestFactory);
-        return $this;
+        return $this->setRequestFactory($requestFactory);
     }
 
     /**
@@ -93,8 +90,7 @@ abstract class ClientBase implements ClientContract
      */
     public function throwOnError(): self
     {
-        $this->setThrowOnError(true);
-        return $this;
+        return $this->setThrowOnError(true);
     }
 
     /**
@@ -128,7 +124,7 @@ abstract class ClientBase implements ClientContract
     protected function assertConfigurationSealed(): void
     {
         if (!$this->isClientInitialized) {
-            throw new \RuntimeException('Client not initialized.');
+            throw new ClientNotSealedException();
         }
     }
 
@@ -139,7 +135,7 @@ abstract class ClientBase implements ClientContract
     protected function assertClientNotConfigured(): void
     {
         if ($this->isClientInitialized) {
-            throw new \RuntimeException('Client already initialized.');
+            throw new ClientAlreadyInitializedException();
         }
     }
 
@@ -179,7 +175,7 @@ abstract class ClientBase implements ClientContract
     /**
      * Network client for API communication.
      *
-     * @var \Psr\Http\Client\ClientInterface
+     * @var ClientInterface
      */
     protected ClientInterface $httpClient;
 
@@ -325,7 +321,6 @@ abstract class ClientBase implements ClientContract
              */
             $result = $processResponseCallback($apiResponse);
         } catch (\Throwable $ex) {
-            // FIXME: log the exception
             $result = Result::fromThrowable($ex);
         }
 

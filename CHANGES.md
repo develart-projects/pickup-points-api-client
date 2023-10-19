@@ -11,6 +11,8 @@ Olza Logistic's Pickup Point API Client PHP library.
   * Removed `withGuzzleHttpClient()` as Guzzle no longer needs special treatment.
   * Removed `withSymfonyHttpClient()`. See docs on how to use Symfony HTTP client.
   * Removed `withPsrClient()`. Use `withHttpClient()` and `withRequestClient()` instead.
+  * Attempt to modify sealed client now throws `ClientAlreadyInitializedException`.
+  * Attempt to access not sealed client now throws `ClientNotSealedException`.
   * Updated library documentation.
 
 
