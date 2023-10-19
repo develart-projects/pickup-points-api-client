@@ -145,7 +145,7 @@ composer require symfony/http-client nyholm/psr7
 Then, create an instance of the `Client` class:
 
 ```php
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \Symfony\Component\HttpClient\Psr18Client();
 $requestFactory = new \Nyholm\Psr7\Factory\Psr17Factory();
 
 $client = PpApiClient::useApi($url)
