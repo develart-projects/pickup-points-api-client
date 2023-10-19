@@ -12,7 +12,7 @@
     * [Usage](#usage)
     * [Creating client instance](#creating-client-instance)
       * [Using with Guzzle library](#using-with-guzzle-library)
-      * [Using with Symfony HTTP Client)](#using-client-with-symfony-http-client)
+      * [Using with Symfony HTTP Client)](#using-with-symfony-http-client)
   * [`Params` - passing method arguments](params.md)
   * [`Result` - accessing response data](response.md)
   * [Exceptions](exceptions.md)
