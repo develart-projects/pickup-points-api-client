@@ -10,7 +10,7 @@
   * [`config(Params $params): Result;`](#configparams-params-result)
   * [`details(Params $params): Result;`](#detailsparams-params-result)
   * [`find(Params $params): Result;`](#findparams-params-result)
-  * [`search(Params $params): Result;`](#searchparams-params-result)
+  * [`nearby(Params $params): Result;`](#nearbyparams-params-result)
 * [Library classes reference](classes.md)
 
 ---
