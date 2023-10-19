@@ -30,7 +30,7 @@ on [Client class instantiation](client.md)).
 
 The following public methods serve as you gateway to PP API:
 
-#### `config(Params $params): Result;`
+### `config(Params $params): Result;`
 
 Returns current vital information about PP API environment.
 
@@ -53,7 +53,7 @@ $configItems = $result->getData();
 ...
 ```
 
-#### `details(Params $params): Result;`
+### `details(Params $params): Result;`
 
 Return details about specific Pickup Point.
 
@@ -78,7 +78,7 @@ foreach($items as $pp) {
 ...
 ```
 
-#### `find(Params $params): Result;`
+### `find(Params $params): Result;`
 
 Searches for available pickup points that match the provided parameters.
 
@@ -111,7 +111,7 @@ foreach($items as $pp) {
 ...
 ```
 
-#### `nearby(Params $params): Result;`
+### `nearby(Params $params): Result;`
 
 Searches for pickup points located near a specified geographic location.
 

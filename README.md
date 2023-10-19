@@ -18,12 +18,13 @@ Whether you're integrating a parcel delivery system or enhancing the user experi
 convenient pickup options, the PP API Client library is an indispensable tool. It offers
 a streamlined interface to the PP API service, simplifying the development process and augmenting
 the functionality of parcel delivery-related applications.
+
 ---
 
 ## Documentation
 
 * [Requirements](docs/installation.md)
-* [Usage examples](examples/)
+* [Usage examples](docs/examples/README.md)
 * [Library API reference](docs/README.md)
 
 ---

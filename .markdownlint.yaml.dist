@@ -78,7 +78,8 @@ MD013:
   # Include code blocks
   code_blocks: true
   # Include tables
-  tables: true
+  # tables: true
+  tables: false  # MOR
   # Include headings
   headings: true
   # Include headings
