@@ -11,7 +11,8 @@
   * `Client` - gateway to the PP API
     * [Usage](#usage)
     * [Creating client instance](#creating-client-instance)
-      * [Using Client with Guzzle library](#using-client-with-guzzle-library)
+      * [Using with Guzzle library](#using-with-guzzle-library)
+      * [Using with Symfony HTTP Client)](#using-client-with-symfony-http-client)
   * [`Params` - passing method arguments](params.md)
   * [`Result` - accessing response data](response.md)
   * [Exceptions](exceptions.md)
@@ -29,7 +30,7 @@ unified `Result` class object. For those who prefer handling exceptions rather t
 result, there's a mode that transforms each unsuccessful API response into a corresponding
 exception (for more information, see the details on `Client` class instantiation).
 
-### Creating client instance
+## Creating client instance
 
 To begin using the library, you need to first create an instance of the `Client` class, using
 static `public static function useApi(string $apiUrl)` method and several builder methods:
@@ -109,9 +110,9 @@ try {
 therefore you will not see the code checking the `success()` method on the `Result` object, however
 you are free to use either approach as you see fit.
 
-#### Using Client with Guzzle library
+### Using with Guzzle library
 
-To use the Client with Guzzle library, ensure you install both the HTTP client and PSR-7 compatible
+To use the this library with Guzzle, ensure you install both the HTTP client and PSR-7 compatible
 request library:
 
 ```bash
@@ -123,6 +124,29 @@ Then, create an instance of the `Client` class:
 ```php
 $httpClient = new \GuzzleHttp\Client();
 $requestFactory = new \GuzzleHttp\Psr7\HttpFactory();
+
+$client = PpApiClient::useApi($url)
+                     ->withAccessToken($token)
+                     ->withHttpClient($client)
+                     ->withRequestFactory($requestFactory)
+                     ->build();
+```
+
+### Using with Symfony HTTP Client
+
+Unless you are trying to use this library from i.e. existing Symfony framework based project, you
+need to install the Symfony HTTP client package and any package implementing PSR-17 request factory,
+l.e. [nyholm/psr7](https://packagist.org/packages/nyholm/psr7):
+
+```bash
+composer require symfony/http-client nyholm/psr7
+```
+
+Then, create an instance of the `Client` class:
+
+```php
+$httpClient = new \GuzzleHttp\Client();
+$requestFactory = new \Nyholm\Psr7\Factory\Psr17Factory();
 
 $client = PpApiClient::useApi($url)
                      ->withAccessToken($token)
