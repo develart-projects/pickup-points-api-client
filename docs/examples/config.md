@@ -21,18 +21,18 @@
 ## Getting API runtime details for given country
 
 ```php
-use OlzaLogistic\PpApi\Client\Client as PpApiClient;
+use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Model\Country;
 
 // Construct instance of API Client
 // See docs for details about HTTP client and request factory
-$client = PpApiClient::useApi('<REAL PP API URL>')
-                     ->withAccessToken('<YOUR REAL PP API TOKEN>')
-                     ->withHttpClient(...)
-                     ->withRequestFactory(...)
-                     ->throwOnError()
-                     ->build();
+$client = Client::useApi('<REAL PP API URL>')
+                ->withAccessToken('<YOUR REAL PP API TOKEN>')
+                ->withHttpClient(...)
+                ->withRequestFactory(...)
+                ->throwOnError()
+                ->build();
 
 // Prepare request params
 $params = Params::create()
