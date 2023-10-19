@@ -4,25 +4,24 @@
 
 # PP API Client for PHP
 
-* **[« Go back](README.md)**
 * [Library requirements](requirements.md)
 * [Installation](installation.md)
-* Library API reference
-  * [`Client` class - gateway to the PP API](client.md#gateway-to-the-api)
-    * [Creating client instance](client.md#instantiation)
-    * Public API methods
-      * [`config(Params $params): Result;`](client.md#configparams-params-result)
-      * [`details(Params $params): Result;`](client.md#detailsparams-params-result)
-      * [`find(Params $params): Result;`](client.md#findparams-params-result)
-      * [`search(Params $params): Result;`](client.md#searchparams-params-result)
-  * [`Params` class - passing method arguments](params.md#passing-method-arguments)
-  * [`Result` class - accessing response data](response.md#accessing-response-data)
-    * [`Data` class - accessing response payload](response.md#accessing-response-payload)
+* [Public API methods](api.md)
+* [Library classes reference](classes.md)
+  * `Client` - gateway to the PP API
+    * [Usage](#usage)
+    * [Creating client instance](#creating-client-instance)
+      * [Using Client with Guzzle library](#using-client-with-guzzle-library)
+  * [`Params` - passing method arguments](params.md)
+  * [`Result` - accessing response data](response.md)
   * [Exceptions](exceptions.md)
 
 ---
 
 ## Usage
+
+The `Client` class serves as your gateway to the PP API. It acts as a wrapper around the HTTP client
+library, handling the intricacies of communicating with the API and processing responses.
 
 To simplify the usage of the library, all public methods provided by the library expect arguments to
 be passed using the `Params` class. All response data is also returned, encapsulated within a
@@ -30,26 +29,28 @@ unified `Result` class object. For those who prefer handling exceptions rather t
 result, there's a mode that transforms each unsuccessful API response into a corresponding
 exception (for more information, see the details on `Client` class instantiation).
 
----
+### Creating client instance
 
-## Client class
+To begin using the library, you need to first create an instance of the `Client` class, using
+static `public static function useApi(string $apiUrl)` method and several builder methods:
 
-The `Client` class serves as your gateway to the PP API. It acts as a wrapper around the HTTP client
-library, handling the intricacies of communicating with the API and processing responses.
+| Method signature                                              | Description                                                                                           |
+|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| `withAccessToken(string $accessToken)`                        | Configures the client to utilize a specific access token when interacting with the Pickup Points API. |
+| `withUserAgent(string $userAgent)`                            | Specifies the User-Agent string for all HTTP API requests.                                            |
+| `withHttpClient(ClientInterface $httpClient)`                 | Configures a PSR-18 compatible instance of an HTTP client implementation.                             |
+| `withRequestFactory(requestFactoryInterface $requestFactory)` | Configures a PSR-17 compatible request factory instance to work with the HTTP client.                 |
+| `throwOnError()`                                              | Configures the client to throw an exception in case of any API connection failure.                    |
 
-### Instantiation
-
-To begin using the library, you need to first create an instance of the `Client` class:
+Then calling `build()` to obrain the `Client` instance:
 
 ```php
 use OlzaLogistic\PpApi\Client\Client as PpApiClient;
 
-$url = ...
-$accessToken = ...
-
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withGuzzleHttpClient()
+                       ->withHttpClient($client)
+                       ->withRequestFactory($requestFactory)
                        ->throwOnError()
                        ->build();
 ```
@@ -61,7 +62,8 @@ need an instance of the `Params` class to pass all the required information to t
 ```php
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withGuzzleHttpClient()
+                       ->withHttpClient($client)
+                       ->withRequestFactory($requestFactory)
                        ->build();
 
 $params = Params::create()
@@ -88,7 +90,8 @@ be thrown):
 ```php
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withGuzzleHttpClient()
+                       ->withHttpClient($client)
+                       ->withRequestFactory($requestFactory)
                        ->throwOnError()  // <-- any error will end up as an exception
                        ->build();
 
@@ -106,122 +109,24 @@ try {
 therefore you will not see the code checking the `success()` method on the `Result` object, however
 you are free to use either approach as you see fit.
 
----
+#### Using Client with Guzzle library
 
-### Public API methods
+To use the Client with Guzzle library, ensure you install both the HTTP client and PSR-7 compatible
+request library:
 
-The following public methods serve as you gateway to PP API:
-
-#### `config(Params $params): Result;`
-
-Returns current vital information about PP API environment.
-
-![Note](note.png)  It's highly recommended to invoke the `config/` method as the very first method
-during your PP API communication session. This method is expected to return vital runtime parameters
-back to the client, allowing you to act accordingly. For instance, `config/` will return a list of
-all currently available carriers (and their IDs), providing foresight on what to expect from other
-carrier-dependent methods.
-
-Required arguments:
-
-* `country` - **(required)** country code (use Country::xxx consts)
-
-```php
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC);
-$result = $client->config($params);
-$configItems = $result->getData();
-...
-...
+```bash
+composer require guzzlehttp/guzzle guzzlehttp/psr7
 ```
 
-#### `details(Params $params): Result;`
-
-Return details about specific Pickup Point.
-
-Required arguments:
-
-* `country` - **(required)** country code (use `Country::xxx` consts)
-* `spedition` - **(required)** one (string) or more (array of strings)
-* `id` - **(required)** Pickup point identifier
+Then, create an instance of the `Client` class:
 
 ```php
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
-                  ->withSpedition(Spedition::PACKETA_IPP)
-                  ->withSpeditionId('12345');
-$result = $client->details($params);
-$items = $result->getData();
-foreach($items as $pp) {
-  echo $pp->getSpeditionId() . PHP_EOL;
-}
-...
+$httpClient = new \GuzzleHttp\Client();
+$requestFactory = new \GuzzleHttp\Psr7\HttpFactory();
 
-...
-```
-
-#### `find(Params $params): Result;`
-
-Searches for available pickup points that match the provided parameters.
-
-Required arguments:
-
-* `country` - **[required]** country code (use `Country::xxx` consts).
-* `spedition` - **[required]** either a single spedition (string) or multiple speditions (array of
-  strings).
-
-Optional arguments:
-
-* `search` - A search string that will be additionally matched against pickup point names,
-  identifiers, addresses, etc.
-* `services` - A list of services (see `ServiceType::*`) that a pickup point must support to be
-  included in the returned dataset. **NOTE: services are `OR`ed, so supporting just one suffices.**
-* `payments` - A list of payment types (see `PaymentType::*`) that a pickup point must support to be
-  included in the returned dataset. **NOTE: payment types are `OR`ed, so supporting just one
-  suffices.**
-* `limit` - The maximum number of items to be returned. The default is to return all matching items.
-
-```php
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
-                  ->withSpedition(Spedition::PACKETA_IPP);
-$result = $client->find($params);
-$items = $result->getData() ?? [];
-foreach($items as $pp) {
-  echo $pp->getSpeditionId() . PHP_EOL;
-}
-...
-```
-
-#### `nearby(Params $params): Result;`
-
-Searches for pickup points located near a specified geographic location.
-
-Required arguments:
-
-* `country` - **[required]** country code (use `Country::xxx` consts).
-* `spedition` - **[required]** either a single spedition (string) or multiple speditions (array of
-  strings).
-* `coords` - **[required]** geographic coordinates to search near. The value should be a string in
-  the format `latitude,longitude`.
-
-![Note](note.png) The `coords` argument description seems to have been copied erroneously from
-the `search`
-argument in the previous method. It should specify the format for providing geographic coordinates
-rather than matching against pickup point attributes.
-
-```php
-$lat = 50.087;
-$long = 14.421;
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
-                  ->withSpedition(Spedition::PACKETA_IPP)
-                  ->withLocation($lat, $long);
-$result = $client->nearby($params);
-/** @var ?Data $data */
-$items = $result->getData() ?? [];
-foreach($items as $pp) {
-  echo $pp->getSpeditionId() . PHP_EOL;
-}
-...
+$client = PpApiClient::useApi($url)
+                     ->withAccessToken($token)
+                     ->withHttpClient($client)
+                     ->withRequestFactory($requestFactory)
+                     ->build();
 ```

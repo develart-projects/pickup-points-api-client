@@ -4,21 +4,10 @@
 
 # PP API Client for PHP
 
-* **[« Go back](README.md)**
 * [Library requirements](requirements.md)
 * [Installation](installation.md)
-* Library API reference
-  * [`Client` class - gateway to the PP API](client.md#gateway-to-the-api)
-    * [Creating client instance](client.md#instantiation)
-    * Public API methods
-      * [`config(Params $params): Result;`](client.md#configparams-params-result)
-      * [`details(Params $params): Result;`](client.md#detailsparams-params-result)
-      * [`find(Params $params): Result;`](client.md#findparams-params-result)
-      * [`search(Params $params): Result;`](client.md#searchparams-params-result)
-  * [`Params` class - passing method arguments](params.md#passing-method-arguments)
-  * [`Result` class - accessing response data](response.md#accessing-response-data)
-    * [`Data` class - accessing response payload](response.md#accessing-response-payload)
-  * [Exceptions](exceptions.md)
+* [Public API methods](api.md)
+* [Library classes reference](classes.md)
 
 ---
 
@@ -37,10 +26,8 @@ composer require develart-projects/pickup-points-api-client
 ### HTTP Clients
 
 The library supports the following HTTP clients:
-
-* Guzzle (version 7.4 or newer)
-  *Symfony HttpClient (version 5.4 or newer)
-  *Any PSR-18 compatible HTTP client
+  * Any `PSR-18` compatible HTTP client and `PSR-17` compatible request factory.
+  * Symfony HttpClient (version 5.4 or newer)
 
 
 This command will download the PP API Client library and its core dependencies. Next, you need to
@@ -48,7 +35,7 @@ install one of the supported HTTP clients (unless you have it installed already)
 For example, to install Guzzle, run the following command:
 
 ```bash
-composer require guzzlehttp/guzzle
+composer require guzzlehttp/guzzle guzzlehttp/psr7
 ```
 
 To install Symfony HTTP client, run the following command:

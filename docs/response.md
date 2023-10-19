@@ -4,21 +4,15 @@
 
 # PP API Client for PHP
 
-* **[« Go back](README.md)**
 * [Library requirements](requirements.md)
 * [Installation](installation.md)
+* [Public API methods](api.md)
 * Library API reference
-  * [`Client` class - gateway to the PP API](client.md#gateway-to-the-api)
-    * [Creating client instance](client.md#instantiation)
-    * Public API methods
-      * [`config(Params $params): Result;`](client.md#configparams-params-result)
-      * [`details(Params $params): Result;`](client.md#detailsparams-params-result)
-      * [`find(Params $params): Result;`](client.md#findparams-params-result)
-      * [`search(Params $params): Result;`](client.md#searchparams-params-result)
-  * [`Params` class - passing method arguments](params.md#passing-method-arguments)
-  * [`Result` class - accessing response data](response.md#accessing-response-data)
-    * [`Data` class - accessing response payload](response.md#accessing-response-payload)
-  * [Exceptions](exceptions.md)
+
+* [Library classes reference](classes.md)
+  * [`Client` class - gateway to the PP API](client.md)
+  * [`Params` - passing method arguments](params.md)
+  * `Result` - accessing response data
 
 ---
 
@@ -30,13 +24,11 @@ of [ArrayObject](https://www.php.net/manual/en/class.arrayobject.php). Aside fro
 methods, it also acts as a regular array:
 
 ```php
-...
 $result = $client->find('cz');
 $items = $result->getData();
 foreach($items as $item) {
     echo $item->getSpeditionId() . PHP_EOL;
 }
-...
 ```
 
 `Result` class exposes the following public methods:
