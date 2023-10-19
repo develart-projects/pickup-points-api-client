@@ -26,13 +26,12 @@ use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Model\Country;
 use OlzaLogistic\PpApi\Client\Model\Spedition;
 
+// Configure with real URL and token
 $apiToken = '<YOUR REAL PP API TOKEN>';
 $apiUrl = 'https://...';
 
-// Using Guzzle HTTP client
-$httpClient = \GuzzleHttp\Client();
-$requestFactory = \GuzzleHttp\Psr7\RequestFactory();
-
+// Construct instance of API Client
+// See docs for details about HTTP client and request factory
 $client = PpApiClient::useApi($apiUrl)
                      ->withAccessToken($apiToken)
                      ->withHttpClient($httpClient)
@@ -40,11 +39,13 @@ $client = PpApiClient::useApi($apiUrl)
                      ->throwOnError()
                      ->build();
 
+// Prepare request params
 $params = Params::create()
                   ->withCountry(Country::CZECHIA)
                   ->withSpedition(Spedition::PACKETA_IPP)
                   ->withSpeditionId('135');
 
+// Call API method
 $apiResponse = $client->details($params);
 
 print_r($apiResponse);
