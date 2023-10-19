@@ -33,8 +33,8 @@ $apiUrl = 'https://...';
 // See docs for details about HTTP client and request factory
 $client = PpApiClient::useApi($apiUrl)
                      ->withAccessToken($apiToken)
-                     ->withHttpClient($httpClient)
-                     ->withRequestFactory($requestFactory)
+                     ->withHttpClient(...)
+                     ->withRequestFactory(...)
                      ->throwOnError()
                      ->build();
 
