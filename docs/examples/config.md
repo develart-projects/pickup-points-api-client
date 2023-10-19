@@ -25,14 +25,10 @@ use OlzaLogistic\PpApi\Client\Client as PpApiClient;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Model\Country;
 
-// Configure with real URL and token
-$apiToken = '<YOUR REAL PP API TOKEN>';
-$apiUrl = 'https://...';
-
 // Construct instance of API Client
 // See docs for details about HTTP client and request factory
-$client = PpApiClient::useApi($apiUrl)
-                     ->withAccessToken($apiToken)
+$client = PpApiClient::useApi('<REAL PP API URL>')
+                     ->withAccessToken('<YOUR REAL PP API TOKEN>')
                      ->withHttpClient(...)
                      ->withRequestFactory(...)
                      ->throwOnError()
