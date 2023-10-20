@@ -326,13 +326,6 @@ class Result implements ArrayableContract
         $data = $this->getData();
         if ($data instanceof ArrayableContract) {
             $data = $data->toArray();
-        } else if ($data instanceof \Stringable) {
-            $data = $data->__toString();
-        } else if ($data instanceof \ArrayObject) {
-            $data = $data->getArrayCopy();
-        } else if (is_object($data)) {
-            $cls = \get_class($data);
-            $data = "<{$cls}>";
         }
 
         $result['data'] = $data;
