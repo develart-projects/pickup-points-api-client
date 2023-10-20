@@ -5,7 +5,7 @@
 *.bak
 *.swp
 *.iml
-*.lock
+composer.lock
 
 # pre-commit
 .pre-commit-config.yaml
