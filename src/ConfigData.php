@@ -78,4 +78,17 @@ class ConfigData extends Data
 
     /* ****************************************************************************************** */
 
+    public function toArray(): array
+    {
+        $result = [];
+        foreach ($this->config as $key => $value) {
+            $result['config'][$key] = $value;
+        }
+        foreach ($this->speditions as $key => $value) {
+            $result['speditions'][$key] = $value->toArray();
+        }
+
+        return $result;
+    }
+
 } // end of class
