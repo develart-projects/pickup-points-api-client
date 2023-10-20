@@ -21,6 +21,21 @@ class Data extends \ArrayObject implements ArrayableContract
 {
     public function toArray(): array
     {
-        return $this->getArrayCopy();
+        $result = [];
+        foreach($this as $key => $value) {
+            if ($value instanceof ArrayableContract) {
+                $value = $value->toArray();
+            } else if ($value instanceof \Stringable) {
+                $value = $value->__toString();
+            } else if ($value instanceof \ArrayObject) {
+                $value = $value->getArrayCopy();
+            } else if (is_object($value)) {
+                $cls = \get_class($value);
+                $value = "<{$cls}>";
+            }
+            $result[$key] = $value;
+        }
+        return $result;
     }
+
 }
