@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client\Model;
 
-class PickupPoint
+use OlzaLogistic\PpApi\Client\Contracts\ArrayableContract;
+
+class PickupPoint implements ArrayableContract
 {
     /* ****************************************************************************************** */
 
@@ -1005,6 +1007,68 @@ class PickupPoint
         }
 
         return $pp;
+    }
+
+    /* ****************************************************************************************** */
+
+    public function toArray(): array
+    {
+        return [
+            static::KEY_ID             => $this->getSpeditionId(),
+            static::KEY_SPEDITION      => $this->getSpedition(),
+            static::KEY_GROUP_NAME     => $this->getNames(),
+            static::KEY_GROUP_ADDRESS  => [
+                static::KEY_FULL_ADDRESS => $this->getFullAddress(),
+                static::KEY_STREET       => $this->getStreet(),
+                static::KEY_ZIP          => $this->getZip(),
+                static::KEY_CITY         => $this->getCity(),
+                static::KEY_COUNTY       => $this->getCounty(),
+                static::KEY_COUNTRY      => $this->getCountry(),
+            ],
+
+            static::KEY_GROUP_CONTACTS => [
+                static::KEY_PHONE => $this->getPhone(),
+                static::KEY_EMAIL => $this->getEmail(),
+            ],
+
+            static::KEY_GROUP_HOURS    => [
+                static::KEY_OPEN_247  => $this->isOpen247(),
+                static::KEY_MONDAY    => [
+                    static::KEY_HOURS => $this->getMondayHours(),
+                    static::KEY_BREAK => $this->getMondayBreak(),
+                ],
+                static::KEY_TUESDAY   => [
+                    static::KEY_HOURS => $this->getTuesdayHours(),
+                    static::KEY_BREAK => $this->getTuesdayBreak(),
+                ],
+                static::KEY_WEDNESDAY => [
+                    static::KEY_HOURS => $this->getWednesdayHours(),
+                    static::KEY_BREAK => $this->getWednesdayBreak(),
+                ],
+                static::KEY_THURSDAY  => [
+                    static::KEY_HOURS => $this->getThursdayHours(),
+                    static::KEY_BREAK => $this->getThursdayBreak(),
+                ],
+                static::KEY_FRIDAY    => [
+                    static::KEY_HOURS => $this->getFridayHours(),
+                    static::KEY_BREAK => $this->getFridayBreak(),
+                ],
+                static::KEY_SATURDAY  => [
+                    static::KEY_HOURS => $this->getSaturdayHours(),
+                    static::KEY_BREAK => $this->getSaturdayBreak(),
+                ],
+                static::KEY_SUNDAY    => [
+                    static::KEY_HOURS => $this->getSundayHours(),
+                    static::KEY_BREAK => $this->getSundayBreak(),
+                ],
+            ],
+
+            static::KEY_GROUP_LOCATION => [
+                static::KEY_LATITUDE  => $this->getLatitude(),
+                static::KEY_LONGITUDE => $this->getLongitude(),
+            ],
+
+        ];
     }
 
 } // end of class
