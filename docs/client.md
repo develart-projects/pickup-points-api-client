@@ -50,7 +50,7 @@ use OlzaLogistic\PpApi\Client\Client as PpApiClient;
 
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withHttpClient($client)
+                       ->withHttpClient($httpClient)
                        ->withRequestFactory($requestFactory)
                        ->throwOnError()
                        ->build();
@@ -61,14 +61,18 @@ should now be able to access the API data. As API methods may require certain ar
 need an instance of the `Params` class to pass all the required information to the method:
 
 ```php
+use OlzaLogistic\PpApi\Client\Client as PpApiClient;
+use OlzaLogistic\PpApi\Client\Params;
+use OlzaLogistic\PpApi\Client\Model\Country;
+
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withHttpClient($client)
+                       ->withHttpClient($httpClient)
                        ->withRequestFactory($requestFactory)
                        ->build();
 
 $params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC);
+                  ->withCountry(Country::CZECHIA);
 $result = $client->config($params);
 if($result->success()) {
   $configItems = $result->getData();
@@ -91,14 +95,14 @@ be thrown):
 ```php
 $client = PpApiClient::useApi($url)
                        ->withAccessToken($token)
-                       ->withHttpClient($client)
+                       ->withHttpClient($httpClient)
                        ->withRequestFactory($requestFactory)
                        ->throwOnError()  // <-- any error will end up as an exception
                        ->build();
 
 try {
   $params = Params::create()
-                    ->withCountry(Country::CZECH_REPUBLIC);
+                    ->withCountry(Country::CZECHIA);
   $result = $client->find($params);
   ...
 } catch (MethodFailedException $ex) {
@@ -127,7 +131,7 @@ $requestFactory = new \GuzzleHttp\Psr7\HttpFactory();
 
 $client = PpApiClient::useApi($url)
                      ->withAccessToken($token)
-                     ->withHttpClient($client)
+                     ->withHttpClient($httpClient)
                      ->withRequestFactory($requestFactory)
                      ->build();
 ```
@@ -150,7 +154,7 @@ $requestFactory = new \Nyholm\Psr7\Factory\Psr17Factory();
 
 $client = PpApiClient::useApi($url)
                      ->withAccessToken($token)
-                     ->withHttpClient($client)
+                     ->withHttpClient($httpClient)
                      ->withRequestFactory($requestFactory)
                      ->build();
 ```

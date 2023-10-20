@@ -5,6 +5,7 @@
 *.bak
 *.swp
 *.iml
+*.lock
 
 # pre-commit
 .pre-commit-config.yaml
