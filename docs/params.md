@@ -23,6 +23,8 @@ example, `find()` methods expects `country` and `spedition` arguments, so create
 instance first using `create()` static method and set the params:
 
 ```php
+use OlzaLogistic\PpApi\Client\Params;
+
 $params = Params::create()
           ->withCountry($country)
           ->withSpedition($spedition);

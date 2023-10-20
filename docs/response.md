@@ -79,8 +79,13 @@ all methods return the payload in the same manner via an instance of the `Data` 
 the `Result` object:
 
 ```php
+use OlzaLogistic\PpApi\Client\Params;
+use OlzaLogistic\PpApi\Client\Model\Country;
+use OlzaLogistic\PpApi\Client\Model\Spedition;
+
+
 $params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
+                  ->withCountry(Country::CZECHIA)
                   ->withSpedition(Spedition::PACKETA_IPP);
 $result = $client->find($params);
 
