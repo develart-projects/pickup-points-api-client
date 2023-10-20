@@ -11,9 +11,11 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\Model;
 
+use OlzaLogistic\PpApi\Client\Contracts\ArrayableContract;
 use OlzaLogistic\PpApi\Client\Model\PickupPoint as PP;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
 use OlzaLogistic\PpApi\Client\Tests\Util\PickupPointResponseGenerator;
+use PHPUnit\Framework\Assert;
 
 class PickupPointTest extends BaseTestCase
 {
@@ -57,6 +59,29 @@ class PickupPointTest extends BaseTestCase
             $this->assertEquals((string)$node[ PP::KEY_LATITUDE ], $pp->getLatitude());
             $this->assertEquals((string)$node[ PP::KEY_LONGITUDE ], $pp->getLongitude());
         }
+    }
+
+    /* ****************************************************************************************** */
+
+    public function testArrayable(): void
+    {
+        $data = PickupPointResponseGenerator::data()
+                                            ->withAll()
+                                            ->get();
+        $pp = PP::fromApiResponse($data);
+
+        $expected = $data;
+        unset($expected[PP::KEY_GROUP_SERVICES]);
+        $expected[PP::KEY_GROUP_LOCATION][PP::KEY_LATITUDE]
+            = \strval($expected[PP::KEY_GROUP_LOCATION][PP::KEY_LATITUDE]);
+        $expected[PP::KEY_GROUP_LOCATION][PP::KEY_LONGITUDE]
+            = \strval($expected[PP::KEY_GROUP_LOCATION][PP::KEY_LONGITUDE]);
+        Assert::assertInstanceof(ArrayableContract::class, $pp);
+
+        $actual = $pp->toArray();
+        unset($actual[PP::KEY_GROUP_HOURS]);
+        $this->addWarning('Hours are not tested');
+        Assert::assertEquals($expected, $actual);
     }
 
 } // end of class

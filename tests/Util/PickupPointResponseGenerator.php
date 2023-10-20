@@ -90,10 +90,10 @@ class PickupPointResponseGenerator
             PP::KEY_EMAIL,
         ];
 
-        if (\array_key_exists(PP::KEY_PHONE, $fields)) {
+        if (\in_array(PP::KEY_PHONE, $fields)) {
             $this->data[ PP::KEY_GROUP_CONTACTS ][ PP::KEY_PHONE ] = $this->getRandomString('phone');
         }
-        if (\array_key_exists(PP::KEY_EMAIL, $fields)) {
+        if (\in_array(PP::KEY_EMAIL, $fields)) {
             $this->data[ PP::KEY_GROUP_CONTACTS ][ PP::KEY_EMAIL ] = $this->getRandomString('email');
         }
 
