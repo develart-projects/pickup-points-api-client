@@ -101,7 +101,7 @@ class Spedition
 
     /* ****************************************************************************************** */
 
-    protected string $label;
+    protected ?string $label = null;
 
     /**
      * Returns spedition's label (name).
@@ -110,7 +110,9 @@ class Spedition
      */
     public function getLabel(): string
     {
-        return $this->label;
+        return $this->label !== null
+            ? $this->label
+            : $this->getCode();
     }
 
     /**
