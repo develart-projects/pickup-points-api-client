@@ -12,11 +12,15 @@ declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client;
 
+use OlzaLogistic\PpApi\Client\Contracts\ArrayableContract;
+
 /**
  * Immutable object representing elements of "data" node of the API response.
  */
-class Data extends \ArrayObject
+class Data extends \ArrayObject implements ArrayableContract
 {
-    // empty
-
-} // end of class
+    public function toArray(): array
+    {
+        return $this->getArrayCopy();
+    }
+}
