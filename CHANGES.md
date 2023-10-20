@@ -16,6 +16,7 @@ Olza Logistic's Pickup Point API Client PHP library.
   * Improved construction of `Config` response object.
   * The `Spedition::getLabel()` now returns spedition code if no label is returned by API.
   * Implemented `Arrayable` contact (`toArray()`) for response data classes.
+  * Updated tests.
   * Updated library documentation.
 
 
