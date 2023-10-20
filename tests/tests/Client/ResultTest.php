@@ -14,6 +14,7 @@ namespace OlzaLogistic\PpApi\Client\Tests\Model;
 use OlzaLogistic\PpApi\Client\ApiResponse;
 use OlzaLogistic\PpApi\Client\Result;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
+use PHPUnit\Framework\Assert;
 
 class ResultTest extends BaseTestCase
 {
@@ -110,5 +111,55 @@ class ResultTest extends BaseTestCase
 
     /* ****************************************************************************************** */
 
+    public function testArrayableSuccess(): void
+    {
+        $message = $this->getRandomString('msg');
+
+        $expected = [
+            'success' => true,
+            'code'    => 0,
+            'message' => $message,
+            'data'    => null,
+        ];
+
+        $result = Result::asSuccess();
+        $this->call($result, 'setMessage', [$message]);
+        $actual = $result->toArray();
+
+        Assert::assertEquals($expected, $actual);
+    }
+
+    public function testArrayableError(): void
+    {
+        $message = $this->getRandomString('msg');
+        $code = $this->getRandomInt(1, 255);
+
+        $expected = [
+            'success' => false,
+            'code'    => $code,
+            'message' => $message,
+            'data'    => null,
+        ];
+
+        $result = Result::asError();
+        $this->call($result, 'setMessage', [$message]);
+        $this->call($result, 'setCode', [$code]);
+        $actual = $result->toArray();
+
+        Assert::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public static function call(object $obj, string $methodName, array $args = [])
+    {
+        $reflection = new \ReflectionClass($obj);
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs(\is_object($obj) ? $obj : null, $args);
+    }
 
 } // end of class

@@ -2,29 +2,29 @@
 
 # PP API Client for PHP
 
-The PP API Client is a robust library for PHP 7.4 or newer, designed to interact with the Pickup
-Points (PP) API service offered by Olza Logistic, facilitating seamless access to a comprehensive
-database of parcel delivery pickup points. This library empowers developers to execute precise
-queries to fetch information about pickup points across various parameters. With the PP API Client,
-one can effortlessly:
+The PP API Client is a robust library tailored for PHP 7.4 or newer, designed to interact with the
+Pickup Points (PP) API service offered by Olza Logistic. This library facilitates seamless access to
+a comprehensive database of parcel delivery pickup points, empowering developers to execute precise
+queries to retrieve information about pickup points based on various parameters. With the PP API
+Client, one can effortlessly:
 
-* search for pickup points in a specified country,
-* filter pickup points based on the courier service,
-* distinguish between different types of pickup points such as lockers or offices,
-* locate pickup points in proximity to a defined location,
-* retrieve detailed information about individual pickup points.
+* Search for pickup points in a specified country,
+* Filter pickup points based on the courier service,
+* Distinguish between different types of pickup points, such as lockers or offices,
+* Locate pickup points in proximity to a defined location,
+* Retrieve detailed information about individual pickup points.
 
-Whether integrating a parcel delivery system or enhancing the user experience by providing
-convenient pickup options, the PP API Client library is an indispensable tool that offers a
-streamlined interface to the PP API service, thereby simplifying the development process and
-augmenting the functionality of parcel delivery-related applications.
+Whether you're integrating a parcel delivery system or enhancing the user experience by providing
+convenient pickup options, the PP API Client library is an indispensable tool. It offers
+a streamlined interface to the PP API service, simplifying the development process and augmenting
+the functionality of parcel delivery-related applications.
 
 ---
 
 ## Documentation
 
 * [Requirements](docs/installation.md)
-* [Usage examples](examples.md)
+* [Usage examples](docs/examples/README.md)
 * [Library API reference](docs/README.md)
 
 ---

@@ -57,7 +57,7 @@ class ConfigTest extends BaseTestCase
         /** @var array $json */
         $json = \json_decode(static::apiJsonConfigResponse, true, 32, JSON_THROW_ON_ERROR);
         $this->assertSuccessResponse($json);
-        $jsonData = $json[ ApiResponse::KEY_DATA ];
+        $jsonData = $json[ApiResponse::KEY_DATA];
         $this->assertNotNull($jsonData);
 
         $streamIfaceStub = $this->createStub(DummyStreamInterface::class);
@@ -79,9 +79,10 @@ class ConfigTest extends BaseTestCase
         $httpClientStub->method('sendRequest')->willReturn($responseStub);
 
         $apiClient = Client::useApi($url)
-            ->withAccessToken($accessToken)
-            ->withPsrClient($httpClientStub, $requestFactoryStub)
-            ->build();
+                           ->withAccessToken($accessToken)
+                           ->withHttpClient($httpClientStub)
+                           ->withRequestFactory($requestFactoryStub)
+                           ->build();
 
         $apiParams = Params::create()->withCountry(Country::CZECHIA);
 
@@ -99,13 +100,13 @@ class ConfigTest extends BaseTestCase
         $this->assertNotEmpty($speditions);
 
         $returnedSpeditionCodes = \array_keys($speditions);
-        $this->assertArrayEquals(\array_keys($jsonData[ ApiResponse::KEY_SPEDITIONS ]), $returnedSpeditionCodes);
+        $this->assertArrayEquals(\array_keys($jsonData[ApiResponse::KEY_SPEDITIONS]), $returnedSpeditionCodes);
 
         foreach ($speditions as $spedCode => $spedition) {
             /** @var \OlzaLogistic\PpApi\Client\Model\Spedition $spedition */
 
-            $i = $jsonData[ ApiResponse::KEY_SPEDITIONS ][ $spedCode ];
-            $this->assertEquals($i[ ApiResponse::KEY_CODE ], $spedition->getCode());
+            $i = $jsonData[ApiResponse::KEY_SPEDITIONS][$spedCode];
+            $this->assertEquals($i[ApiResponse::KEY_CODE], $spedition->getCode());
 //            $this->assertEquals($i[ ApiResponse::KEY_LABEL ], $spedition->getLabel());
 
             // TODO: check translations

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client;
 
+use OlzaLogistic\PpApi\Client\Contracts\ArrayableContract;
 use OlzaLogistic\PpApi\Client\Exception\InvalidResponseStructureException;
 use OlzaLogistic\PpApi\Client\Model\PickupPoint;
 use OlzaLogistic\PpApi\Client\Model\Spedition;
@@ -20,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Immutable object representing API action response.
  */
-class Result
+class Result implements ArrayableContract
 {
     /**
      * Returns instance of Result preconfigured to indicate success.
@@ -237,9 +238,6 @@ class Result
      */
     protected bool $success = false;
 
-    /**
-     * Returns TRUE if result relates to successful action's response, FALSE otherwise.
-     */
     public function success(): bool
     {
         return $this->success;
@@ -263,9 +261,6 @@ class Result
      */
     protected int $code = 0;
 
-    /**
-     * Returns API code associated with the response.
-     */
     public function getCode(): int
     {
         return $this->code;
@@ -284,9 +279,6 @@ class Result
 
     protected string $message = '';
 
-    /**
-     * Returns message associated with the response.
-     */
     public function getMessage(): string
     {
         return $this->message;
@@ -305,9 +297,6 @@ class Result
 
     protected ?Data $data = null;
 
-    /**
-     * Returns data associated with the response.
-     */
     public function getData(): ?Data
     {
         return $this->data;
@@ -322,6 +311,26 @@ class Result
     {
         $this->data = $data;
         return $this;
+    }
+
+    /* ****************************************************************************************** */
+
+    public function toArray(): array
+    {
+        $result = [
+            'success' => $this->success(),
+            'code'    => $this->getCode(),
+            'message' => $this->getMessage(),
+        ];
+
+        $data = $this->getData();
+        if ($data instanceof ArrayableContract) {
+            $data = $data->toArray();
+        }
+
+        $result['data'] = $data;
+
+        return $result;
     }
 
 } // end of class

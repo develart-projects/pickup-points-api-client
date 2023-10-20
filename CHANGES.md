@@ -6,6 +6,20 @@ Olza Logistic's Pickup Point API Client PHP library.
 
 # Changelog
 
+* v1.3.0-dev (YYYY-MM-DD)
+  * Added `withHttpClient()` and `withRequestFactory()` methods to `Client` builder.
+  * Removed `withGuzzleHttpClient()` as Guzzle no longer needs special treatment.
+  * Removed `withSymfonyHttpClient()`. See docs on how to use Symfony HTTP client.
+  * Removed `withPsrClient()`. Use `withHttpClient()` and `withRequestClient()` instead.
+  * Attempt to modify sealed client now throws `ClientAlreadyInitializedException`.
+  * Attempt to access not sealed client now throws `ClientNotSealedException`.
+  * Improved construction of `Config` response object.
+  * The `Spedition::getLabel()` now returns spedition code if no label is returned by API.
+  * Implemented `Arrayable` contact (`toArray()`) for response data classes.
+  * Updated tests.
+  * Updated library documentation.
+
+
 * v1.2.2 (2023-10-06)
   * Fixed API response code not being included in the thrown exception.
   * Added dedicated exceptions to reflect API error codes (when `throwOnError` is enabled).

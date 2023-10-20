@@ -14,17 +14,18 @@ namespace OlzaLogistic\PpApi\Client;
 
 use OlzaLogistic\PpApi\Client\Contracts\ClientContract;
 use OlzaLogistic\PpApi\Client\Exception\AccessDeniedException;
+use OlzaLogistic\PpApi\Client\Exception\ClientAlreadyInitializedException;
+use OlzaLogistic\PpApi\Client\Exception\ClientNotSealedException;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
 use OlzaLogistic\PpApi\Client\Exception\ObjectNotFoundException;
-use OlzaLogistic\PpApi\Client\Extras\GuzzleRequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
-abstract class  ClientBase implements ClientContract
+abstract class ClientBase implements ClientContract
 {
     /**
-     * Configures client to use specific API URL
+     * Configures the client to engage with a Pickup Point API at the provided URL.
      *
      * @param string $apiUrl Valid API URL, i.e. 'https://api.olzalogistic.com/v1'
      */
@@ -34,7 +35,8 @@ abstract class  ClientBase implements ClientContract
     }
 
     /**
-     * Configures client to use specific access token while talking to Pickup Points API.
+     * Configures the client to utilize a specific access token when interacting with the Pickup
+     * Points API.
      *
      * @param string $accessToken Your private access token.
      */
@@ -44,96 +46,51 @@ abstract class  ClientBase implements ClientContract
             throw new \InvalidArgumentException('Invalid API access token.');
         }
 
-        $this->setAccessToken($accessToken);
-        return $this;
+        return $this->setAccessToken($accessToken);
     }
 
     /**
-     * Sets User Agent string to be used with all the API requests.
+     * Specifies the User-Agent string for all HTTP API requests.
      *
      * @param string $userAgent User agent string.
      */
     public function withUserAgent(string $userAgent): self
     {
-        $this->setUserAgent($userAgent);
-        return $this;
+        return $this->setUserAgent($userAgent);
     }
 
     /**
-     * Configures Client instance to use Guzzle HTTP client.
+     * Configures a PSR-18 compatible instance of an HTTP client implementation.
      *
-     * NOTE: Requires Guzzle package to be installed.
+     * @param ClientInterface $httpClient Instance of PSR-18 compatible HTTP client.
      */
-    public function withGuzzleHttpClient(): self
+    public function withHttpClient(ClientInterface $httpClient): self
     {
         $this->assertClientNotConfigured();
 
-        // NOTE: do NOT move Guzzle reference out of this method! This code is OPTIONAL and
-        // if you "optimize" by i.e. adding "use" instead, then instantiation of this
-        // class will be Guzzle dependent and will simply fail if there's no Guzzle dependency.
-        /** @noinspection ClassConstantCanBeUsedInspection */
-        $httpClientClass = '\GuzzleHttp\Client';
-
-        if (!\class_exists($httpClientClass)) {
-            throw new \RuntimeException('Guzzle HTTP client not found. See library docs for assistance.');
-        }
-
-        $this->setHttpClient(new $httpClientClass());
-        $this->setRequestFactory(new GuzzleRequestFactory());
-        return $this;
+        return $this->setHttpClient($httpClient);
     }
 
-    /**
-     * Configures Client instance to use Symfony's PSR18 HTTP client.
-     *
-     * NOTE: Requires Symfony HTTP client and support packages to be installed.
-     */
-    public function withSymfonyHttpClient(): self
-    {
-        $this->assertClientNotConfigured();
-
-        // NOTE: do NOT move Symfony reference out of this method! This code is OPTIONAL and
-        // if you "optimize" by i.e. adding "use" instead, then instantiation of this
-        // class will be Symfony client dependent and will simply fail if there's no Symfony
-        // HTTP client dependency.
-        /** @noinspection ClassConstantCanBeUsedInspection */
-        $httpClientClass = '\Symfony\Component\HttpClient\Psr18Client';
-
-        if (!\class_exists($httpClientClass)) {
-            throw new \RuntimeException('Symfony HTTP client not found. See library docs for assistance.');
-        }
-
-        $client = new $httpClientClass();
-        $this->setHttpClient($client);
-        $this->setRequestFactory($client);
-
-        return $this;
-    }
 
     /**
-     * Configures Client instance to use generic PSR-17 compatible HTTP client.
+     * Configures a PSR-17 compatible request factory instance to work with the HTTP client.
      *
-     * @param ClientInterface         $httpClient     Instance of PSR-17 compatible HTTP client.
      * @param RequestFactoryInterface $requestFactory Instance of PSR-17 compatible request factory.
      */
-    public function withPsrClient(ClientInterface         $httpClient,
-                                  RequestFactoryInterface $requestFactory): self
+    public function withRequestFactory(requestFactoryInterface $requestFactory): self
     {
         $this->assertClientNotConfigured();
 
-        $this->setHttpClient($httpClient);
-        $this->setRequestFactory($requestFactory);
-        return $this;
+        return $this->setRequestFactory($requestFactory);
     }
 
     /**
-     * Configures client to throw exception when any API connection failure happened.
-     * Useful for "exception driven" code approach.
+     * Configures the client to throw an exception in case of any API connection failure.
+     * Beneficial for an "exception-driven" coding approach.
      */
     public function throwOnError(): self
     {
-        $this->setThrowOnError(true);
-        return $this;
+        return $this->setThrowOnError(true);
     }
 
     /**
@@ -153,8 +110,8 @@ abstract class  ClientBase implements ClientContract
     protected bool $isClientInitialized = false;
 
     /**
-     * Closes ability to further configure the client. Once seal() is called no further
-     * changes to the client are allowed.
+     * Disallows further configuration of the client. Once seal() is invoked, no subsequent changes
+     * to the client are permitted.
      */
     protected function seal(): void
     {
@@ -162,22 +119,23 @@ abstract class  ClientBase implements ClientContract
     }
 
     /**
-     * Ensures Client is correctly configured. Will throw exception if not.
+     * Verifies the client's configuration is correct. An exception will be thrown if it's not.
      */
     protected function assertConfigurationSealed(): void
     {
         if (!$this->isClientInitialized) {
-            throw new \RuntimeException('Client not initialized.');
+            throw new ClientNotSealedException();
         }
     }
 
     /**
-     * Ensures client is not yet configured and all configuration methods can safely be executed.
+     * Ensures the client has not been configured yet, allowing all configuration methods to be
+     * executed safely.
      */
     protected function assertClientNotConfigured(): void
     {
         if ($this->isClientInitialized) {
-            throw new \RuntimeException('Client already initialized.');
+            throw new ClientAlreadyInitializedException();
         }
     }
 
@@ -217,7 +175,7 @@ abstract class  ClientBase implements ClientContract
     /**
      * Network client for API communication.
      *
-     * @var \Psr\Http\Client\ClientInterface
+     * @var ClientInterface
      */
     protected ClientInterface $httpClient;
 
@@ -363,7 +321,6 @@ abstract class  ClientBase implements ClientContract
              */
             $result = $processResponseCallback($apiResponse);
         } catch (\Throwable $ex) {
-            // FIXME: log the exception
             $result = Result::fromThrowable($ex);
         }
 
