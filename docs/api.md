@@ -42,7 +42,7 @@ carrier-dependent methods.
 
 Required arguments:
 
-* `country` - **(required)** country code (use Country::xxx consts)
+* `country` - **(required)** country code (use `Country::xxx` consts)
 
 [See usage example](examples/config.md)
 
@@ -60,8 +60,7 @@ Required arguments:
 
 [See usage example](examples/details.md)
 
-...
-```
+---
 
 ### `find(Params $params): Result;`
 
@@ -82,7 +81,8 @@ Optional arguments:
 * `payments` - A list of payment types (see `PaymentType::*`) that a pickup point must support to be
   included in the returned dataset. **NOTE: payment types are `OR`ed, so supporting just one
   suffices.**
-* `limit` - The maximum number of items to be returned. The default is to return all matching items.
+* `limit` - The maximum number of items to be returned. The default is to return all matching items
+  (API cap limit may apply).
 
 [See usage example](examples/find.md)
 
@@ -99,5 +99,7 @@ Required arguments:
   strings).
 * `coords` - **[required]** geographic coordinates to search near. The value should be a string in
   the format `latitude,longitude`.
+* `limit` - The maximum number of items to be returned. The default is to return all matching
+  items (API cap limit may apply).
 
 [See usage example](examples/nearby.md)
