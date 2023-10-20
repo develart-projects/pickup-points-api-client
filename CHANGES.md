@@ -13,6 +13,9 @@ Olza Logistic's Pickup Point API Client PHP library.
   * Removed `withPsrClient()`. Use `withHttpClient()` and `withRequestClient()` instead.
   * Attempt to modify sealed client now throws `ClientAlreadyInitializedException`.
   * Attempt to access not sealed client now throws `ClientNotSealedException`.
+  * Improved construction of `Config` response object.
+  * The `Spedition::getLabel()` now returns spedition code if no label is returned by API.
+  * Implemented `Arrayable` contact (`toArray()`) for response data classes.
   * Updated library documentation.
 
 
