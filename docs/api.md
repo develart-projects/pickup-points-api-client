@@ -44,14 +44,9 @@ Required arguments:
 
 * `country` - **(required)** country code (use Country::xxx consts)
 
-```php
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC);
-$result = $client->config($params);
-$configItems = $result->getData();
-...
-...
-```
+[See usage example](examples/config.md)
+
+---
 
 ### `details(Params $params): Result;`
 
@@ -63,17 +58,7 @@ Required arguments:
 * `spedition` - **(required)** one (string) or more (array of strings)
 * `id` - **(required)** Pickup point identifier
 
-```php
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
-                  ->withSpedition(Spedition::PACKETA_IPP)
-                  ->withSpeditionId('12345');
-$result = $client->details($params);
-$items = $result->getData();
-foreach($items as $pp) {
-  echo $pp->getSpeditionId() . PHP_EOL;
-}
-...
+[See usage example](examples/details.md)
 
 ...
 ```
@@ -99,17 +84,9 @@ Optional arguments:
   suffices.**
 * `limit` - The maximum number of items to be returned. The default is to return all matching items.
 
-```php
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
-                  ->withSpedition(Spedition::PACKETA_IPP);
-$result = $client->find($params);
-$items = $result->getData() ?? [];
-foreach($items as $pp) {
-  echo $pp->getSpeditionId() . PHP_EOL;
-}
-...
-```
+[See usage example](examples/find.md)
+
+---
 
 ### `nearby(Params $params): Result;`
 
@@ -123,23 +100,4 @@ Required arguments:
 * `coords` - **[required]** geographic coordinates to search near. The value should be a string in
   the format `latitude,longitude`.
 
-![Note](note.png) The `coords` argument description seems to have been copied erroneously from
-the `search`
-argument in the previous method. It should specify the format for providing geographic coordinates
-rather than matching against pickup point attributes.
-
-```php
-$lat = 50.087;
-$long = 14.421;
-$params = Params::create()
-                  ->withCountry(Country::CZECH_REPUBLIC)
-                  ->withSpedition(Spedition::PACKETA_IPP)
-                  ->withLocation($lat, $long);
-$result = $client->nearby($params);
-/** @var ?Data $data */
-$items = $result->getData() ?? [];
-foreach($items as $pp) {
-  echo $pp->getSpeditionId() . PHP_EOL;
-}
-...
-```
+[See usage example](examples/nearby.md)

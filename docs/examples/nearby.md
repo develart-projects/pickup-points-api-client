@@ -41,10 +41,11 @@ $long = 14.421;
 $params = Params::create()
                   ->withCountry(Country::CZECHIA)
                   ->withSpedition(Spedition::PACKETA_IPP)
-                  ->withLocation($lat, $long);
+                  ->withLocation($lat, $long)
+                  ->withLimit(5);
 
 // Call API method
 $apiResponse = $client->nearby($params);
 
-print_r($apiResponse);
+var_dump($apiResponse->toArray);
 ```

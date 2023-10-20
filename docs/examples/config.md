@@ -41,5 +41,5 @@ $params = Params::create()
 // Call API method
 $apiResponse = $client->config($params);
 
-print_r($apiResponse);
+var_dump($apiResponse->toArray());
 ```

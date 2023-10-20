@@ -42,10 +42,11 @@ $params = Params::create()
                   ->withSpeditions([
                       Spedition::PACKETA_IPP,
                       Spedition::PACKETA_EPP_SPEEDY_PP,
-                    ]);
+                    ])
+                  ->withLimit(3);
 
 // Call API method
 $apiResponse = $client->find($params);
 
-print_r($apiResponse);
+var_dump($apiResponse->toArray());
 ```
