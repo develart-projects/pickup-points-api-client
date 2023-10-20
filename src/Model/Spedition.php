@@ -9,9 +9,12 @@ declare(strict_types=1);
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
+
 namespace OlzaLogistic\PpApi\Client\Model;
 
-class Spedition
+use OlzaLogistic\PpApi\Client\Contracts\ArrayableContract;
+
+class Spedition implements ArrayableContract
 {
     public const COLETARIA                 = 'zas-col';
     public const CZECH_POST                = 'cp-bal';
@@ -178,11 +181,10 @@ class Spedition
 
     /* ****************************************************************************************** */
 
-    public const KEY_COUNTRY   = 'country';
-    public const KEY_SPEDITION = 'spedition';
-    public const KEY_CODE      = 'code';
-    public const KEY_LABEL     = 'label';
-    public const KEY_NAMES     = 'names';
+    public const KEY_CODE    = 'code';
+    public const KEY_ENABLED = 'enabled';
+    public const KEY_LABEL   = 'label';
+    public const KEY_NAMES   = 'names';
 
     /**
      * Returns instance of Spedition, instantiated using data from provided source array.
@@ -204,6 +206,18 @@ class Spedition
         }
 
         return $spedition;
+    }
+
+    /* ****************************************************************************************** */
+
+    public function toArray(): array
+    {
+        return [
+            static::KEY_CODE    => $this->getCode(),
+            static::KEY_ENABLED => $this->isEnabled(),
+            static::KEY_LABEL   => $this->getLabel(),
+            static::KEY_NAMES   => $this->getNames(),
+        ];
     }
 
 } // end of class
