@@ -159,7 +159,7 @@ class ResultTest extends BaseTestCase
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
-        return $method->invokeArgs(\is_object($obj) ? $obj : null, $args);
+        return $method->invokeArgs($obj, $args);
     }
 
 } // end of class

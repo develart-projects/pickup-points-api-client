@@ -284,7 +284,7 @@ abstract class ClientBase implements ClientContract
         $request = $this->getRequestFactory()->createRequest($method, $uri);
         if (!$request->hasHeader('User-Agent')) {
             /**
-             * Some static analizers apparently believe the line
+             * Some static analyzers apparently believe the line
              * below is unreachable. Most likely it's because
              * the dummy implementation of invoked method
              * is used as reference (and it just throws).

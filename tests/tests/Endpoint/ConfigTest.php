@@ -55,7 +55,6 @@ class ConfigTest extends BaseTestCase
         $url = $this->getRandomString('url');
         $accessToken = $this->getRandomString('pass');
 
-        /** @var array $json */
         $json = Json::decode(static::apiJsonConfigResponse);
         $this->assertSuccessResponse($json);
         $jsonData = $json[ApiResponse::KEY_DATA];

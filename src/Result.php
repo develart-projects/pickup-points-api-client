@@ -65,7 +65,6 @@ class Result implements ArrayableContract
         $body->rewind();
         $jsonStr = $body->getContents();
 
-        /** @var array $json */
         $json = Json::decode($jsonStr);
         if (!static::isApiResponseArrayValid($json, $extraKeys)) {
             throw new InvalidResponseStructureException();
