@@ -100,7 +100,6 @@ class Result implements ArrayableContract
             $body = $response->getBody();
             $body->rewind();
             $respJsonStr = $body->getContents();
-            /** @var array $json */
             $json = Json::decode($respJsonStr);
 
             $requiredKeys = [
@@ -136,7 +135,6 @@ class Result implements ArrayableContract
     {
         try {
             $respJsonStr = $response->getBody()->getContents();
-            /** @var array $json */
             $json = Json::decode($respJsonStr);
 
             $requiredKeys = [

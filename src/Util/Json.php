@@ -33,9 +33,10 @@ final class Json
 
         $decodedJson = \json_decode($json, true, 32, $flags);
         if (\json_last_error() !== \JSON_ERROR_NONE) {
-            throw new \JsonException('JSON decoding error: ', \json_last_error_msg());
+            throw new \JsonException('JSON decoding error: ' . \json_last_error_msg());
         }
 
+        /** @var array $decodedJson */
         return $decodedJson;
     }
 
