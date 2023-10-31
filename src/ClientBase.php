@@ -276,7 +276,7 @@ abstract class ClientBase implements ClientContract
     protected function createRequest(string $method, string $uri,
                                      ?array $queryArgs = null): RequestInterface
     {
-        $queryArgs ??= [];
+        $queryArgs = $queryArgs ?? [];
         if (!empty($queryArgs)) {
             $uri .= '?' . \http_build_query($queryArgs);
         }

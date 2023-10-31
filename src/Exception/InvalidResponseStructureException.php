@@ -15,7 +15,7 @@ class InvalidResponseStructureException extends \RuntimeException
 {
     public function __construct(?string $msg = null, int $code = 0, \Throwable $previous = null)
     {
-        $msg ??= "Invalid response data structure.";
+        $msg = $msg ?? "Invalid response data structure.";
         parent::__construct($msg, $code, $previous);
     }
 

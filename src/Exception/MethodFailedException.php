@@ -15,7 +15,7 @@ class MethodFailedException extends \RuntimeException
 {
     public function __construct(?string $reason = null, int $code = 0, \Throwable $previous = null)
     {
-        $reason ??= "API method failed";
+        $reason = $reason ?? 'API method failed';
         parent::__construct($reason, $code, $previous);
     }
 

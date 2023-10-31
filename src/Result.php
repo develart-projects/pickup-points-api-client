@@ -207,7 +207,7 @@ class Result implements ArrayableContract
         // extraDataKeys contains keys that we expect to be present in "data" node
         // but only for successful responses, as otherwise data is usually null.
         if ($json[ApiResponse::KEY_SUCCESS]) {
-            $extraDataKeys ??= [];
+            $extraDataKeys = $extraDataKeys ?? [];
             if (!empty($extraDataKeys)) {
                 // if extra keys are required, "data" node must be present and not empty.
                 if ($dataNode === null) {
