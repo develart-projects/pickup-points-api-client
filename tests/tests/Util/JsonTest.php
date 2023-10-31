@@ -17,7 +17,7 @@ use PHPUnit\Framework\Assert;
 
 class JsonTest extends BaseTestCase
 {
-    public function testDecode()
+    public function testDecode(): void
     {
         $expected = [
             $this->getRandomString('k1') => $this->getRandomInt(),
@@ -25,14 +25,17 @@ class JsonTest extends BaseTestCase
             $this->getRandomString('k3') => $this->getRandomString(),
         ];
 
-        $actual = Json::decode(\json_encode($expected));
+        /** @var string $encoded */
+        $encoded = \json_encode($expected);
+        Assert::assertNotFalse($encoded);
+        $actual = Json::decode($encoded);
         Assert::assertEquals($expected, $actual);
     }
 
     /**
      * NOTE: it's important to ensure this test runs on pre-PHP 7.3 as well.
      */
-    public function testInvalidDecode()
+    public function testInvalidDecode(): void
     {
         $str = '{{invald json';
         $this->expectException(\JsonException::class);
