@@ -16,7 +16,7 @@ use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
 use OlzaLogistic\PpApi\Client\Tests\Util\Lockpick;
 use PHPUnit\Framework\Assert;
 
-class CliebtTest extends BaseTestCase
+class ClientTest extends BaseTestCase
 {
     public function testUserAgentAccessors(): void
     {
