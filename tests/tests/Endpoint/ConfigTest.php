@@ -16,6 +16,7 @@ use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Model\Country;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
+use OlzaLogistic\PpApi\Client\Util\Json;
 
 class ConfigTest extends BaseTestCase
 {
@@ -55,7 +56,7 @@ class ConfigTest extends BaseTestCase
         $accessToken = $this->getRandomString('pass');
 
         /** @var array $json */
-        $json = \json_decode(static::apiJsonConfigResponse, true, 32, JSON_THROW_ON_ERROR);
+        $json = Json::decode(static::apiJsonConfigResponse);
         $this->assertSuccessResponse($json);
         $jsonData = $json[ApiResponse::KEY_DATA];
         $this->assertNotNull($jsonData);

@@ -16,6 +16,7 @@ use OlzaLogistic\PpApi\Client\Contracts\ArrayableContract;
 use OlzaLogistic\PpApi\Client\Exception\InvalidResponseStructureException;
 use OlzaLogistic\PpApi\Client\Model\PickupPoint;
 use OlzaLogistic\PpApi\Client\Model\Spedition;
+use OlzaLogistic\PpApi\Client\Util\Json;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -65,7 +66,7 @@ class Result implements ArrayableContract
         $jsonStr = $body->getContents();
 
         /** @var array $json */
-        $json = \json_decode($jsonStr, true, 32, \JSON_THROW_ON_ERROR);
+        $json = Json::decode($jsonStr);
         if (!static::isApiResponseArrayValid($json, $extraKeys)) {
             throw new InvalidResponseStructureException();
         }
@@ -101,7 +102,7 @@ class Result implements ArrayableContract
             $body->rewind();
             $respJsonStr = $body->getContents();
             /** @var array $json */
-            $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
+            $json = Json::decode($respJsonStr);
 
             $requiredKeys = [
                 ApiResponse::KEY_ITEMS,
@@ -137,7 +138,7 @@ class Result implements ArrayableContract
         try {
             $respJsonStr = $response->getBody()->getContents();
             /** @var array $json */
-            $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
+            $json = Json::decode($respJsonStr);
 
             $requiredKeys = [
                 ApiResponse::KEY_SPEDITIONS,
