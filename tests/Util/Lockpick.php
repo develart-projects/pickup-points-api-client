@@ -36,6 +36,8 @@ class Lockpick
          * At this point $objectOrClass is either object or string but some static analyzers
          * got problems figuring that out, so this (partially correct) var declaration is
          * to make them believe.
+         *
+         * @phpstan-ignore-next-line
          */
         $reflection = new \ReflectionClass($clsOrObj);
         $method = $reflection->getMethod($methodName);
