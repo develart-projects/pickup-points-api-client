@@ -841,7 +841,12 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    public function getHours(): array
+    /**
+     * Returns array of opening and break hours.
+     *
+     * @param bool $filterWithoutHours if TRUE. won't return days without opening hours given (NULL)
+     */
+    public function getHours(bool $filterWithoutHours): array
     {
         $hours = [
             static::KEY_OPEN_247  => $this->isOpen247(),
@@ -875,12 +880,13 @@ class PickupPoint implements ArrayableContract
             ],
         ];
 
-        // Remove days without opening hours given
-        return \array_filter($hours, static function ($item) {
-            return \is_array($item)
-                ? $item[static::KEY_HOURS] !== null
-                : $item !== null;
-        });
+        return (!$filterWithoutHours)
+            ? $hours
+            : \array_filter($hours, static function ($item) {
+                return \is_array($item)
+                    ? $item[static::KEY_HOURS] !== null
+                    : $item !== null;
+            });
     }
 
     /* ****************************************************************************************** */
@@ -1099,10 +1105,10 @@ class PickupPoint implements ArrayableContract
     public function toArray(): array
     {
         return [
-            static::KEY_ID             => $this->getSpeditionId(),
-            static::KEY_SPEDITION      => $this->getSpedition(),
-            static::KEY_GROUP_NAME     => $this->getNames(),
-            static::KEY_GROUP_ADDRESS  => [
+            static::KEY_ID            => $this->getSpeditionId(),
+            static::KEY_SPEDITION     => $this->getSpedition(),
+            static::KEY_GROUP_NAME    => $this->getNames(),
+            static::KEY_GROUP_ADDRESS => [
                 static::KEY_FULL_ADDRESS => $this->getFullAddress(),
                 static::KEY_STREET       => $this->getStreet(),
                 static::KEY_ZIP          => $this->getZip(),
@@ -1116,37 +1122,7 @@ class PickupPoint implements ArrayableContract
                 static::KEY_EMAIL => $this->getEmail(),
             ],
 
-            static::KEY_GROUP_HOURS    => [
-                static::KEY_OPEN_247  => $this->isOpen247(),
-                static::KEY_MONDAY    => [
-                    static::KEY_HOURS => $this->getMondayHours(),
-                    static::KEY_BREAK => $this->getMondayBreak(),
-                ],
-                static::KEY_TUESDAY   => [
-                    static::KEY_HOURS => $this->getTuesdayHours(),
-                    static::KEY_BREAK => $this->getTuesdayBreak(),
-                ],
-                static::KEY_WEDNESDAY => [
-                    static::KEY_HOURS => $this->getWednesdayHours(),
-                    static::KEY_BREAK => $this->getWednesdayBreak(),
-                ],
-                static::KEY_THURSDAY  => [
-                    static::KEY_HOURS => $this->getThursdayHours(),
-                    static::KEY_BREAK => $this->getThursdayBreak(),
-                ],
-                static::KEY_FRIDAY    => [
-                    static::KEY_HOURS => $this->getFridayHours(),
-                    static::KEY_BREAK => $this->getFridayBreak(),
-                ],
-                static::KEY_SATURDAY  => [
-                    static::KEY_HOURS => $this->getSaturdayHours(),
-                    static::KEY_BREAK => $this->getSaturdayBreak(),
-                ],
-                static::KEY_SUNDAY    => [
-                    static::KEY_HOURS => $this->getSundayHours(),
-                    static::KEY_BREAK => $this->getSundayBreak(),
-                ],
-            ],
+            static::KEY_GROUP_HOURS => $this->getHours(false),
 
             static::KEY_GROUP_LOCATION => [
                 static::KEY_LATITUDE  => $this->getLatitude(),
