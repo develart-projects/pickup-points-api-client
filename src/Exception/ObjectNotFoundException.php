@@ -22,7 +22,7 @@ class ObjectNotFoundException extends MethodFailedException
                                 int        $code = ApiCode::ERROR_OBJECT_NOT_FOUND,
                                 \Throwable $previous = null)
     {
-        $reason ??= 'Object not found';
+        $reason = $reason ?? 'Object not found';
         parent::__construct($reason, $code, $previous);
     }
 

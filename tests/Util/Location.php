@@ -57,8 +57,15 @@ class Location
 
     /* ****************************************************************************************** */
 
-    protected ?float $latitude;
-    protected ?float $longitude;
+    /**
+     * @var null|float
+     */
+    protected $latitude;
+
+    /**
+     * @var null|float
+     */
+    protected $longitude;
 
     /**
      * Returns current latitude
@@ -192,7 +199,7 @@ class Location
         // hi-res, 0-1 range random number
         $resolution = 10000;
         $u = \random_int(0, $resolution) / $resolution;
-        $v = \random_int(0, $resolution) / $resolution;;
+        $v = \random_int(0, $resolution) / $resolution;
 
         $w = $rd * \sqrt($u);
         $t = 2 * M_PI * $v;

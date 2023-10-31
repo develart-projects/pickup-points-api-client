@@ -44,8 +44,10 @@ class Spedition implements ArrayableContract
      * Code (identifier) of the spedition.
      *
      * @ORM\Column(type="string", nullable=false)
+     *
+     * @var string
      */
-    protected string $spedition;
+    protected $spedition;
 
     public function getSpedition(): string
     {
@@ -62,8 +64,10 @@ class Spedition implements ArrayableContract
      * If set to FALSE, the spedition is not reported as available.
      *
      * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @var bool
      */
-    protected bool $isEnabled = false;
+    protected $isEnabled = false;
 
     /**
      * Returns TRUE if spedition is enabled.
@@ -77,7 +81,10 @@ class Spedition implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected string $code;
+    /**
+     * @var string
+     */
+    protected $code;
 
     /**
      * Returns spedition's code (identifier).
@@ -104,7 +111,10 @@ class Spedition implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $label = null;
+    /**
+     * @var null|string
+     */
+    protected $label = null;
 
     /**
      * Returns spedition's label (name).
@@ -133,7 +143,10 @@ class Spedition implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected array $names = [];
+    /**
+     * @var array
+     */
+    protected $names = [];
 
     /**
      * Returns spedition's names in all supported languages.

@@ -36,7 +36,9 @@ class Client extends ClientBase
             Params::SPEDITION,
         ]);
         return $this->handleHttpRequest(Route::FIND, $apiParams,
-            static fn(ResponseInterface $apiResponse) => Result::fromApiResponseWithItems($apiResponse)
+            static function (ResponseInterface $apiResponse) {
+                return Result::fromApiResponseWithItems($apiResponse);
+            }
         );
     }
 
@@ -55,7 +57,9 @@ class Client extends ClientBase
             Params::ID,
         ]);
         return $this->handleHttpRequest(Route::DETAILS, $apiParams,
-            static fn(ResponseInterface $apiResponse) => Result::fromApiResponseWithItems($apiResponse)
+            static function (ResponseInterface $apiResponse) {
+                return Result::fromApiResponseWithItems($apiResponse);
+            }
         );
     }
 
@@ -72,7 +76,9 @@ class Client extends ClientBase
             Params::LOCATION,
         ]);
         return $this->handleHttpRequest(Route::NEARBY, $apiParams,
-            static fn(ResponseInterface $apiResponse) => Result::fromApiResponseWithItems($apiResponse)
+            static function (ResponseInterface $apiResponse) {
+                return Result::fromApiResponseWithItems($apiResponse);
+            }
         );
     }
 
@@ -89,7 +95,9 @@ class Client extends ClientBase
             Params::COUNTRY,
         ]);
         return $this->handleHttpRequest(Route::CONFIG, $apiParams,
-            static fn(ResponseInterface $apiResponse) => Result::fromConfigApiResponse($apiResponse)
+            static function (ResponseInterface $apiResponse) {
+                return Result::fromConfigApiResponse($apiResponse);
+            }
         );
     }
 

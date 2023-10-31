@@ -15,7 +15,7 @@
 
 The PP API Client library has the following requirements:
 
-* PHP 7.4 or newer.
+* PHP 7.2 or newer.
 * [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library to handle HTTP
   requests and responses.
 * [PSR-17](https://www.php-fig.org/psr/psr-17/) compatible HTTP Factory library to create

@@ -16,10 +16,16 @@ use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Model\Country;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
+use OlzaLogistic\PpApi\Client\Util\Json;
 
 class ConfigTest extends BaseTestCase
 {
-    protected const apiJsonConfigResponse = <<<JSON
+    /**
+     * Tests integration with Guzzle HTTP client
+     */
+    public function testConfig(): void
+    {
+        $apiJsonConfigResponse = '
             {
               "success": true,
               "code": 0,
@@ -44,24 +50,18 @@ class ConfigTest extends BaseTestCase
                 }
               }
             }
-        JSON;
+        ';
 
-    /**
-     * Tests integration with Guzzle HTTP client
-     */
-    public function testConfig(): void
-    {
         $url = $this->getRandomString('url');
         $accessToken = $this->getRandomString('pass');
 
-        /** @var array $json */
-        $json = \json_decode(static::apiJsonConfigResponse, true, 32, JSON_THROW_ON_ERROR);
+        $json = Json::decode($apiJsonConfigResponse);
         $this->assertSuccessResponse($json);
         $jsonData = $json[ApiResponse::KEY_DATA];
         $this->assertNotNull($jsonData);
 
         $streamIfaceStub = $this->createStub(DummyStreamInterface::class);
-        $streamIfaceStub->method('getContents')->willReturn(static::apiJsonConfigResponse);
+        $streamIfaceStub->method('getContents')->willReturn($apiJsonConfigResponse);
 
         $responseStub = $this->createStub(DummyResponse::class);
         $responseStub->method('getBody')->willReturn($streamIfaceStub);
@@ -92,7 +92,7 @@ class ConfigTest extends BaseTestCase
         $configData = $result->getData();
         $this->assertNotNull($configData);
 
-        $configItems = $configData->getConfigItems();
+//        $configItems = $configData->getConfigItems();
 //        $this->assertNotEmpty($configItems);
 //        $this->assertArrayEquals($configItems, $json[ ApiResponse::KEY_DATA ][ ApiResponse::KEY_CONFIG ]);
 

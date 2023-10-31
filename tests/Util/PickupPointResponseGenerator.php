@@ -85,7 +85,7 @@ class PickupPointResponseGenerator
 
     public function withContacts(?array $fields = null): self
     {
-        $fields ??= [
+        $fields = $fields ?? [
             PP::KEY_PHONE,
             PP::KEY_EMAIL,
         ];
@@ -109,7 +109,7 @@ class PickupPointResponseGenerator
 
     public function withServices(?array $services = null): self
     {
-        $services ??= [
+        $services = $services ?? [
             ServiceType::COD,
         ];
 
@@ -124,7 +124,7 @@ class PickupPointResponseGenerator
 
     public function withPayments(?array $paymentTypes = null): self
     {
-        $paymentTypes ??= [
+        $paymentTypes = $paymentTypes ?? [
             PaymentType::CASH,
             PaymentType::CARD,
         ];
@@ -167,7 +167,10 @@ class PickupPointResponseGenerator
 
     /* ****************************************************************************************** */
 
-    protected array $data = [];
+    /**
+     * @var array
+     */
+    protected $data = [];
 
     final protected function __construct()
     {

@@ -15,7 +15,7 @@ class ResponseParsingException extends \RuntimeException
 {
     public function __construct(?string $msg = null, int $code = 0, \Throwable $previous = null)
     {
-        $msg ??= "Failed parsing API response.";
+        $msg = $msg ?? 'Failed parsing API response.';
         parent::__construct($msg, $code, $previous);
     }
 

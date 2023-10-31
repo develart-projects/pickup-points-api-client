@@ -11,8 +11,6 @@
 
 namespace OlzaLogistic\PpApi\Client\Tests\Traits;
 
-use OlzaLogistic\PpApi\Client\ApiResponse;
-
 trait GeneratorsTrait
 {
     /**

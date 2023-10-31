@@ -6,6 +6,11 @@ Olza Logistic's Pickup Point API Client PHP library.
 
 # Changelog
 
+* dev
+  * Refactored to lower PHP requirements down to 7.2+
+  * Updated tests.
+
+
 * v1.3.0 (2023-10-20)
   * Added `withHttpClient()` and `withRequestFactory()` methods to `Client` builder.
   * Removed `withGuzzleHttpClient()` as Guzzle no longer needs special treatment.

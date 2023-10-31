@@ -19,7 +19,10 @@ use OlzaLogistic\PpApi\Client\Model\Spedition;
  */
 class ConfigData extends Data
 {
-    protected array $config = [];
+    /**
+     * @var array
+     */
+    protected $config = [];
 
     public function getConfigItems(): array
     {
@@ -53,7 +56,10 @@ class ConfigData extends Data
 
     /* ****************************************************************************************** */
 
-    protected array $speditions = [];
+    /**
+     * @var array
+     */
+    protected $speditions = [];
 
     /**
      * Returns list of Spedition objects.

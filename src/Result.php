@@ -16,6 +16,7 @@ use OlzaLogistic\PpApi\Client\Contracts\ArrayableContract;
 use OlzaLogistic\PpApi\Client\Exception\InvalidResponseStructureException;
 use OlzaLogistic\PpApi\Client\Model\PickupPoint;
 use OlzaLogistic\PpApi\Client\Model\Spedition;
+use OlzaLogistic\PpApi\Client\Util\Json;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -64,8 +65,7 @@ class Result implements ArrayableContract
         $body->rewind();
         $jsonStr = $body->getContents();
 
-        /** @var array $json */
-        $json = \json_decode($jsonStr, true, 32, \JSON_THROW_ON_ERROR);
+        $json = Json::decode($jsonStr);
         if (!static::isApiResponseArrayValid($json, $extraKeys)) {
             throw new InvalidResponseStructureException();
         }
@@ -100,8 +100,7 @@ class Result implements ArrayableContract
             $body = $response->getBody();
             $body->rewind();
             $respJsonStr = $body->getContents();
-            /** @var array $json */
-            $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
+            $json = Json::decode($respJsonStr);
 
             $requiredKeys = [
                 ApiResponse::KEY_ITEMS,
@@ -136,8 +135,7 @@ class Result implements ArrayableContract
     {
         try {
             $respJsonStr = $response->getBody()->getContents();
-            /** @var array $json */
-            $json = \json_decode($respJsonStr, true, 32, \JSON_THROW_ON_ERROR);
+            $json = Json::decode($respJsonStr);
 
             $requiredKeys = [
                 ApiResponse::KEY_SPEDITIONS,
@@ -207,7 +205,7 @@ class Result implements ArrayableContract
         // extraDataKeys contains keys that we expect to be present in "data" node
         // but only for successful responses, as otherwise data is usually null.
         if ($json[ApiResponse::KEY_SUCCESS]) {
-            $extraDataKeys ??= [];
+            $extraDataKeys = $extraDataKeys ?? [];
             if (!empty($extraDataKeys)) {
                 // if extra keys are required, "data" node must be present and not empty.
                 if ($dataNode === null) {
@@ -235,8 +233,10 @@ class Result implements ArrayableContract
 
     /**
      * Set to TRUE if result relates to successful action's response, FALSE otherwise.
+     *
+     * @var bool
      */
-    protected bool $success = false;
+    protected $success = false;
 
     public function success(): bool
     {
@@ -259,7 +259,7 @@ class Result implements ArrayableContract
     /**
      * @var int $code API code associated with the response.
      */
-    protected int $code = 0;
+    protected $code = 0;
 
     public function getCode(): int
     {
@@ -277,7 +277,10 @@ class Result implements ArrayableContract
         return $this;
     }
 
-    protected string $message = '';
+    /**
+     * @var string
+     */
+    protected $message = '';
 
     public function getMessage(): string
     {
@@ -295,7 +298,10 @@ class Result implements ArrayableContract
         return $this;
     }
 
-    protected ?Data $data = null;
+    /**
+     * @var null|Data
+     */
+    protected $data = null;
 
     public function getData(): ?Data
     {

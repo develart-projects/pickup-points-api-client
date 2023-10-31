@@ -2,7 +2,7 @@
 
 # PP API Client for PHP
 
-The PP API Client is a robust library tailored for PHP 7.4 or newer, designed to interact with the
+The PP API Client is a robust library tailored for PHP 7.2 or newer, designed to interact with the
 Pickup Points (PP) API service offered by Olza Logistic. This library facilitates seamless access to
 a comprehensive database of parcel delivery pickup points, empowering developers to execute precise
 queries to retrieve information about pickup points based on various parameters. With the PP API

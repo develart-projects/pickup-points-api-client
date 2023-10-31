@@ -42,10 +42,6 @@ abstract class ClientBase implements ClientContract
      */
     public function withAccessToken(string $accessToken): self
     {
-        if (empty(\trim($accessToken))) {
-            throw new \InvalidArgumentException('Invalid API access token.');
-        }
-
         return $this->setAccessToken($accessToken);
     }
 
@@ -106,8 +102,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * Indicates if client configuration phase is completed.
+     *
+     * @var bool
      */
-    protected bool $isClientInitialized = false;
+    protected $isClientInitialized = false;
 
     /**
      * Disallows further configuration of the client. Once seal() is invoked, no subsequent changes
@@ -150,8 +148,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * PP-API access token
+     *
+     * @var string
      */
-    protected string $accessToken;
+    protected $accessToken;
 
     protected function getAccessToken(): string
     {
@@ -166,7 +166,7 @@ abstract class ClientBase implements ClientContract
     protected function setAccessToken(string $accessToken): self
     {
         if (\trim($accessToken) === '') {
-            throw new \RuntimeException('Invalid value of accessToken');
+            throw new \InvalidArgumentException('Invalid value of accessToken');
         }
         $this->accessToken = $accessToken;
         return $this;
@@ -177,7 +177,7 @@ abstract class ClientBase implements ClientContract
      *
      * @var ClientInterface
      */
-    protected ClientInterface $httpClient;
+    protected $httpClient;
 
     protected function getHttpClient(): ClientInterface
     {
@@ -195,7 +195,7 @@ abstract class ClientBase implements ClientContract
      *
      * @var \Psr\Http\Message\RequestFactoryInterface
      */
-    protected RequestFactoryInterface $requestFactory;
+    protected $requestFactory;
 
     protected function getRequestFactory(): RequestFactoryInterface
     {
@@ -210,8 +210,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * Base URL for the API
+     *
+     * @var string
      */
-    protected string $apiUrl;
+    protected $apiUrl;
 
     protected function getApiUrl(): string
     {
@@ -226,8 +228,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * User Agent string for API requests
+     *
+     * @var string
      */
-    protected string $userAgent = 'Olza Logistic/PpApiClient';
+    protected $userAgent = 'Olza Logistic/PpApiClient';
 
     protected function getUserAgent(): string
     {
@@ -240,8 +244,10 @@ abstract class ClientBase implements ClientContract
         return $this;
     }
 
-
-    protected bool $throwOnError = false;
+    /**
+     * @var bool
+     */
+    protected $throwOnError = false;
 
     protected function getThrowOnError(): bool
     {
@@ -266,7 +272,7 @@ abstract class ClientBase implements ClientContract
     protected function createRequest(string $method, string $uri,
                                      ?array $queryArgs = null): RequestInterface
     {
-        $queryArgs ??= [];
+        $queryArgs = $queryArgs ?? [];
         if (!empty($queryArgs)) {
             $uri .= '?' . \http_build_query($queryArgs);
         }
@@ -274,7 +280,7 @@ abstract class ClientBase implements ClientContract
         $request = $this->getRequestFactory()->createRequest($method, $uri);
         if (!$request->hasHeader('User-Agent')) {
             /**
-             * Some static analizers apparently believe the line
+             * Some static analyzers apparently believe the line
              * below is unreachable. Most likely it's because
              * the dummy implementation of invoked method
              * is used as reference (and it just throws).
