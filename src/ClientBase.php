@@ -106,8 +106,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * Indicates if client configuration phase is completed.
+     *
+     * @var bool
      */
-    protected bool $isClientInitialized = false;
+    protected $isClientInitialized = false;
 
     /**
      * Disallows further configuration of the client. Once seal() is invoked, no subsequent changes
@@ -150,8 +152,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * PP-API access token
+     *
+     * @var string
      */
-    protected string $accessToken;
+    protected $accessToken;
 
     protected function getAccessToken(): string
     {
@@ -177,7 +181,7 @@ abstract class ClientBase implements ClientContract
      *
      * @var ClientInterface
      */
-    protected ClientInterface $httpClient;
+    protected $httpClient;
 
     protected function getHttpClient(): ClientInterface
     {
@@ -195,7 +199,7 @@ abstract class ClientBase implements ClientContract
      *
      * @var \Psr\Http\Message\RequestFactoryInterface
      */
-    protected RequestFactoryInterface $requestFactory;
+    protected $requestFactory;
 
     protected function getRequestFactory(): RequestFactoryInterface
     {
@@ -210,8 +214,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * Base URL for the API
+     *
+     * @var string
      */
-    protected string $apiUrl;
+    protected $apiUrl;
 
     protected function getApiUrl(): string
     {
@@ -226,8 +232,10 @@ abstract class ClientBase implements ClientContract
 
     /**
      * User Agent string for API requests
+     *
+     * @var string
      */
-    protected string $userAgent = 'Olza Logistic/PpApiClient';
+    protected $userAgent = 'Olza Logistic/PpApiClient';
 
     protected function getUserAgent(): string
     {
@@ -240,8 +248,10 @@ abstract class ClientBase implements ClientContract
         return $this;
     }
 
-
-    protected bool $throwOnError = false;
+    /**
+     * @var bool
+     */
+    protected $throwOnError = false;
 
     protected function getThrowOnError(): bool
     {

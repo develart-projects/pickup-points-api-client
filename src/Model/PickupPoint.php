@@ -81,8 +81,10 @@ class PickupPoint implements ArrayableContract
      * Pickup point ID assigned by the spedition.
      *
      * NOTE: value is always stored lower cased.
+     *
+     * @var string
      */
-    protected string $speditionId;
+    protected $speditionId;
 
     /**
      * Returns Id of the pickup point as assigned by the spedition
@@ -107,8 +109,10 @@ class PickupPoint implements ArrayableContract
 
     /**
      * Code of the spedition (carrier) that handles this pickup point.
+     *
+     * @var string
      */
-    private string $spedition;
+    private $spedition;
 
     /**
      * Returns speditions's code (identifier), i.e. 'HUP-CS'
@@ -136,7 +140,10 @@ class PickupPoint implements ArrayableContract
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
-    private string $name1;
+    /**
+     * @var string
+     */
+    private $name1;
 
     /**
      * Returns first name line of the pickup point.
@@ -157,7 +164,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    private ?string $name2 = null;
+    /**
+     * @var null|string
+     */
+    private $name2 = null;
 
     /**
      * Returns second name line of the pickup point.
@@ -196,7 +206,10 @@ class PickupPoint implements ArrayableContract
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
-    protected ?string $fullAddress = null;
+    /**
+     * @var null|string
+     */
+    protected $fullAddress = null;
 
     /**
      * Returns full address of the pickup point.
@@ -222,7 +235,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $street = null;
+    /**
+     * @var null|string
+     */
+    protected $street = null;
 
     /**
      * Returns street name of the pickup point.
@@ -245,7 +261,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $zip = null;
+    /**
+     * @var null|string
+     */
+    protected $zip = null;
 
     /**
      * Returns ZIP code of the pickup point.
@@ -268,7 +287,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $city = null;
+    /**
+     * @var null|string
+     */
+    protected $city = null;
 
     /**
      * Returns city of the pickup point.
@@ -291,7 +313,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $county = null;
+    /**
+     * @var null|string
+     */
+    protected $county = null;
 
     /**
      * Returns county of the pickup point.
@@ -318,8 +343,10 @@ class PickupPoint implements ArrayableContract
      * Street address' country field.
      *
      * NOTE: value is always stored lower cased.
+     *
+     * @var string|null
      */
-    protected ?string $country = null;
+    protected $country = null;
 
     /**
      * Returns country of the pickup point.
@@ -367,7 +394,10 @@ class PickupPoint implements ArrayableContract
     /* ****************************************************************************************** */
     /* ****************************************************************************************** */
 
-    protected ?string $phone = null;
+    /**
+     * @var null|string
+     */
+    protected $phone = null;
 
     /**
      * Returns phone number of the pickup point.
@@ -390,7 +420,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $email = null;
+    /**
+     * @var null|string
+     */
+    protected $email = null;
 
     /**
      * Returns email address of the pickup point.
@@ -446,7 +479,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected bool $open247 = false;
+    /**
+     * @var bool
+     */
+    protected $open247 = false;
 
     /**
      * Returns true if pickup point is open 24/7.
@@ -469,8 +505,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-
-    protected ?string $mondayHours = null;
+    /**
+     * @var null|string
+     */
+    protected $mondayHours = null;
 
     /**
      * Returns opening hours for Monday.
@@ -491,7 +529,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $mondayBreak = null;
+    /**
+     * @var null|string
+     */
+    protected $mondayBreak = null;
 
     /**
      * Returns break hours for Monday.
@@ -512,7 +553,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $tuesdayHours = null;
+    /**
+     * @var null|string
+     */
+    protected $tuesdayHours = null;
 
     /**
      * Returns opening hours for Tuesday.
@@ -533,7 +577,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $tuesdayBreak = null;
+    /**
+     * @var null|string
+     */
+    protected $tuesdayBreak = null;
 
     /**
      * Returns break hours for Tuesday.
@@ -554,7 +601,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $wednesdayHours = null;
+    /**
+     * @var null|string
+     */
+    protected $wednesdayHours = null;
 
     /**
      * Returns opening hours for Wednesday.
@@ -575,7 +625,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $wednesdayBreak = null;
+    /**
+     * @var null|string
+     */
+    protected $wednesdayBreak = null;
 
     /**
      * Returns break hours for Wednesday.
@@ -596,8 +649,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-
-    protected ?string $thursdayHours = null;
+    /**
+     * @var null|string
+     */
+    protected $thursdayHours = null;
 
     /**
      * Returns opening hours for Thursday.
@@ -618,7 +673,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $thursdayBreak = null;
+    /**
+     * @var null|string
+     */
+    protected $thursdayBreak = null;
 
     /**
      * Returns break hours for Thursday.
@@ -639,7 +697,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $fridayHours = null;
+    /**
+     * @var null|string
+     */
+    protected $fridayHours = null;
 
     /**
      * Returns opening hours for Friday.
@@ -660,7 +721,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $fridayBreak = null;
+    /**
+     * @var null|string
+     */
+    protected $fridayBreak = null;
 
     /**
      * Returns break hours for Friday.
@@ -681,7 +745,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $saturdayHours = null;
+    /**
+     * @var null|string
+     */
+    protected $saturdayHours = null;
 
     /**
      * Returns opening hours for Saturday.
@@ -702,7 +769,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $saturdayBreak = null;
+    /**
+     * @var null|string
+     */
+    protected $saturdayBreak = null;
 
     /**
      * Returns break hours for Saturday.
@@ -723,7 +793,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $sundayHours = null;
+    /**
+     * @var null|string
+     */
+    protected $sundayHours = null;
 
     /**
      * Returns opening hours for Sunday.
@@ -744,7 +817,10 @@ class PickupPoint implements ArrayableContract
         return $this;
     }
 
-    protected ?string $sundayBreak = null;
+    /**
+     * @var null|string
+     */
+    protected $sundayBreak = null;
 
     /**
      * Returns break hours for Sunday.
@@ -809,7 +885,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $latitude = null;
+    /**
+     * @var null|string
+     */
+    protected $latitude = null;
 
     /**
      * Returns latitude.
@@ -819,7 +898,10 @@ class PickupPoint implements ArrayableContract
         return $this->latitude;
     }
 
-    protected ?string $longitude = null;
+    /**
+     * @var null|string
+     */
+    protected $longitude = null;
 
     /**
      * Returns longitude.
@@ -893,7 +975,10 @@ class PickupPoint implements ArrayableContract
 
     /* ****************************************************************************************** */
 
-    protected ?string $notes = null;
+    /**
+     * @var null|string
+     */
+    protected $notes = null;
 
     /**
      * Returns notes.

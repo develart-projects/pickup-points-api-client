@@ -167,7 +167,10 @@ class PickupPointResponseGenerator
 
     /* ****************************************************************************************** */
 
-    protected array $data = [];
+    /**
+     * @var array
+     */
+    protected $data = [];
 
     final protected function __construct()
     {

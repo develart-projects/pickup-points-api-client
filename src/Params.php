@@ -46,7 +46,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?string $accessToken = null;
+    /**
+     * @var null|string
+     */
+    protected $accessToken = null;
 
     /**
      * Sets access token to be used with API calls.
@@ -69,7 +72,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?string $country = null;
+    /**
+     * @var null|string
+     */
+    protected $country = null;
 
     /**
      * Sets country code to be used with API calls.
@@ -92,7 +98,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?string $city = null;
+    /**
+     * @var null|string
+     */
+    protected $city = null;
 
     /**
      * Sets city name to be used with API calls.
@@ -115,7 +124,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?array $speditions = null;
+    /**
+     * @var null|array
+     */
+    protected $speditions = null;
 
     /**
      * Sets list of spedition codes to be used with API calls.
@@ -153,7 +165,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?string $speditionId = null;
+    /**
+     * @var null|string
+     */
+    protected $speditionId = null;
 
     /**
      * Sets spedition ID to be used with API calls.
@@ -176,8 +191,15 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?float $latitude  = null;
-    protected ?float $longitude = null;
+    /**
+     * @var null|float
+     */
+    protected $latitude  = null;
+
+    /**
+     * @var null|float
+     */
+    protected $longitude = null;
 
     /**
      * Sets location to be used with API calls.
@@ -221,7 +243,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected array $fields = [];
+    /**
+     * @var array
+     */
+    protected $fields = [];
 
     /**
      * Sets list of fields to be used with API calls.
@@ -271,7 +296,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?array $requiredFields = null;
+    /**
+     * @var null|array
+     */
+    protected $requiredFields = null;
 
     /**
      * Sets list of required fields to be used with API calls.
@@ -294,7 +322,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?string $searchQuery = null;
+    /**
+     * @var null|string
+     */
+    protected $searchQuery = null;
 
     /**
      * Sets search query to be used with API calls.
@@ -317,7 +348,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?int $limit = null;
+    /**
+     * @var null|int
+     */
+    protected $limit = null;
 
     /**
      * Sets limit to be used with API calls.
@@ -340,7 +374,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?string $language = null;
+    /**
+     * @var null|string
+     */
+    protected $language = null;
 
     /**
      * Sets language to be used with API calls.
@@ -363,7 +400,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?array $payments = null;
+    /**
+     * @var null|array
+     */
+    protected $payments = null;
 
     /**
      * Sets payment to be used with API calls.
@@ -408,7 +448,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected ?array $services = null;
+    /**
+     * @var null|array
+     */
+    protected $services = null;
 
     /**
      * Sets service to be used with API calls.

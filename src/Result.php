@@ -235,8 +235,10 @@ class Result implements ArrayableContract
 
     /**
      * Set to TRUE if result relates to successful action's response, FALSE otherwise.
+     *
+     * @var bool
      */
-    protected bool $success = false;
+    protected $success = false;
 
     public function success(): bool
     {
@@ -259,7 +261,7 @@ class Result implements ArrayableContract
     /**
      * @var int $code API code associated with the response.
      */
-    protected int $code = 0;
+    protected $code = 0;
 
     public function getCode(): int
     {
@@ -277,7 +279,10 @@ class Result implements ArrayableContract
         return $this;
     }
 
-    protected string $message = '';
+    /**
+     * @var string
+     */
+    protected $message = '';
 
     public function getMessage(): string
     {
@@ -295,7 +300,10 @@ class Result implements ArrayableContract
         return $this;
     }
 
-    protected ?Data $data = null;
+    /**
+     * @var null|Data
+     */
+    protected $data = null;
 
     public function getData(): ?Data
     {

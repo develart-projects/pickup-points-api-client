@@ -57,8 +57,15 @@ class Location
 
     /* ****************************************************************************************** */
 
-    protected ?float $latitude;
-    protected ?float $longitude;
+    /**
+     * @var null|float
+     */
+    protected $latitude;
+
+    /**
+     * @var null|float
+     */
+    protected $longitude;
 
     /**
      * Returns current latitude
