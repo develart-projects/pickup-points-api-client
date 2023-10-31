@@ -20,7 +20,12 @@ use OlzaLogistic\PpApi\Client\Util\Json;
 
 class ConfigTest extends BaseTestCase
 {
-    protected const apiJsonConfigResponse = <<<JSON
+    /**
+     * Tests integration with Guzzle HTTP client
+     */
+    public function testConfig(): void
+    {
+        $apiJsonConfigResponse = '
             {
               "success": true,
               "code": 0,
@@ -45,23 +50,18 @@ class ConfigTest extends BaseTestCase
                 }
               }
             }
-        JSON;
+        ';
 
-    /**
-     * Tests integration with Guzzle HTTP client
-     */
-    public function testConfig(): void
-    {
         $url = $this->getRandomString('url');
         $accessToken = $this->getRandomString('pass');
 
-        $json = Json::decode(static::apiJsonConfigResponse);
+        $json = Json::decode($apiJsonConfigResponse);
         $this->assertSuccessResponse($json);
         $jsonData = $json[ApiResponse::KEY_DATA];
         $this->assertNotNull($jsonData);
 
         $streamIfaceStub = $this->createStub(DummyStreamInterface::class);
-        $streamIfaceStub->method('getContents')->willReturn(static::apiJsonConfigResponse);
+        $streamIfaceStub->method('getContents')->willReturn($apiJsonConfigResponse);
 
         $responseStub = $this->createStub(DummyResponse::class);
         $responseStub->method('getBody')->willReturn($streamIfaceStub);
