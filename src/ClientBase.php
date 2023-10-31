@@ -42,10 +42,6 @@ abstract class ClientBase implements ClientContract
      */
     public function withAccessToken(string $accessToken): self
     {
-        if (empty(\trim($accessToken))) {
-            throw new \InvalidArgumentException('Invalid API access token.');
-        }
-
         return $this->setAccessToken($accessToken);
     }
 
@@ -170,7 +166,7 @@ abstract class ClientBase implements ClientContract
     protected function setAccessToken(string $accessToken): self
     {
         if (\trim($accessToken) === '') {
-            throw new \RuntimeException('Invalid value of accessToken');
+            throw new \InvalidArgumentException('Invalid value of accessToken');
         }
         $this->accessToken = $accessToken;
         return $this;
