@@ -92,7 +92,7 @@ class ConfigTest extends BaseTestCase
         $configData = $result->getData();
         $this->assertNotNull($configData);
 
-        $configItems = $configData->getConfigItems();
+//        $configItems = $configData->getConfigItems();
 //        $this->assertNotEmpty($configItems);
 //        $this->assertArrayEquals($configItems, $json[ ApiResponse::KEY_DATA ][ ApiResponse::KEY_CONFIG ]);
 

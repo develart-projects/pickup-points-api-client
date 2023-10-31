@@ -41,6 +41,8 @@ class SpeditionTest extends BaseTestCase
      * @param int    $count   Number of elements to yield.
      *
      * @return \Generator
+     *
+     * @noinspection PhpUnusedParameterInspection
      */
     protected function generateSpeditionData(string $country, int $count): \Generator
     {
