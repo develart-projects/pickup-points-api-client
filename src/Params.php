@@ -539,7 +539,9 @@ class Params
         $speditions = $this->getSpeditions();
         if (!empty($speditions)) {
             $speditions = \implode(',',
-                \array_map(static fn(string $item): string => \trim($item),
+                \array_map(static function (string $item): string {
+                    return \trim($item);
+                },
                     $speditions));
         }
 
@@ -567,7 +569,9 @@ class Params
         }
 
         // Remove all null-value query arguments.
-        $filtered = \array_filter($queryArgs, static fn($value): bool => $value !== null);
+        $filtered = \array_filter($queryArgs, static function ($value): bool {
+            return $value !== null;
+        });
 
         return \http_build_query($filtered);
     }
