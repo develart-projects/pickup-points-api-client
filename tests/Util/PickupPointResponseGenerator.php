@@ -177,6 +177,7 @@ class PickupPointResponseGenerator
         $this->data = [
             PP::KEY_ID        => $this->getRandomString('id'),
             PP::KEY_SPEDITION => $this->getRandomString('sped'),
+            PP::KEY_TYPE      => $this->getRandomString('type'),
         ];
     }
 

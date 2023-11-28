@@ -20,6 +20,7 @@ class PickupPoint implements ArrayableContract
 
     public const KEY_ID        = 'id';
     public const KEY_SPEDITION = 'spedition';
+    public const KEY_TYPE      = 'type';
 
     /* ****************************************************************************************** */
 
@@ -133,6 +134,32 @@ class PickupPoint implements ArrayableContract
         }
 
         $this->spedition = $spedition;
+        return $this;
+    }
+
+    /* ****************************************************************************************** */
+
+    /**
+     * @var string
+     */
+    protected $type;
+
+    /**
+     * Returns type of the pickup point.
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * Sets type of the pickup point.
+     *
+     * @param string $type Type of the pickup point to set (i.e. "point")
+     */
+    protected function setType(string $type): self
+    {
+        $this->type = $type;
         return $this;
     }
 
@@ -1019,7 +1046,8 @@ class PickupPoint implements ArrayableContract
     {
         $pp = (new static())
             ->setSpeditionId($ppData[static::KEY_ID])
-            ->setSpedition($ppData[static::KEY_SPEDITION]);
+            ->setSpedition($ppData[static::KEY_SPEDITION])
+            ->setType($ppData[static::KEY_TYPE]);
 
         if (\array_key_exists(static::KEY_GROUP_NAME, $ppData)) {
             $pp->setName1($ppData[static::KEY_GROUP_NAME][0] ?? '???');
@@ -1107,6 +1135,7 @@ class PickupPoint implements ArrayableContract
         return [
             static::KEY_ID            => $this->getSpeditionId(),
             static::KEY_SPEDITION     => $this->getSpedition(),
+            static::KEY_TYPE          => $this->getType(),
             static::KEY_GROUP_NAME    => $this->getNames(),
             static::KEY_GROUP_ADDRESS => [
                 static::KEY_FULL_ADDRESS => $this->getFullAddress(),
