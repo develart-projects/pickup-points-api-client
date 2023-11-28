@@ -1,4 +1,4 @@
-![Olza Logistic Logo](docs/olza-logo.png)
+![Olza Logistic Logo](docs/olza-logo-small.png)
 
 # PP API Client for PHP
 
