@@ -35,6 +35,7 @@ class PickupPointTest extends BaseTestCase
     {
         $this->assertEquals($expected[ PP::KEY_ID ], $pp->getSpeditionId());
         $this->assertEquals($expected[ PP::KEY_SPEDITION ], $pp->getSpedition());
+        $this->assertEquals($expected[ PP::KEY_TYPE ], $pp->getType());
 
         if (\array_key_exists(PP::KEY_GROUP_NAME, $expected)) {
             $nameLines = $expected[ PP::KEY_GROUP_NAME ];
