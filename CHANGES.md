@@ -6,6 +6,10 @@ Olza Logistic's Pickup Point API Client PHP library.
 
 # Changelog
 
+* dev
+  * Added `PickupPointType` class with type consts.
+
+
 * v1.3.2 (2023-11-28)
   * `PickupPoint` class now implements exposes and `getType()` method.
 
