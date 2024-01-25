@@ -5,7 +5,7 @@ declare(strict_types=1);
  * Olza Logistic's Pickup Points API client
  *
  * @author    Marcin Orlowski <marcin.orlowski (#) develart (.) cz>
- * @copyright 2023 DevelArt
+ * @copyright 2023-2024 DevelArt
  * @license   Proprietary
  */
 
