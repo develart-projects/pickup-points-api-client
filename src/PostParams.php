@@ -20,10 +20,15 @@ use OlzaLogistic\PpApi\Client\Util\Validator;
  */
 class PostParams
 {
+    public const KEY_LANGUAGE = 'language';
+    public const KEY_NAME     = 'name';
+
     /* ****************************************************************************************** */
 
-    /** @var string|null */
+    /** @var string */
     protected $json;
+
+    /** @var bool */
     protected $jsonSet = false;
 
     /**
@@ -35,7 +40,7 @@ class PostParams
      */
     public function setJson(string $json): void
     {
-        Validator::assertIsJson($json);
+        Validator::assertIsJson('json', $json);
 
         $this->json = $json;
         $this->jsonSet = true;

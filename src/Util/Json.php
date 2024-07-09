@@ -63,6 +63,7 @@ final class Json
             throw new \JsonException('JSON encoding error: ' . \json_last_error_msg());
         }
 
+        /** @var string $json */
         return $json;
     }
 

@@ -38,6 +38,9 @@ class Params extends QueryParams
 
     /* ****************************************************************************************** */
 
+    /**
+     * Returns QueryParams instance
+     */
     public function getQueryParams(): QueryParams
     {
         return $this;
@@ -48,16 +51,29 @@ class Params extends QueryParams
     /** @var PostParams */
     protected $postParams;
 
+    /**
+     * Returns PostParams instance
+     */
     public function getPostParams(): PostParams
     {
         return $this->postParams;
     }
 
-    public function withPostPayload(array $payload): self
+    /**
+     * Sets JSON POST payload data to be sent with API request.
+     *
+     * @param array $payload JSON data to set.
+     *
+     * @return static
+     * @throws \JsonException on JSON encoding error
+     */
+    public function withPostPayload(array $payload)
     {
         $json = Json::encode($payload);
         $this->postParams->setJson($json);
         return $this;
     }
+
+    /* ****************************************************************************************** */
 
 } // end of class
