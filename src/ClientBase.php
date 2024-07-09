@@ -352,4 +352,28 @@ abstract class ClientBase implements ClientContract
 
     /* ****************************************************************************************** */
 
+    /**
+     * Validates endpoint part to ensure it meets API requirements.
+     *
+     * @param string $endPoint Endpoint part to validate.
+     *
+     * @throws \InvalidArgumentException If endpoint part contains not allowed characters or is
+     *                                   invalid in any other way.
+     */
+    protected function assertValidEndpointPart(string $endPoint): void
+    {
+        $endPoint = \trim($endPoint);
+        if ($endPoint === '') {
+            throw new \InvalidArgumentException('Endpoint string must not be empty.');
+        }
+        if (\substr($endPoint, 0, 1) !== '/') {
+            throw new \InvalidArgumentException('Endpoint must not start with "/" character.');
+        }
+        if (\substr($endPoint, -1) === '?') {
+            throw new \InvalidArgumentException('Endpoint must not end with "?" character.');
+        }
+    }
+
+    /* ****************************************************************************************** */
+
 } // end of class
