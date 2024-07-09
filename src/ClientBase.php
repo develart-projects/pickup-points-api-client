@@ -18,9 +18,11 @@ use OlzaLogistic\PpApi\Client\Exception\ClientAlreadyInitializedException;
 use OlzaLogistic\PpApi\Client\Exception\ClientNotSealedException;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
 use OlzaLogistic\PpApi\Client\Exception\ObjectNotFoundException;
+use OlzaLogistic\PpApi\Client\Util\Json;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 abstract class ClientBase implements ClientContract
 {
@@ -73,11 +75,18 @@ abstract class ClientBase implements ClientContract
      *
      * @param RequestFactoryInterface $requestFactory Instance of PSR-17 compatible request factory.
      */
-    public function withRequestFactory(requestFactoryInterface $requestFactory): self
+    public function withRequestFactory(RequestFactoryInterface $requestFactory): self
     {
         $this->assertClientNotConfigured();
 
         return $this->setRequestFactory($requestFactory);
+    }
+
+    public function withStreamFactory(StreamFactoryInterface $streamFactory): self
+    {
+        $this->assertClientNotConfigured();
+
+        return $this->setStreamFactory($streamFactory);
     }
 
     /**
@@ -205,6 +214,24 @@ abstract class ClientBase implements ClientContract
     protected function setRequestFactory(RequestFactoryInterface $requestFactory): self
     {
         $this->requestFactory = $requestFactory;
+        return $this;
+    }
+
+    /**
+     * Stream factory instance (PSR-17) for methods that are documented to need it (most do not).
+     *
+     * @var \Psr\Http\Message\StreamFactoryInterface
+     */
+    protected $streamFactory;
+
+    protected function getStreamFactory(): StreamFactoryInterface
+    {
+        return $this->streamFactory;
+    }
+
+    protected function setStreamFactory(StreamFactoryInterface $streamFactory): self
+    {
+        $this->streamFactory = $streamFactory;
         return $this;
     }
 

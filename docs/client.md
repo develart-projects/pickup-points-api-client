@@ -41,7 +41,11 @@ static `public static function useApi(string $apiUrl)` method and several builde
 | `withUserAgent(string $userAgent)`                            | Specifies the User-Agent string for all HTTP API requests.                                            |
 | `withHttpClient(ClientInterface $httpClient)`                 | Configures a PSR-18 compatible instance of an HTTP client implementation.                             |
 | `withRequestFactory(requestFactoryInterface $requestFactory)` | Configures a PSR-17 compatible request factory instance to work with the HTTP client.                 |
+| `withStreamFactory(streamFactoryInterface $streamFactory)`    | Configures a PSR-17 compatible stream factory instance to work with the HTTP client.                  |
 | `throwOnError()`                                              | Configures the client to throw an exception in case of any API connection failure.                    |
+
+NOTE: the `StreamFactoryInterface` instance is usually not needed. Unless you use methods
+explicitly documented as requiring a stream factory, you can safely ignore it and not provide it.
 
 Then calling `build()` to obrain the `Client` instance:
 
