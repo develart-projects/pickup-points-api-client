@@ -28,7 +28,7 @@ class Client extends ClientBase
             Params::COUNTRY,
             Params::SPEDITION,
         ]);
-        return $this->handleHttpRequest(Route::FIND, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::FIND, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromApiResponseWithItems($apiResponse);
             }
@@ -45,7 +45,7 @@ class Client extends ClientBase
             Params::SPEDITION,
             Params::ID,
         ]);
-        return $this->handleHttpRequest(Route::DETAILS, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::DETAILS, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromApiResponseWithItems($apiResponse);
             }
@@ -59,7 +59,7 @@ class Client extends ClientBase
             Params::COUNTRY,
             Params::LOCATION,
         ]);
-        return $this->handleHttpRequest(Route::NEARBY, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::NEARBY, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromApiResponseWithItems($apiResponse);
             }
@@ -73,7 +73,7 @@ class Client extends ClientBase
         $apiParams->setRequiredFields([
             Params::COUNTRY,
         ]);
-        return $this->handleHttpRequest(Route::CONFIG, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::CONFIG, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromConfigApiResponse($apiResponse);
             }
