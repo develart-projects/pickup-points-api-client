@@ -28,7 +28,6 @@ class ParamsTest extends BaseTestCase
         $accessToken = $this->getRandomString('token');
         $p = Params::create()->withAccessToken($accessToken);
         $value = $this->callProtectedMethod($p, 'getAccessToken');
-        $this->assertIsString($value);
         $this->assertEquals($accessToken, $value);
     }
 

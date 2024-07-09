@@ -69,9 +69,13 @@ class Params
     /**
      * Returns access token to be used with API calls.
      */
-    protected function getAccessToken(): ?string
+    protected function getAccessToken(): string
     {
-        return $this->accessToken;
+        $token = $this->accessToken;
+        if ($token === null) {
+            throw new \InvalidArgumentException('Access token not set');
+        }
+        return $token;
     }
 
     /* ****************************************************************************************** */
