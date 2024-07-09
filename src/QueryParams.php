@@ -74,8 +74,10 @@ class QueryParams
      * Sets country code to be used with API calls.
      *
      * @param string $country Country code to be used with API calls.
+     *
+     * @return static
      */
-    public function withCountry(string $country): self
+    public function withCountry(string $country)
     {
         $this->country = $country;
         return $this;
@@ -100,8 +102,10 @@ class QueryParams
      * Sets city name to be used with API calls.
      *
      * @param string $city City name to be used with API calls.
+     *
+     * @return static
      */
-    public function withCity(string $city): self
+    public function withCity(string $city)
     {
         $this->city = $city;
         return $this;
@@ -126,8 +130,10 @@ class QueryParams
      * Sets list of spedition codes to be used with API calls.
      *
      * @param array $speditions List of spedition codes to be used with API calls.
+     *
+     * @return static
      */
-    public function withSpeditions(array $speditions): self
+    public function withSpeditions(array $speditions)
     {
         $this->speditions = $speditions;
         return $this;
@@ -137,8 +143,10 @@ class QueryParams
      * Returns list of spedition codes to be used with API calls.
      *
      * @param string $spedition Spedition code to be added to the list.
+     *
+     * @return static
      */
-    public function withSpedition(string $spedition): self
+    public function withSpedition(string $spedition)
     {
         if ($this->speditions === null) {
             $this->speditions = [];
@@ -167,8 +175,10 @@ class QueryParams
      * Sets spedition ID to be used with API calls.
      *
      * @param string $speditionId Spedition ID to be used with API calls.
+     *
+     * @return static
      */
-    public function withSpeditionId(string $speditionId): self
+    public function withSpeditionId(string $speditionId)
     {
         $this->speditionId = $speditionId;
         return $this;
@@ -199,8 +209,10 @@ class QueryParams
      *
      * @param float|null $latitude  Latitude to be used with API calls.
      * @param float|null $longitude Longitude to be used with API calls.
+     *
+     * @return static
      */
-    public function withLocation(?float $latitude, ?float $longitude): self
+    public function withLocation(?float $latitude, ?float $longitude)
     {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
@@ -245,8 +257,10 @@ class QueryParams
      * Sets list of fields to be used with API calls.
      *
      * @param array|null $fields List of fields to be used with API calls.
+     *
+     * @return static
      */
-    public function withFields(?array $fields): self
+    public function withFields(?array $fields)
     {
         $fields = $fields ?? [];
         $this->fields = $fields;
@@ -273,8 +287,10 @@ class QueryParams
      * Adds field to the list of fields to be used with API calls.
      *
      * @param string $field Field to be added to the list.
+     *
+     * @return static
      */
-    public function addField(string $field): self
+    public function addField(string $field)
     {
         $fields = $this->getFields();
         if ($fields === null) {
@@ -298,8 +314,10 @@ class QueryParams
      * Sets list of required fields to be used with API calls.
      *
      * @param array|null $requiredFields List of required fields to be used with API calls.
+     *
+     * @return static
      */
-    public function setRequiredFields(?array $requiredFields): self
+    public function setRequiredFields(?array $requiredFields)
     {
         $this->requiredFields = $requiredFields;
         return $this;
@@ -324,8 +342,10 @@ class QueryParams
      * Sets search query to be used with API calls.
      *
      * @param string $searchQuery Search query to be used with API calls.
+     *
+     * @return static
      */
-    public function withSearchQuery(string $searchQuery): self
+    public function withSearchQuery(string $searchQuery)
     {
         $this->searchQuery = $searchQuery;
         return $this;
@@ -350,8 +370,10 @@ class QueryParams
      * Sets limit to be used with API calls.
      *
      * @param int $limit Limit to be used with API calls.
+     *
+     * @return static
      */
-    public function withLimit(int $limit): self
+    public function withLimit(int $limit)
     {
         $this->limit = $limit;
         return $this;
@@ -376,8 +398,10 @@ class QueryParams
      * Sets language to be used with API calls.
      *
      * @param string $language Language to be used with API calls.
+     *
+     * @return static
      */
-    public function withLanguage(string $language): self
+    public function withLanguage(string $language)
     {
         $this->language = $language;
         return $this;
@@ -402,8 +426,10 @@ class QueryParams
      * Sets payment to be used with API calls.
      *
      * @param string $payment Payment to be used with API calls.
+     *
+     * @return static
      */
-    public function withPayment(string $payment): self
+    public function withPayment(string $payment)
     {
         if ($this->payments === null) {
             $this->payments = [];
@@ -416,8 +442,10 @@ class QueryParams
      * Sets payments to be used with API calls.
      *
      * @param array|null $payments Payments to be used with API calls.
+     *
+     * @return static
      */
-    public function withPayments(?array $payments): self
+    public function withPayments(?array $payments)
     {
         $this->payments = $payments;
         return $this;
@@ -450,8 +478,10 @@ class QueryParams
      * Sets service to be used with API calls.
      *
      * @param string $service Service to be used with API calls.
+     *
+     * @return static
      */
-    public function withService(string $service): self
+    public function withService(string $service)
     {
         if ($this->services === null) {
             $this->services = [];
@@ -464,8 +494,10 @@ class QueryParams
      * Sets services to be used with API calls.
      *
      * @param array|null $services Services to be used with API calls.
+     *
+     * @return static
      */
-    public function withServices(?array $services): self
+    public function withServices(?array $services)
     {
         $this->services = $services;
         return $this;
