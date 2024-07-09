@@ -90,9 +90,9 @@ class Result implements ArrayableContract
      *
      * NOTE: only results with with single "items" list in "data" node.
      *
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response HTTP response to process
      *
-     * @return Result
+     * @return Result Instance of Result filled with data from provided API response.
      */
     public static function fromApiResponseWithItems(ResponseInterface $response): self
     {
@@ -123,13 +123,12 @@ class Result implements ArrayableContract
         return $result;
     }
 
-
     /**
      * Returns instance of Result filled with data from provided config/ API response.
      *
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response HTTP response to process
      *
-     * @return Result
+     * @return Result Instance of Result filled with data from provided API response.
      */
     public static function fromConfigApiResponse(ResponseInterface $response): self
     {
@@ -198,7 +197,7 @@ class Result implements ArrayableContract
      *                                            of "data" node. NOTE: only keys directly in "data"
      *                                            node are checked. Deeper levels are not currently
      *
-     * @return bool
+     * @return bool TRUE if response is valid, FALSE otherwise.
      */
     protected static function isApiResponseArrayValid(array  $json,
                                                       ?array $extraDataKeys = null): bool
