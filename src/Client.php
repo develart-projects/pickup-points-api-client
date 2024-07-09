@@ -80,4 +80,21 @@ class Client extends ClientBase
         );
     }
 
+    public function rawRequest(string $httpMethod,
+                               string $endpoint,
+                               ?Params $apiParams = null): Result
+    {
+        $this->assertConfigurationSealed();
+
+        if ($apiParams === null) {
+            $apiParams = Params::create();
+        }
+
+        return $this->handleHttpRequest($httpMethod, $endpoint, $apiParams,
+            static function (ResponseInterface $apiResponse) {
+                return Result::fromGenericApiResponse($apiResponse);
+            }
+        );
+    }
+
 } // end of class

@@ -45,4 +45,6 @@ interface ClientContract
      */
     public function config(Params $apiParams): Result;
 
+    public function rawRequest(string $httpMethod, string $endpoint, Params $apiParams): Result;
+
 } // end of class
