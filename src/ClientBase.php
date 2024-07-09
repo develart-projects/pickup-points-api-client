@@ -296,11 +296,10 @@ abstract class ClientBase implements ClientContract
      * Calls API endpoint and builds proper Response instance either with returned
      * data or one indicating request failure.
      *
-     * @param string      $endPoint                 Endpoint to call (i.e. '/pp/find')
-     * @param Params|null $apiParams                Instance of Params container with valid API
-     *                                              params.
-     * @param callable    $processResponseCallback  Callback that will be called to map response
-     *                                              data to Result object.
+     * @param string   $endPoint                 Endpoint to call (i.e. '/pp/find')
+     * @param Params   $apiParams                Instance of Params container with valid API params.
+     * @param callable $processResponseCallback  Callback that will be called to map response
+     *                                           data to Result object.
      *
      * @throws MethodFailedException If API call failed and throwOnError is set to TRUE.
      * @throws ObjectNotFoundException If requested object was not found.
@@ -310,15 +309,13 @@ abstract class ClientBase implements ClientContract
      *                                                   request by the PSR HTTP client.
      */
     protected function handleHttpRequest(string   $endPoint,
-                                         ?Params  $apiParams,
+                                         Params   $apiParams,
                                          callable $processResponseCallback): Result
     {
         try {
             $uri = $this->getApiUrl() . $endPoint;
-            if ($apiParams !== null) {
-                $apiParams->withAccessToken($this->accessToken);
-                $uri .= '?' . $apiParams->toQueryString();
-            }
+            $apiParams->withAccessToken($this->accessToken);
+            $uri .= '?' . $apiParams->toQueryString();
 
             $client = $this->getHttpClient();
             $request = $this->createRequest('GET', $uri);
