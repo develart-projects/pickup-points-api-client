@@ -19,7 +19,8 @@ class Validator
 {
     /**
      *
-     * @param string $varName Label or name of the variable to be used in exception message (if thrown).
+     * @param string $varName Label or name of the variable to be used in exception message (if
+     *                        thrown).
      * @param mixed  $value   Value to be asserted.
      *
      * @return void'
@@ -34,7 +35,8 @@ class Validator
     /**
      * Checks if given $cls_cls_or_obj is either an object or name of existing class.
      *
-     * @param string        $varName Label or name of the variable to be used in exception message (if thrown).
+     * @param string        $varName Label or name of the variable to be used in exception message
+     *                               (if thrown).
      * @param string|object $classOrObject
      *
      * @return void
@@ -49,10 +51,11 @@ class Validator
     }
 
     /**
-     * Checks if $item (of name $key) is of type that is include in $allowed_types (there's `OR` connection
-     * between specified types).
+     * Checks if $item (of name $key) is of type that is include in $allowed_types (there's `OR`
+     * connection between specified types).
      *
-     * @param string $varName      Label or name of the variable to be used in exception message (if thrown).
+     * @param string $varName      Label or name of the variable to be used in exception message
+     *                             (if thrown).
      * @param mixed  $value        Variable to be asserted.
      * @param array  $allowedTypes Array of allowed types for $value, i.e. [Type::INTEGER]
      */
@@ -63,7 +66,7 @@ class Validator
         $idx = array_search(Type::EXISTING_CLASS, $tmp, true);
         if ($idx !== false) {
             // Remove the type, so gettype() test loop won't see it.
-            unset($tmp[ $idx ]);
+            unset($tmp[$idx]);
             if (is_string($value) && class_exists($value)) {
                 // It's existing class, no need to test further.
                 return;
@@ -109,9 +112,11 @@ class Validator
     }
 
     /**
-     * Ensures $obj (that is value coming from variable, which name is passed in $label) is instance of $cls class.
+     * Ensures $obj (that is value coming from variable, which name is passed in $label) is
+     * instance of $cls class.
      *
-     * @param string $varName Name of variable that the $obj value is coming from. Used for exception message.
+     * @param string $varName Name of variable that the $obj value is coming from. Used for
+     *                        exception message.
      * @param object $obj     Object to check instance of
      * @param string $cls     Target class we want to check $obj agains.
      *
@@ -129,7 +134,8 @@ class Validator
     /**
      * Ensures provided $value is in specified $range.
      *
-     * @param string    $varName Name of variable that the $obj value is coming from. Used for exception message reference.
+     * @param string    $varName Name of variable that the $obj value is coming from. Used for
+     *                           exception message reference.
      * @param float|int $value   Current value of the variable.
      * @param float|int $min     Minimum allowed value (inclusive).
      * @param float|int $max     Maximum allowed value (inclusive).
@@ -151,7 +157,8 @@ class Validator
     /**
      * Ensures provided value is a number (either int or float).
      *
-     * @param string $varName Name of variable that the $obj value is coming from. Used for exception message reference.
+     * @param string $varName Name of variable that the $obj value is coming from. Used for
+     *                        exception message reference.
      * @param mixed  $value
      */
     public static function assertIsNumber(string $varName, $value): void
@@ -159,6 +166,21 @@ class Validator
         if (!(\is_int($value) || \is_float($value))) {
             $msg = \sprintf('"%s" must be a number: "%s" given.', $varName, \gettype($value));
             throw new \InvalidArgumentException($msg);
+        }
+    }
+
+    /**
+     * Ensures provided value is a string representing valid JSON.
+     *
+     * @param string $varName Name of variable that the $obj value is coming from. Used for
+     *                        exception message reference.
+     * @param string $value   JSON string to be validated.
+     */
+    public static function assertIsJson(string $varName, string $value): void
+    {
+        \json_decode($value, true);
+        if (\json_last_error() !== JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException("Invalid JSON string: {$varName}");
         }
     }
 
