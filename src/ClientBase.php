@@ -18,7 +18,6 @@ use OlzaLogistic\PpApi\Client\Exception\ClientAlreadyInitializedException;
 use OlzaLogistic\PpApi\Client\Exception\ClientNotSealedException;
 use OlzaLogistic\PpApi\Client\Exception\MethodFailedException;
 use OlzaLogistic\PpApi\Client\Exception\ObjectNotFoundException;
-use OlzaLogistic\PpApi\Client\Util\Json;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -353,24 +352,7 @@ abstract class ClientBase implements ClientContract
             $uri .= '?' . $queryParams->toQueryString();
 
             $client = $this->getHttpClient();
-            $request = $this->createRequest($httpMethod, $uri);
-
-            $postParams = $apiParams->getPostParams();
-            if ($postParams->hasJson()) {
-                // Body payload is supported for specific methods only.
-                $allowedMethod = [
-                    Method::POST,
-                    Method::PUT,
-                ];
-                if (!\in_array($httpMethod, $allowedMethod, true)) {
-                    $exMsg = \sprintf('Payload not supported for method: %s', $httpMethod);
-                    throw new MethodFailedException($exMsg, ApiCode::INVALID_ARGUMENTS);
-                }
-                $postPayload = $postParams->getJson();
-                $body = $this->getStreamFactory()->createStream($postPayload);
-                $request = $request->withBody($body);
-            }
-
+            $request = $this->createPostPayload($this->createRequest($httpMethod, $uri), $apiParams);
             $apiResponse = $client->sendRequest($request);
             /**
              * Some static analyzers apparently believe the line below is unreachable. Most likely
@@ -400,6 +382,38 @@ abstract class ClientBase implements ClientContract
         }
 
         return $result;
+    }
+
+    /**
+     * Creates and returns Request object with payload set up according to provided
+     * API parameters.
+     *
+     * @param RequestInterface $request   Request to optionally add payload to.
+     * @param Params           $apiParams API parameters to use.
+     *
+     * @return RequestInterface
+     */
+    protected function createPostPayload(RequestInterface $request,
+                                         Params           $apiParams): RequestInterface
+    {
+        $postParams = $apiParams->getPostParams();
+        if ($postParams->hasJson()) {
+            // Body payload is supported for specific methods only.
+            $allowedMethod = [
+                Method::POST,
+                Method::PUT,
+            ];
+            $httpMethod = $request->getMethod();
+            if (!\in_array($httpMethod, $allowedMethod, true)) {
+                $exMsg = \sprintf('Payload not supported for method: %s', $httpMethod);
+                throw new MethodFailedException($exMsg, ApiCode::INVALID_ARGUMENTS);
+            }
+            $postPayload = $postParams->getJson();
+            $body = $this->getStreamFactory()->createStream($postPayload);
+            $request = $request->withBody($body);
+        }
+
+        return $request;
     }
 
     /* ****************************************************************************************** */
