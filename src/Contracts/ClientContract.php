@@ -19,21 +19,29 @@ interface ClientContract
 {
     /**
      * Returns all pickup points associated with given country and spedition(s).
+     *
+     * @param Params $apiParams Populated instance of request parameters' container.
      */
     public function find(Params $apiParams): Result;
 
     /**
-     * Return details about specified pickup points.
+     * Returns details about given Pickup Point.
+     *
+     * @param Params $apiParams Populated instance of request parameters' container.
      */
     public function details(Params $apiParams): Result;
 
     /**
-     * Returns nearby pickup points matching search criteria.
+     * Returns list of nearby Pickup Points matching search criteria.
+     *
+     * @param Params $apiParams Populated instance of request parameters' container.
      */
     public function nearby(Params $apiParams): Result;
 
     /**
-     * Returns runtime API config and params
+     * Returns list current API runtime params and available options.
+     *
+     * @param Params $apiParams Populated instance of request parameters' container.
      */
     public function config(Params $apiParams): Result;
 

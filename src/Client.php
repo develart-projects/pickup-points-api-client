@@ -20,13 +20,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client extends ClientBase
 {
-    /**
-     * Talks to API and returns list of PPs matching search criteria.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     *
-     * @return Result
-     */
     public function find(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
@@ -42,11 +35,7 @@ class Client extends ClientBase
         );
     }
 
-    /**
-     * Return details about given Pickup Point.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     */
+
     public function details(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
@@ -63,11 +52,6 @@ class Client extends ClientBase
         );
     }
 
-    /**
-     * Talks to API and returns list of nearby Pickup Points matching search criteria.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     */
     public function nearby(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
@@ -82,11 +66,6 @@ class Client extends ClientBase
         );
     }
 
-    /**
-     * Talks to API and returns list current API runtime params and available options.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     */
     public function config(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();

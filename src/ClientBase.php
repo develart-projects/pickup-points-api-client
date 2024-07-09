@@ -296,16 +296,21 @@ abstract class ClientBase implements ClientContract
      * Calls API endpoint and builds proper Response instance either with returned
      * data or one indicating request failure.
      *
-     * @param string      $endPoint                Endpoint to call (i.e. '/pp/find')
-     * @param Params|null $apiParams               Instance of Params container with valid API
-     *                                             params.
-     * @param callable    $processResponseCallback Callback that will be called to map response
-     *                                             data
-     *                                             to Result object.
+     * @param string      $endPoint                 Endpoint to call (i.e. '/pp/find')
+     * @param Params|null $apiParams                Instance of Params container with valid API
+     *                                              params.
+     * @param callable    $processResponseCallback  Callback that will be called to map response
+     *                                              data to Result object.
      *
-     * @throws MethodFailedException
+     * @throws MethodFailedException If API call failed and throwOnError is set to TRUE.
+     * @throws ObjectNotFoundException If requested object was not found.
+     * @throws AccessDeniedException If access to requested object was denied.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the
+     *                                                   request by the PSR HTTP client.
      */
-    protected function handleHttpRequest(string   $endPoint, ?Params $apiParams,
+    protected function handleHttpRequest(string   $endPoint,
+                                         ?Params  $apiParams,
                                          callable $processResponseCallback): Result
     {
         try {

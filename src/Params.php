@@ -12,8 +12,12 @@ declare(strict_types=1);
 
 namespace OlzaLogistic\PpApi\Client;
 
+
 use OlzaLogistic\PpApi\Client\Util\Validator;
 
+/**
+ * Represents set of QUERY parameters to be used with API calls.
+ */
 class Params
 {
     public const ACCESS_TOKEN = 'access_token';
@@ -31,10 +35,10 @@ class Params
 
     /* ****************************************************************************************** */
 
-    protected function __construct()
-    {
-        // dummy
-    }
+    /**
+     * C'tor. No direct instantiation allowed though
+     */
+    protected function __construct() {}
 
     /**
      * Returns new instance of Params
@@ -194,7 +198,7 @@ class Params
     /**
      * @var null|float
      */
-    protected $latitude  = null;
+    protected $latitude = null;
 
     /**
      * @var null|float
@@ -502,6 +506,8 @@ class Params
      * @param array $requiredFields Array of Param::XXX types that are
      *                              mandatory. All specified fields must be set
      *                              or exception is thrown.
+     *
+     * @throws \InvalidArgumentException If any of required fields is missing or empty.
      */
     protected function validate(array $requiredFields): void
     {
@@ -544,7 +550,7 @@ class Params
                     Validator::assertIsInRange('longitude', $long, -180, 180);
                     break;
                 default:
-                    throw new \RuntimeException("Unknown field: {$field}");
+                    throw new \InvalidArgumentException("Unknown field: {$field}");
             }
         }
     }
@@ -570,7 +576,7 @@ class Params
      * of query string (URL passed GET arguments).
      *
      * @param array|null $requiredFields Optional array of Param::XXX types that are
-     *                                   mandatory (must be non-empty).
+     *                                   mandatory (must be present and non-empty).
      *
      * @return string URL encoded string representation of set parameters.
      */
