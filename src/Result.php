@@ -57,8 +57,21 @@ class Result implements ArrayableContract
             ->setCode($ex->getCode());
     }
 
+    /**
+     * Returns instance of Result preconfigured to indicate failure based on provided
+     * Throwable object.
+     *
+     * @param ResponseInterface $response  HTTP response to process
+     * @param array|null        $extraKeys Flat list of keys that must be present as child
+     *                                     elements of "data" node. NOTE: only keys directly
+     *                                     in "data" node are checked.
+     *
+     * @return self Instance of self's class, filled with data from provided API response.
+     *
+     * @throws \JsonException If JSON payload decoding fails.
+     */
     protected static function getConfiguredResponseObject(ResponseInterface $response,
-                                                          array             $extraKeys): self
+                                                          ?array            $extraKeys = null): self
     {
         $code = $response->getStatusCode();
         $body = $response->getBody();
@@ -192,12 +205,12 @@ class Result implements ArrayableContract
     /**
      * Ensures decoded JSON response from API matches expectations.
      *
-     * @param array         $json                 Decoded API response array.
-     * @param string[]|null $extraDataKeys        Flat list of keys that must be present as child
-     *                                            of "data" node. NOTE: only keys directly in "data"
-     *                                            node are checked. Deeper levels are not currently
+     * @param array         $json          Decoded API response array.
+     * @param string[]|null $extraDataKeys Flat list of keys that must be present as child of
+     *                                     "data" node. NOTE: only keys directly in "data" node are
+     *                                     checked.
      *
-     * @return bool TRUE if response is valid, FALSE otherwise.
+     * @return bool TRUE if response meets our criteria, FALSE otherwise.
      */
     protected static function isApiResponseArrayValid(array  $json,
                                                       ?array $extraDataKeys = null): bool
