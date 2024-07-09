@@ -355,7 +355,6 @@ abstract class ClientBase implements ClientContract
             $client = $this->getHttpClient();
             $request = $this->createRequest($httpMethod, $uri);
 
-
             $postParams = $apiParams->getPostParams();
             if ($postParams->hasJson()) {
                 // Body payload is supported for specific methods only.
@@ -368,7 +367,7 @@ abstract class ClientBase implements ClientContract
                     throw new MethodFailedException($exMsg, ApiCode::INVALID_ARGUMENTS);
                 }
                 $postPayload = $postParams->getJson();
-                $body = $this->getStreamFactory()->createStream(Json::encode($postPayload));
+                $body = $this->getStreamFactory()->createStream($postPayload);
                 $request = $request->withBody($body);
             }
 
@@ -388,10 +387,10 @@ abstract class ClientBase implements ClientContract
         if (!$result->success() && $this->getThrowOnError()) {
             switch ($result->getCode()) {
                 case ApiCode::ERROR_OBJECT_NOT_FOUND:
-                    $ex = new ObjectNotFoundException();
+                    $ex = new ObjectNotFoundException($result->getMessage(), $result->getCode());
                     break;
                 case ApiCode::ERROR_ACCESS_DENIED:
-                    $ex = new AccessDeniedException();
+                    $ex = new AccessDeniedException($result->getMessage(), $result->getCode());
                     break;
                 default:
                     $ex = new MethodFailedException($result->getMessage(), $result->getCode());
@@ -420,7 +419,7 @@ abstract class ClientBase implements ClientContract
             throw new \InvalidArgumentException('Endpoint string must not be empty.');
         }
         if (\substr($endPoint, 0, 1) !== '/') {
-            throw new \InvalidArgumentException('Endpoint must not start with "/" character.');
+            throw new \InvalidArgumentException('Endpoint must start with "/" character.');
         }
         if (\substr($endPoint, -1) === '?') {
             throw new \InvalidArgumentException('Endpoint must not end with "?" character.');
