@@ -58,16 +58,11 @@ class Lockpick
     {
         static::assertClassOrString($clsOrObj);
 
-        /**
-         * At this point $objectOrClass is either object or string but some static analyzers
-         * got problems figuring that out, so this (partially correct) var declaration is
-         * to make them believe.
-         */
-        /** @var mixed $clsOrObj */
+        /** @phpstan-ignore-next-line */
         $reflection = new \ReflectionClass($clsOrObj);
         $property = $reflection->getProperty($name);
         $property->setAccessible(true);
-        /** @var mixed $clsOrObj */
+        /** @phpstan-ignore-next-line */
         $property->setValue($clsOrObj, $value);
     }
 
