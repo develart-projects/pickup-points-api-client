@@ -160,6 +160,34 @@ class Result implements ArrayableContract
         return $result;
     }
 
+    /**
+     * Generic handler that returns instance of Result filled with data from provided API response.
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response HTTP response to process
+     *
+     * @return Result Instance of Result filled with data from provided API response.
+     */
+    public static function fromGenericApiResponse(ResponseInterface $response): self
+    {
+        try {
+            $body = $response->getBody();
+            $body->rewind();
+            $respJsonStr = $body->getContents();
+            $json = Json::decode($respJsonStr);
+
+            $result = static::getConfiguredResponseObject($response);
+
+            $dataSrc = $json[ApiResponse::KEY_DATA] ?? null;
+            if ($dataSrc != null) {
+                $data = new Data($dataSrc);
+                $result->setData($data);
+            }
+        } catch (\Throwable $ex) {
+            $result = static::fromThrowable($ex);
+        }
+        return $result;
+    }
+
     /* ****************************************************************************************** */
 
     /**
