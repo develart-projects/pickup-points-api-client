@@ -22,7 +22,9 @@ final class Json
      *
      * @param string $json JSON string to decode
      *
-     * @throws \JsonException
+     * @return array Decoded JSON data
+     *
+     * @throws \JsonException on JSON decoding error
      */
     public static function decode(string $json): array
     {
@@ -38,6 +40,30 @@ final class Json
 
         /** @var array $decodedJson */
         return $decodedJson;
+    }
+
+    /**
+     * Helper methods that imitates JSON_THROW_ON_ERROR flag on PHP < 7.3
+     *
+     * @param array $data Data to encode
+     *
+     * @return string JSON encoded data
+     *
+     * @throws \JsonException on JSON encoding error
+     */
+    public static function encode(array $data): string
+    {
+        $flags = 0;
+        if (version_compare(phpversion(), '7.3.0', '>=')) {
+            $flags |= \JSON_THROW_ON_ERROR;
+        }
+
+        $json = \json_encode($data, $flags);
+        if (\json_last_error() !== \JSON_ERROR_NONE) {
+            throw new \JsonException('JSON encoding error: ' . \json_last_error_msg());
+        }
+
+        return $json;
     }
 
 }
