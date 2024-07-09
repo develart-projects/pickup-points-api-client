@@ -323,34 +323,60 @@ abstract class ClientBase implements ClientContract
      * Calls API endpoint and builds proper Response instance either with returned
      * data or one indicating request failure.
      *
-     * @param string   $endPoint                 Endpoint to call (i.e. '/pp/find')
-     * @param Params   $apiParams                Instance of Params container with valid API params.
-     * @param callable $processResponseCallback  Callback that will be called to map response
-     *                                           data to Result object.
+     * @param string   $httpMethod              HTTP method to use (see Method class for consts)
+     * @param string   $endPoint                Endpoint to call (i.e. '/pp/find')
+     * @param Params   $apiParams               Params container with valid API configuration
+     * @param callable $processResponseCallback Callback that will be called to process response
+     *                                          data and produce final Result object.
      *
      * @throws MethodFailedException If API call failed and throwOnError is set to TRUE.
      * @throws ObjectNotFoundException If requested object was not found.
      * @throws AccessDeniedException If access to requested object was denied.
      *
+     * @throws \InvalidArgumentException If $endPoint does not start with "/" character.
+     *
      * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the
      *                                                   request by the PSR HTTP client.
      */
-    protected function handleHttpRequest(string   $endPoint,
+    protected function handleHttpRequest(string   $httpMethod,
+                                         string   $endPoint,
                                          Params   $apiParams,
                                          callable $processResponseCallback): Result
     {
         try {
+            $endPoint = \trim($endPoint);
+            $this->assertValidEndpointPart($endPoint);
             $uri = $this->getApiUrl() . $endPoint;
+
+            $queryParams = $apiParams->getQueryParams();
             $apiParams->withAccessToken($this->accessToken);
-            $uri .= '?' . $apiParams->toQueryString();
+            $uri .= '?' . $queryParams->toQueryString();
 
             $client = $this->getHttpClient();
-            $request = $this->createRequest('GET', $uri);
+            $request = $this->createRequest($httpMethod, $uri);
+
+
+            $postParams = $apiParams->getPostParams();
+            if ($postParams->hasJson()) {
+                // Body payload is supported for specific methods only.
+                $allowedMethod = [
+                    Method::POST,
+                    Method::PUT,
+                ];
+                if (!\in_array($httpMethod, $allowedMethod, true)) {
+                    $exMsg = \sprintf('Payload not supported for method: %s', $httpMethod);
+                    throw new MethodFailedException($exMsg, ApiCode::INVALID_ARGUMENTS);
+                }
+                $postPayload = $postParams->getJson();
+                $body = $this->getStreamFactory()->createStream(Json::encode($postPayload));
+                $request = $request->withBody($body);
+            }
+
             $apiResponse = $client->sendRequest($request);
             /**
-             * Some static analyzers apparently believe the line  below is unreachable. Most likely
+             * Some static analyzers apparently believe the line below is unreachable. Most likely
              * it's because the dummy implementation of invoked method is used as reference (and it
-             * just throws).
+             * just throws an exception).
              *
              * @var Result $result
              */
