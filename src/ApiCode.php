@@ -34,4 +34,12 @@ class ApiCode
      */
     public const ERROR_ACCESS_DENIED = 101;
 
+    /**
+     * API rejects the request due to invalid arguments (like missing required fields etc.)
+     * or invalid data format.
+     *
+     * @var int
+     */
+    public const INVALID_ARGUMENTS = 102;
+
 }

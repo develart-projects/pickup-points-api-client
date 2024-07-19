@@ -57,8 +57,21 @@ class Result implements ArrayableContract
             ->setCode($ex->getCode());
     }
 
+    /**
+     * Returns instance of Result preconfigured to indicate failure based on provided
+     * Throwable object.
+     *
+     * @param ResponseInterface $response  HTTP response to process
+     * @param array|null        $extraKeys Flat list of keys that must be present as child
+     *                                     elements of "data" node. NOTE: only keys directly
+     *                                     in "data" node are checked.
+     *
+     * @return self Instance of self's class, filled with data from provided API response.
+     *
+     * @throws \JsonException If JSON payload decoding fails.
+     */
     protected static function getConfiguredResponseObject(ResponseInterface $response,
-                                                          array             $extraKeys): self
+                                                          ?array            $extraKeys = null): self
     {
         $code = $response->getStatusCode();
         $body = $response->getBody();
@@ -90,9 +103,9 @@ class Result implements ArrayableContract
      *
      * NOTE: only results with with single "items" list in "data" node.
      *
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response HTTP response to process
      *
-     * @return Result
+     * @return Result Instance of Result filled with data from provided API response.
      */
     public static function fromApiResponseWithItems(ResponseInterface $response): self
     {
@@ -123,13 +136,12 @@ class Result implements ArrayableContract
         return $result;
     }
 
-
     /**
      * Returns instance of Result filled with data from provided config/ API response.
      *
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response HTTP response to process
      *
-     * @return Result
+     * @return Result Instance of Result filled with data from provided API response.
      */
     public static function fromConfigApiResponse(ResponseInterface $response): self
     {
@@ -160,17 +172,45 @@ class Result implements ArrayableContract
         return $result;
     }
 
+    /**
+     * Generic handler that returns instance of Result filled with data from provided API response.
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response HTTP response to process
+     *
+     * @return Result Instance of Result filled with data from provided API response.
+     */
+    public static function fromGenericApiResponse(ResponseInterface $response): self
+    {
+        try {
+            $body = $response->getBody();
+            $body->rewind();
+            $respJsonStr = $body->getContents();
+            $json = Json::decode($respJsonStr);
+
+            $result = static::getConfiguredResponseObject($response);
+
+            $dataSrc = $json[ApiResponse::KEY_DATA] ?? null;
+            if ($dataSrc != null) {
+                $data = new Data($dataSrc);
+                $result->setData($data);
+            }
+        } catch (\Throwable $ex) {
+            $result = static::fromThrowable($ex);
+        }
+        return $result;
+    }
+
     /* ****************************************************************************************** */
 
     /**
      * Ensures decoded JSON response from API matches expectations.
      *
-     * @param array         $json                 Decoded API response array.
-     * @param string[]|null $extraDataKeys        Flat list of keys that must be present as child
-     *                                            of "data" node. NOTE: only keys directly in "data"
-     *                                            node are checked. Deeper levels are not currently
+     * @param array         $json          Decoded API response array.
+     * @param string[]|null $extraDataKeys Flat list of keys that must be present as child of
+     *                                     "data" node. NOTE: only keys directly in "data" node are
+     *                                     checked.
      *
-     * @return bool
+     * @return bool TRUE if response meets our criteria, FALSE otherwise.
      */
     protected static function isApiResponseArrayValid(array  $json,
                                                       ?array $extraDataKeys = null): bool

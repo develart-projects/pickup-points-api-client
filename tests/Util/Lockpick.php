@@ -17,9 +17,9 @@ class Lockpick
     /**
      * Calls protected method of $object, passing optional array of arguments.
      *
-     * @param object|string $clsOrObj Object to call $methodName on or name of the class.
-     * @param string $methodName Name of method to call.
-     * @param array $args Optional array of arguments (empty array for no args).
+     * @param object|string $clsOrObj   Object to call $methodName on or name of the class.
+     * @param string        $methodName Name of method to call.
+     * @param array         $args       Optional array of arguments (empty array for no args).
      *
      * @return mixed
      *
@@ -28,9 +28,7 @@ class Lockpick
      */
     public static function call($clsOrObj, string $methodName, array $args = [])
     {
-        if (\is_object($clsOrObj) === false && \is_string($clsOrObj) === false) {
-            throw new \RuntimeException('Invalid argument type');
-        }
+        static::assertClassOrString($clsOrObj);
 
         /**
          * At this point $objectOrClass is either object or string but some static analyzers
@@ -44,6 +42,42 @@ class Lockpick
         $method->setAccessible(true);
 
         return $method->invokeArgs(\is_object($clsOrObj) ? $clsOrObj : null, $args);
+    }
+
+    /**
+     * Sets protected property
+     *
+     * @param object|string $clsOrObj Object to call $methodName on or name of the class.
+     * @param string        $name     Property name to set.
+     * @param mixed         $value    Value to set.
+     *
+     * @return void
+     * @throws \ReflectionException
+     */
+    public static function setProperty($clsOrObj, string $name, $value): void
+    {
+        static::assertClassOrString($clsOrObj);
+
+        /** @phpstan-ignore-next-line */
+        $reflection = new \ReflectionClass($clsOrObj);
+        $property = $reflection->getProperty($name);
+        $property->setAccessible(true);
+        /** @phpstan-ignore-next-line */
+        $property->setValue($clsOrObj, $value);
+    }
+
+    /**
+     * Ebsures argument is of expected type.
+     *
+     * @param mixed $clsOrObj Object or class name to check.
+     *
+     * @throws \RuntimeException If argument is not object or string.
+     */
+    protected static function assertClassOrString($clsOrObj): void
+    {
+        if (\is_object($clsOrObj) === false && \is_string($clsOrObj) === false) {
+            throw new \RuntimeException('Invalid argument type');
+        }
     }
 
 } // end of Location

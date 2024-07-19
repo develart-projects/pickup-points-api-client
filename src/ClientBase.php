@@ -21,6 +21,7 @@ use OlzaLogistic\PpApi\Client\Exception\ObjectNotFoundException;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 abstract class ClientBase implements ClientContract
 {
@@ -73,11 +74,18 @@ abstract class ClientBase implements ClientContract
      *
      * @param RequestFactoryInterface $requestFactory Instance of PSR-17 compatible request factory.
      */
-    public function withRequestFactory(requestFactoryInterface $requestFactory): self
+    public function withRequestFactory(RequestFactoryInterface $requestFactory): self
     {
         $this->assertClientNotConfigured();
 
         return $this->setRequestFactory($requestFactory);
+    }
+
+    public function withStreamFactory(StreamFactoryInterface $streamFactory): self
+    {
+        $this->assertClientNotConfigured();
+
+        return $this->setStreamFactory($streamFactory);
     }
 
     /**
@@ -209,6 +217,24 @@ abstract class ClientBase implements ClientContract
     }
 
     /**
+     * Stream factory instance (PSR-17) for methods that are documented to need it (most do not).
+     *
+     * @var \Psr\Http\Message\StreamFactoryInterface
+     */
+    protected $streamFactory;
+
+    protected function getStreamFactory(): StreamFactoryInterface
+    {
+        return $this->streamFactory;
+    }
+
+    protected function setStreamFactory(StreamFactoryInterface $streamFactory): self
+    {
+        $this->streamFactory = $streamFactory;
+        return $this;
+    }
+
+    /**
      * Base URL for the API
      *
      * @var string
@@ -296,32 +322,42 @@ abstract class ClientBase implements ClientContract
      * Calls API endpoint and builds proper Response instance either with returned
      * data or one indicating request failure.
      *
-     * @param string      $endPoint                Endpoint to call (i.e. '/pp/find')
-     * @param Params|null $apiParams               Instance of Params container with valid API
-     *                                             params.
-     * @param callable    $processResponseCallback Callback that will be called to map response
-     *                                             data
-     *                                             to Result object.
+     * @param string   $httpMethod              HTTP method to use (see Method class for consts)
+     * @param string   $endPoint                Endpoint to call (i.e. '/pp/find')
+     * @param Params   $apiParams               Params container with valid API configuration
+     * @param callable $processResponseCallback Callback that will be called to process response
+     *                                          data and produce final Result object.
      *
-     * @throws MethodFailedException
+     * @throws MethodFailedException If API call failed and throwOnError is set to TRUE.
+     * @throws ObjectNotFoundException If requested object was not found.
+     * @throws AccessDeniedException If access to requested object was denied.
+     *
+     * @throws \InvalidArgumentException If $endPoint does not start with "/" character.
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface If an error happens while processing the
+     *                                                   request by the PSR HTTP client.
      */
-    protected function handleHttpRequest(string   $endPoint, ?Params $apiParams,
+    protected function handleHttpRequest(string   $httpMethod,
+                                         string   $endPoint,
+                                         Params   $apiParams,
                                          callable $processResponseCallback): Result
     {
         try {
+            $endPoint = \trim($endPoint);
+            $this->assertValidEndpointPart($endPoint);
             $uri = $this->getApiUrl() . $endPoint;
-            if ($apiParams !== null) {
-                $apiParams->withAccessToken($this->accessToken);
-                $uri .= '?' . $apiParams->toQueryString();
-            }
+
+            $queryParams = $apiParams->getQueryParams();
+            $apiParams->withAccessToken($this->accessToken);
+            $uri .= '?' . $queryParams->toQueryString();
 
             $client = $this->getHttpClient();
-            $request = $this->createRequest('GET', $uri);
+            $request = $this->createPostPayload($this->createRequest($httpMethod, $uri), $apiParams);
             $apiResponse = $client->sendRequest($request);
             /**
-             * Some static analyzers apparently believe the line  below is unreachable. Most likely
+             * Some static analyzers apparently believe the line below is unreachable. Most likely
              * it's because the dummy implementation of invoked method is used as reference (and it
-             * just throws).
+             * just throws an exception).
              *
              * @var Result $result
              */
@@ -333,10 +369,10 @@ abstract class ClientBase implements ClientContract
         if (!$result->success() && $this->getThrowOnError()) {
             switch ($result->getCode()) {
                 case ApiCode::ERROR_OBJECT_NOT_FOUND:
-                    $ex = new ObjectNotFoundException();
+                    $ex = new ObjectNotFoundException($result->getMessage(), $result->getCode());
                     break;
                 case ApiCode::ERROR_ACCESS_DENIED:
-                    $ex = new AccessDeniedException();
+                    $ex = new AccessDeniedException($result->getMessage(), $result->getCode());
                     break;
                 default:
                     $ex = new MethodFailedException($result->getMessage(), $result->getCode());
@@ -346,6 +382,62 @@ abstract class ClientBase implements ClientContract
         }
 
         return $result;
+    }
+
+    /**
+     * Creates and returns Request object with payload set up according to provided
+     * API parameters.
+     *
+     * @param RequestInterface $request   Request to optionally add payload to.
+     * @param Params           $apiParams API parameters to use.
+     *
+     * @return RequestInterface
+     */
+    protected function createPostPayload(RequestInterface $request,
+                                         Params           $apiParams): RequestInterface
+    {
+        $postParams = $apiParams->getPostParams();
+        if ($postParams->hasJson()) {
+            // Body payload is supported for specific methods only.
+            $allowedMethod = [
+                Method::POST,
+                Method::PUT,
+            ];
+            $httpMethod = $request->getMethod();
+            if (!\in_array($httpMethod, $allowedMethod, true)) {
+                $exMsg = \sprintf('Payload not supported for method: %s', $httpMethod);
+                throw new MethodFailedException($exMsg, ApiCode::INVALID_ARGUMENTS);
+            }
+            $postPayload = $postParams->getJson();
+            $body = $this->getStreamFactory()->createStream($postPayload);
+            $request = $request->withBody($body);
+        }
+
+        return $request;
+    }
+
+    /* ****************************************************************************************** */
+
+    /**
+     * Validates endpoint part to ensure it meets API requirements.
+     *
+     * @param string $endPoint Endpoint part to validate.
+     *
+     * @throws \InvalidArgumentException If endpoint part contains not allowed characters or is
+     *                                   invalid in any other way.
+     */
+    protected function assertValidEndpointPart(string $endPoint): void
+    {
+        $endPoint = \trim($endPoint);
+        if ($endPoint === '') {
+            throw new \InvalidArgumentException('Endpoint string must not be empty.');
+        }
+        if (\substr($endPoint, 0, 1) !== '/') {
+            throw new \InvalidArgumentException('Endpoint must start with "/" character.');
+        }
+        if (\substr($endPoint, -1) === '?') {
+            throw new \InvalidArgumentException('Endpoint must not end with "?" character.');
+        }
     }
 
     /* ****************************************************************************************** */

@@ -20,13 +20,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client extends ClientBase
 {
-    /**
-     * Talks to API and returns list of PPs matching search criteria.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     *
-     * @return Result
-     */
     public function find(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
@@ -35,18 +28,14 @@ class Client extends ClientBase
             Params::COUNTRY,
             Params::SPEDITION,
         ]);
-        return $this->handleHttpRequest(Route::FIND, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::FIND, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromApiResponseWithItems($apiResponse);
             }
         );
     }
 
-    /**
-     * Return details about given Pickup Point.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     */
+
     public function details(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
@@ -56,18 +45,13 @@ class Client extends ClientBase
             Params::SPEDITION,
             Params::ID,
         ]);
-        return $this->handleHttpRequest(Route::DETAILS, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::DETAILS, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromApiResponseWithItems($apiResponse);
             }
         );
     }
 
-    /**
-     * Talks to API and returns list of nearby Pickup Points matching search criteria.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     */
     public function nearby(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
@@ -75,18 +59,13 @@ class Client extends ClientBase
             Params::COUNTRY,
             Params::LOCATION,
         ]);
-        return $this->handleHttpRequest(Route::NEARBY, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::NEARBY, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromApiResponseWithItems($apiResponse);
             }
         );
     }
 
-    /**
-     * Talks to API and returns list current API runtime params and available options.
-     *
-     * @param Params $apiParams Populated instance of request parameters' container.
-     */
     public function config(Params $apiParams): Result
     {
         $this->assertConfigurationSealed();
@@ -94,9 +73,26 @@ class Client extends ClientBase
         $apiParams->setRequiredFields([
             Params::COUNTRY,
         ]);
-        return $this->handleHttpRequest(Route::CONFIG, $apiParams,
+        return $this->handleHttpRequest(Method::GET, Route::CONFIG, $apiParams,
             static function (ResponseInterface $apiResponse) {
                 return Result::fromConfigApiResponse($apiResponse);
+            }
+        );
+    }
+
+    public function rawRequest(string $httpMethod,
+                               string $endpoint,
+                               ?Params $apiParams = null): Result
+    {
+        $this->assertConfigurationSealed();
+
+        if ($apiParams === null) {
+            $apiParams = Params::create();
+        }
+
+        return $this->handleHttpRequest($httpMethod, $endpoint, $apiParams,
+            static function (ResponseInterface $apiResponse) {
+                return Result::fromGenericApiResponse($apiResponse);
             }
         );
     }
