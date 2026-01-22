@@ -4,7 +4,7 @@
 
 # PP API Client for PHP
 
-* Library requirements]
+* Library requirements
 * [Installation](installation.md)
 * [Public API methods](api.md)
 * [Library classes reference](classes.md)

@@ -13,5 +13,5 @@
 * Usage examples
   * [Obtaing API configuration](config.md)
   * [Searching for pickup points](find.md)
-  * [Retrieving pickup point details](detail.md)
+  * [Retrieving pickup point details](details.md)
   * [Finding nearby pickup points](nearby.md)
