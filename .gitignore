@@ -10,3 +10,5 @@ composer.lock
 # pre-commit
 .pre-commit-config.yaml
 phpunit.xml
+composer.phar
+.php-version

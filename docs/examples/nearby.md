@@ -47,5 +47,5 @@ $params = Params::create()
 // Call API method
 $apiResponse = $client->nearby($params);
 
-var_dump($apiResponse->toArray);
+var_dump($apiResponse->toArray());
 ```
