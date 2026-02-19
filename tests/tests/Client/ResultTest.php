@@ -162,4 +162,115 @@ class ResultTest extends BaseTestCase
         return $method->invokeArgs($obj, $args);
     }
 
+    /* ****************************************************************************************** */
+
+    public function testAsSuccessWithoutData(): void
+    {
+        $result = Result::asSuccess();
+        
+        $this->assertTrue($result->success());
+        $this->assertNull($result->getData());
+    }
+
+    public function testAsSuccessWithData(): void
+    {
+        $data = new \OlzaLogistic\PpApi\Client\Data();
+        $key = $this->getRandomString('key');
+        $value = $this->getRandomString('value');
+        $data[$key] = $value;
+        
+        $result = Result::asSuccess($data);
+        
+        $this->assertTrue($result->success());
+        $this->assertNotNull($result->getData());
+        $this->assertInstanceOf(\OlzaLogistic\PpApi\Client\Data::class, $result->getData());
+    }
+
+    public function testAsError(): void
+    {
+        $result = Result::asError();
+        
+        $this->assertFalse($result->success());
+        $this->assertNull($result->getData());
+    }
+
+    public function testFromThrowable(): void
+    {
+        $message = $this->getRandomString('error_message');
+        $code = $this->getRandomInt(1, 999);
+        $exception = new \Exception($message, $code);
+        
+        $result = Result::fromThrowable($exception);
+        
+        $this->assertFalse($result->success());
+        $this->assertEquals($code, $result->getCode());
+        $this->assertEquals($message, $result->getMessage());
+    }
+
+    public function testGetCodeReturnsZeroByDefault(): void
+    {
+        $result = Result::asSuccess();
+        
+        $this->assertEquals(0, $result->getCode());
+    }
+
+    public function testGetMessage(): void
+    {
+        $message = $this->getRandomString('test_message');
+        $result = Result::asSuccess();
+        $this->call($result, 'setMessage', [$message]);
+        
+        $this->assertEquals($message, $result->getMessage());
+    }
+
+    public function testGetMessageReturnsEmptyStringByDefault(): void
+    {
+        $result = Result::asSuccess();
+        
+        $this->assertEquals('', $result->getMessage());
+    }
+
+    public function testGetData(): void
+    {
+        $data = new \OlzaLogistic\PpApi\Client\Data();
+        $result = Result::asSuccess();
+        $this->call($result, 'setData', [$data]);
+        
+        $this->assertInstanceOf(\OlzaLogistic\PpApi\Client\Data::class, $result->getData());
+    }
+
+    public function testGetDataReturnsNullByDefault(): void
+    {
+        $result = Result::asSuccess();
+        
+        $this->assertNull($result->getData());
+    }
+
+    public function testToArrayWithData(): void
+    {
+        $data = new \OlzaLogistic\PpApi\Client\Data();
+        $key = $this->getRandomString('key');
+        $value = $this->getRandomString('value');
+        $data[$key] = $value;
+        
+        $message = $this->getRandomString('message');
+        $code = $this->getRandomInt(0, 100);
+        
+        $result = Result::asSuccess($data);
+        $this->call($result, 'setMessage', [$message]);
+        $this->call($result, 'setCode', [$code]);
+        
+        $array = $result->toArray();
+        
+        $this->assertIsArray($array);
+        $this->assertArrayHasKey('success', $array);
+        $this->assertArrayHasKey('code', $array);
+        $this->assertArrayHasKey('message', $array);
+        $this->assertArrayHasKey('data', $array);
+        $this->assertTrue($array['success']);
+        $this->assertEquals($code, $array['code']);
+        $this->assertEquals($message, $array['message']);
+        $this->assertIsArray($array['data']);
+    }
+
 } // end of class
