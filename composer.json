@@ -44,6 +44,10 @@
             "@putenv XDEBUG_MODE=coverage",
             "vendor/bin/phpunit --coverage-text -c phpunit.xml.dist"
         ],
+        "test-coverage-html": [
+            "@putenv XDEBUG_MODE=coverage",
+            "vendor/bin/phpunit --coverage-html coverage -c phpunit.xml.dist"
+        ],
         "lint": [
             "@composer phpstan",
             "@composer mdlint"
