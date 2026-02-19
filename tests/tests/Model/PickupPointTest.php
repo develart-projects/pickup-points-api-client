@@ -52,7 +52,61 @@ class PickupPointTest extends BaseTestCase
         }
 
         if (\array_key_exists(PP::KEY_GROUP_HOURS, $expected)) {
-            $this->addWarning('Hours are not tested');
+            $hoursGroup = $expected[PP::KEY_GROUP_HOURS];
+            
+            // test open247 flag
+            if (\array_key_exists(PP::KEY_OPEN_247, $hoursGroup)) {
+                $this->assertEquals($hoursGroup[PP::KEY_OPEN_247], $pp->isOpen247());
+            }
+            
+            // test Monday
+            if (\array_key_exists(PP::KEY_MONDAY, $hoursGroup)) {
+                $day = $hoursGroup[PP::KEY_MONDAY];
+                $this->assertEquals($day[PP::KEY_HOURS] ?? null, $pp->getMondayHours());
+                $this->assertEquals($day[PP::KEY_BREAK] ?? null, $pp->getMondayBreak());
+            }
+            
+            // test Tuesday
+            if (\array_key_exists(PP::KEY_TUESDAY, $hoursGroup)) {
+                $day = $hoursGroup[PP::KEY_TUESDAY];
+                $this->assertEquals($day[PP::KEY_HOURS] ?? null, $pp->getTuesdayHours());
+                $this->assertEquals($day[PP::KEY_BREAK] ?? null, $pp->getTuesdayBreak());
+            }
+            
+            // test Wednesday
+            if (\array_key_exists(PP::KEY_WEDNESDAY, $hoursGroup)) {
+                $day = $hoursGroup[PP::KEY_WEDNESDAY];
+                $this->assertEquals($day[PP::KEY_HOURS] ?? null, $pp->getWednesdayHours());
+                $this->assertEquals($day[PP::KEY_BREAK] ?? null, $pp->getWednesdayBreak());
+            }
+            
+            // test Thursday
+            if (\array_key_exists(PP::KEY_THURSDAY, $hoursGroup)) {
+                $day = $hoursGroup[PP::KEY_THURSDAY];
+                $this->assertEquals($day[PP::KEY_HOURS] ?? null, $pp->getThursdayHours());
+                $this->assertEquals($day[PP::KEY_BREAK] ?? null, $pp->getThursdayBreak());
+            }
+            
+            // test Friday
+            if (\array_key_exists(PP::KEY_FRIDAY, $hoursGroup)) {
+                $day = $hoursGroup[PP::KEY_FRIDAY];
+                $this->assertEquals($day[PP::KEY_HOURS] ?? null, $pp->getFridayHours());
+                $this->assertEquals($day[PP::KEY_BREAK] ?? null, $pp->getFridayBreak());
+            }
+            
+            // test Saturday
+            if (\array_key_exists(PP::KEY_SATURDAY, $hoursGroup)) {
+                $day = $hoursGroup[PP::KEY_SATURDAY];
+                $this->assertEquals($day[PP::KEY_HOURS] ?? null, $pp->getSaturdayHours());
+                $this->assertEquals($day[PP::KEY_BREAK] ?? null, $pp->getSaturdayBreak());
+            }
+            
+            // test Sunday
+            if (\array_key_exists(PP::KEY_SUNDAY, $hoursGroup)) {
+                $day = $hoursGroup[PP::KEY_SUNDAY];
+                $this->assertEquals($day[PP::KEY_HOURS] ?? null, $pp->getSundayHours());
+                $this->assertEquals($day[PP::KEY_BREAK] ?? null, $pp->getSundayBreak());
+            }
         }
 
         if (\array_key_exists(PP::KEY_GROUP_LOCATION, $expected)) {
@@ -80,8 +134,6 @@ class PickupPointTest extends BaseTestCase
         Assert::assertInstanceof(ArrayableContract::class, $pp);
 
         $actual = $pp->toArray();
-        unset($actual[PP::KEY_GROUP_HOURS]);
-        $this->addWarning('Hours are not tested');
         Assert::assertEquals($expected, $actual);
     }
 
