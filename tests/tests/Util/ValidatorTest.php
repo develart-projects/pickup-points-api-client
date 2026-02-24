@@ -101,6 +101,7 @@ class ValidatorTest extends BaseTestCase
         
         $this->expectException(\RuntimeException::class);
         
+        // @phpstan-ignore argument.type
         Validator::assertIsObjectOrExistingClass($varName, $value);
     }
 
@@ -240,7 +241,8 @@ class ValidatorTest extends BaseTestCase
         
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('/".*" must be a number: ".*" given\./');
-        
+
+        // @phpstan-ignore argument.type
         Validator::assertIsInRange($varName, $value, 1, 10);
     }
 
