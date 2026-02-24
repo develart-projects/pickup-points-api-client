@@ -24,7 +24,7 @@ class HttpRequestTest extends RawRequestTest
 {
     protected function buildErrorApiJson(int $code, string $message): string
     {
-        return \json_encode([
+        return (string)\json_encode([
             'success' => false,
             'code'    => $code,
             'message' => $message,

@@ -110,6 +110,7 @@ class ValidatorTest extends BaseTestCase
 
     /**
      * @dataProvider validTypeProvider
+     * @param mixed $value
      */
     public function testAssertIsTypeWithValidType($value, array $allowedTypes): void
     {
@@ -187,6 +188,9 @@ class ValidatorTest extends BaseTestCase
 
     /**
      * @dataProvider validRangeProvider
+     * @param int|float $value
+     * @param int|float $min
+     * @param int|float $max
      */
     public function testAssertIsInRangeWithValidValue($value, $min, $max): void
     {
@@ -246,6 +250,7 @@ class ValidatorTest extends BaseTestCase
 
     /**
      * @dataProvider validNumberProvider
+     * @param int|float $value
      */
     public function testAssertIsNumberWithValidNumber($value): void
     {
@@ -299,7 +304,7 @@ class ValidatorTest extends BaseTestCase
             $this->getRandomString('key1') => $this->getRandomString('value1'),
             $this->getRandomString('key2') => $this->getRandomInt(),
         ];
-        $value = json_encode($data);
+        $value = (string)json_encode($data);
         
         Validator::assertIsJson($varName, $value);
     }

@@ -20,7 +20,7 @@ class PostParamsTest extends BaseTestCase
     {
         $params = new PostParams();
         $jsonData = ['key' => $this->getRandomString('value')];
-        $jsonString = \json_encode($jsonData);
+        $jsonString = (string)\json_encode($jsonData);
         
         $params->setJson($jsonString);
         
@@ -63,7 +63,7 @@ class PostParamsTest extends BaseTestCase
                 'key' => $this->getRandomString('nested_value'),
             ],
         ];
-        $jsonString = \json_encode($complexData);
+        $jsonString = (string)\json_encode($complexData);
         
         $params->setJson($jsonString);
         
@@ -118,11 +118,11 @@ class PostParamsTest extends BaseTestCase
     {
         $params = new PostParams();
         
-        $firstJson = \json_encode(['first' => $this->getRandomString('value1')]);
+        $firstJson = (string)\json_encode(['first' => $this->getRandomString('value1')]);
         $params->setJson($firstJson);
         $this->assertEquals($firstJson, $params->getJson());
         
-        $secondJson = \json_encode(['second' => $this->getRandomString('value2')]);
+        $secondJson = (string)\json_encode(['second' => $this->getRandomString('value2')]);
         $params->setJson($secondJson);
         $this->assertEquals($secondJson, $params->getJson());
         $this->assertTrue($params->hasJson());

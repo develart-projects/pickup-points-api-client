@@ -21,7 +21,7 @@ class RawRequestTest extends BaseTestCase
 {
     protected function buildSuccessApiJson(?array $data = null): string
     {
-        return \json_encode([
+        return (string)\json_encode([
             'success' => true,
             'code'    => 0,
             'message' => 'OK',
