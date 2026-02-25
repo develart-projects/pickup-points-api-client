@@ -9,7 +9,7 @@
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-namespace OlzaLogistic\PpApi\Client\Tests\Model;
+namespace OlzaLogistic\PpApi\Client\Tests\Client;
 
 use OlzaLogistic\PpApi\Client\ApiResponse;
 use OlzaLogistic\PpApi\Client\Result;

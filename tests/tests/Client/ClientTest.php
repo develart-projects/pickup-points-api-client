@@ -9,12 +9,14 @@
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-namespace OlzaLogistic\PpApi\Client\Tests\Endpoint;
+namespace OlzaLogistic\PpApi\Client\Tests\Client;
 
 use OlzaLogistic\PpApi\Client\Client;
 use OlzaLogistic\PpApi\Client\Exception\ClientNotSealedException;
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
+use OlzaLogistic\PpApi\Client\Tests\Endpoint\DummyHttpClient;
+use OlzaLogistic\PpApi\Client\Tests\Endpoint\DummyRequestFactory;
 use OlzaLogistic\PpApi\Client\Tests\Util\Lockpick;
 use OlzaLogistic\PpApi\Client\Tests\Endpoint\DummyStreamFactory;
 use PHPUnit\Framework\Assert;

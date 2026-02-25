@@ -106,7 +106,7 @@ class PickupPointResponseGenerator
             PP::KEY_OPEN_247 => $open247,
         ];
 
-        // if open 24/7, we not need to generate hours for specific days
+        // if open 24/7, we do not need to generate hours for specific days
         if ($open247) {
             return $this;
         }
