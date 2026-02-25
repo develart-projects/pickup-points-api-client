@@ -20,7 +20,7 @@ class AccessDeniedException extends MethodFailedException
 {
     public function __construct(?string    $reason = null,
                                 int        $code = ApiCode::ERROR_ACCESS_DENIED,
-                                \Throwable $previous = null)
+                                ?\Throwable $previous = null)
     {
         $reason = $reason ?? 'Access denied';
         parent::__construct($reason, $code, $previous);
