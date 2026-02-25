@@ -38,9 +38,15 @@ jobs:
       - name: "Checkout repository…"
         uses: actions/checkout@v3
 
-      - name: "Running PHPUnit…"
+      - name: "Setup PHP ${{ matrix.php }}…"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: "Running PHPUnit on PHP ${{ matrix.php }}…"
         shell: bash
         run: |
-          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          /usr/local/bin/composer install --dev
-          /usr/local/bin/composer test
+          composer install --dev
+          composer test

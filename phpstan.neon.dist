@@ -10,10 +10,11 @@
 ##################################################################################
 
 parameters:
-  checkGenericClassInNonGenericObjectType: false
   level: max
-  checkMissingIterableValueType: false
   treatPhpDocTypesAsCertain: false
+  ignoreErrors:
+    - identifier: missingType.iterableValue
+    - identifier: missingType.generics
   paths:
     - src/
     - tests/

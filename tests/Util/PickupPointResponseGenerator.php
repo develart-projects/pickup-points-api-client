@@ -100,9 +100,34 @@ class PickupPointResponseGenerator
         return $this;
     }
 
-    public function withHours(): self
+    public function withHours(bool $open247 = false, ?array $days = null): self
     {
-        // TODO: not implemented
+        $this->data[PP::KEY_GROUP_HOURS] = [
+            PP::KEY_OPEN_247 => $open247,
+        ];
+
+        // if open 24/7, we do not need to generate hours for specific days
+        if ($open247) {
+            return $this;
+        }
+
+        // default: generate hours for all days
+        $days = $days ?? [
+            PP::KEY_MONDAY,
+            PP::KEY_TUESDAY,
+            PP::KEY_WEDNESDAY,
+            PP::KEY_THURSDAY,
+            PP::KEY_FRIDAY,
+            PP::KEY_SATURDAY,
+            PP::KEY_SUNDAY,
+        ];
+
+        foreach ($days as $day) {
+            $this->data[PP::KEY_GROUP_HOURS][$day] = [
+                PP::KEY_HOURS => '08:00-17:00',
+                PP::KEY_BREAK => '12:00-13:00',
+            ];
+        }
 
         return $this;
     }

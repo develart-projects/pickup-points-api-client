@@ -9,11 +9,16 @@
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-namespace OlzaLogistic\PpApi\Client\Tests\Endpoint;
+namespace OlzaLogistic\PpApi\Client\Tests\Client;
 
 use OlzaLogistic\PpApi\Client\Client;
+use OlzaLogistic\PpApi\Client\Exception\ClientNotSealedException;
+use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
+use OlzaLogistic\PpApi\Client\Tests\Endpoint\DummyHttpClient;
+use OlzaLogistic\PpApi\Client\Tests\Endpoint\DummyRequestFactory;
 use OlzaLogistic\PpApi\Client\Tests\Util\Lockpick;
+use OlzaLogistic\PpApi\Client\Tests\Endpoint\DummyStreamFactory;
 use PHPUnit\Framework\Assert;
 
 class ClientTest extends BaseTestCase
@@ -117,6 +122,63 @@ class ClientTest extends BaseTestCase
         return [
             [$this->getRandomString('token')],
         ];
+    }
+
+    /* ****************************************************************************************** */
+
+    public function testWithStreamFactoryStoresInstance(): void
+    {
+        $url = $this->getRandomString('url');
+        $accessToken = $this->getRandomString('pass');
+        $requestFactoryStub = $this->createStub(DummyRequestFactory::class);
+        $httpClientStub = $this->createStub(DummyHttpClient::class);
+        $streamFactoryStub = $this->createStub(DummyStreamFactory::class);
+
+        $apiClient = Client::useApi($url)
+                           ->withAccessToken($accessToken)
+                           ->withHttpClient($httpClientStub)
+                           ->withRequestFactory($requestFactoryStub)
+                           ->withStreamFactory($streamFactoryStub)
+                           ->build();
+
+        $actual = Lockpick::call($apiClient, 'getStreamFactory');
+        Assert::assertSame($streamFactoryStub, $actual);
+    }
+
+    public function testWithStreamFactoryThrowsWhenAlreadyInitialized(): void
+    {
+        $url = $this->getRandomString('url');
+        $accessToken = $this->getRandomString('pass');
+        $requestFactoryStub = $this->createStub(DummyRequestFactory::class);
+        $httpClientStub = $this->createStub(DummyHttpClient::class);
+        $streamFactoryStub = $this->createStub(DummyStreamFactory::class);
+
+        $apiClient = Client::useApi($url)
+                           ->withAccessToken($accessToken)
+                           ->withHttpClient($httpClientStub)
+                           ->withRequestFactory($requestFactoryStub)
+                           ->build();
+
+        $this->expectException(\OlzaLogistic\PpApi\Client\Exception\ClientAlreadyInitializedException::class);
+        $apiClient->withStreamFactory($streamFactoryStub);
+    }
+
+    /* ****************************************************************************************** */
+
+    public function testFindThrowsWhenClientNotSealed(): void
+    {
+        // calling endpoint method without build() must throw ClientNotSealedException
+        $url = $this->getRandomString('url');
+        $accessToken = $this->getRandomString('pass');
+        $requestFactoryStub = $this->createStub(DummyRequestFactory::class);
+        $httpClientStub = $this->createStub(DummyHttpClient::class);
+
+        $this->expectException(ClientNotSealedException::class);
+        Client::useApi($url)
+              ->withAccessToken($accessToken)
+              ->withHttpClient($httpClientStub)
+              ->withRequestFactory($requestFactoryStub)
+              ->find(Params::create());
     }
 
 } // end of class

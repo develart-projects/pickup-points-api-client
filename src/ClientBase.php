@@ -29,6 +29,7 @@ abstract class ClientBase implements ClientContract
      * Configures the client to engage with a Pickup Point API at the provided URL.
      *
      * @param string $apiUrl Valid API URL, i.e. 'https://api.olzalogistic.com/v1'
+     * @return static
      */
     public static function useApi(string $apiUrl): self
     {
@@ -40,6 +41,7 @@ abstract class ClientBase implements ClientContract
      * Points API.
      *
      * @param string $accessToken Your private access token.
+     * @return static
      */
     public function withAccessToken(string $accessToken): self
     {
@@ -50,6 +52,7 @@ abstract class ClientBase implements ClientContract
      * Specifies the User-Agent string for all HTTP API requests.
      *
      * @param string $userAgent User agent string.
+     * @return static
      */
     public function withUserAgent(string $userAgent): self
     {
@@ -60,6 +63,7 @@ abstract class ClientBase implements ClientContract
      * Configures a PSR-18 compatible instance of an HTTP client implementation.
      *
      * @param ClientInterface $httpClient Instance of PSR-18 compatible HTTP client.
+     * @return static
      */
     public function withHttpClient(ClientInterface $httpClient): self
     {
@@ -73,6 +77,7 @@ abstract class ClientBase implements ClientContract
      * Configures a PSR-17 compatible request factory instance to work with the HTTP client.
      *
      * @param RequestFactoryInterface $requestFactory Instance of PSR-17 compatible request factory.
+     * @return static
      */
     public function withRequestFactory(RequestFactoryInterface $requestFactory): self
     {
@@ -81,6 +86,7 @@ abstract class ClientBase implements ClientContract
         return $this->setRequestFactory($requestFactory);
     }
 
+    /** @return static */
     public function withStreamFactory(StreamFactoryInterface $streamFactory): self
     {
         $this->assertClientNotConfigured();
@@ -91,6 +97,8 @@ abstract class ClientBase implements ClientContract
     /**
      * Configures the client to throw an exception in case of any API connection failure.
      * Beneficial for an "exception-driven" coding approach.
+     *
+     * @return static
      */
     public function throwOnError(): self
     {
@@ -99,6 +107,8 @@ abstract class ClientBase implements ClientContract
 
     /**
      * Returns complete, ready to use PP-API Client instance.
+     *
+     * @return static
      */
     public function build(): self
     {
@@ -170,6 +180,7 @@ abstract class ClientBase implements ClientContract
      * Sets access token to provided value. Must be a valid, non-empty string.
      *
      * @param string $accessToken PP-API access token.
+     * @return static
      */
     protected function setAccessToken(string $accessToken): self
     {
@@ -192,6 +203,7 @@ abstract class ClientBase implements ClientContract
         return $this->httpClient;
     }
 
+    /** @return static */
     protected function setHttpClient(ClientInterface $httpClient): self
     {
         $this->httpClient = $httpClient;
@@ -210,6 +222,7 @@ abstract class ClientBase implements ClientContract
         return $this->requestFactory;
     }
 
+    /** @return static */
     protected function setRequestFactory(RequestFactoryInterface $requestFactory): self
     {
         $this->requestFactory = $requestFactory;
@@ -228,6 +241,7 @@ abstract class ClientBase implements ClientContract
         return $this->streamFactory;
     }
 
+    /** @return static */
     protected function setStreamFactory(StreamFactoryInterface $streamFactory): self
     {
         $this->streamFactory = $streamFactory;
@@ -246,6 +260,7 @@ abstract class ClientBase implements ClientContract
         return $this->apiUrl;
     }
 
+    /** @return static */
     protected function setApiUrl(string $apiUrl): self
     {
         $this->apiUrl = $apiUrl;
@@ -264,6 +279,7 @@ abstract class ClientBase implements ClientContract
         return $this->userAgent;
     }
 
+    /** @return static */
     protected function setUserAgent(string $userAgent): self
     {
         $this->userAgent = $userAgent;
@@ -280,6 +296,7 @@ abstract class ClientBase implements ClientContract
         return $this->throwOnError;
     }
 
+    /** @return static */
     protected function setThrowOnError(bool $throwOnError): self
     {
         $this->throwOnError = $throwOnError;

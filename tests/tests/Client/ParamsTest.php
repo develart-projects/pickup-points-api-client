@@ -9,7 +9,7 @@
  * @link      https://github.com/develart-projects/pickup-points-api-client/
  */
 
-namespace OlzaLogistic\PpApi\Client\Tests\Model;
+namespace OlzaLogistic\PpApi\Client\Tests\Client;
 
 use OlzaLogistic\PpApi\Client\Params;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
@@ -128,6 +128,60 @@ class ParamsTest extends BaseTestCase
         $this->assertIsArray($value);
         /** @var array $value */
         $this->assertArrayEquals($fields, $value);
+    }
+
+    public function testWithPostPayload(): void
+    {
+        $payload = [
+            'key1' => $this->getRandomString('value1'),
+            'key2' => $this->getRandomInt(1, 100),
+        ];
+        
+        $p = Params::create()->withPostPayload($payload);
+        
+        $this->assertInstanceOf(Params::class, $p);
+        $postParams = $p->getPostParams();
+        $this->assertTrue($postParams->hasJson());
+        
+        $json = $postParams->getJson();
+        $decoded = \json_decode($json, true);
+        $this->assertEquals($payload, $decoded);
+    }
+
+    public function testWithPostPayloadEmpty(): void
+    {
+        $payload = [];
+        
+        $p = Params::create()->withPostPayload($payload);
+        
+        $postParams = $p->getPostParams();
+        $this->assertTrue($postParams->hasJson());
+        
+        $json = $postParams->getJson();
+        $this->assertEquals('[]', $json);
+    }
+
+    public function testWithPostPayloadComplex(): void
+    {
+        $payload = [
+            'string' => $this->getRandomString('str'),
+            'number' => $this->getRandomInt(1, 1000),
+            'bool' => $this->getRandomBool(),
+            'null' => null,
+            'array' => [$this->getRandomString('item1'), $this->getRandomString('item2')],
+            'nested' => [
+                'key' => $this->getRandomString('nested_value'),
+            ],
+        ];
+        
+        $p = Params::create()->withPostPayload($payload);
+        
+        $postParams = $p->getPostParams();
+        $this->assertTrue($postParams->hasJson());
+        
+        $json = $postParams->getJson();
+        $decoded = \json_decode($json, true);
+        $this->assertEquals($payload, $decoded);
     }
 
 } // end of class
