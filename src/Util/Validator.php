@@ -101,7 +101,7 @@ class Validator
                 $msg = '"%s" must be %s but %s found.';
                 break;
 
-            default;
+            default:
                 $msg = '"%s" must be one of allowed types: %s but %s found.';
                 break;
         }

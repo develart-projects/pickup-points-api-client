@@ -13,7 +13,7 @@ namespace OlzaLogistic\PpApi\Client\Exception;
 
 class ResponseParsingException extends \RuntimeException
 {
-    public function __construct(?string $msg = null, int $code = 0, \Throwable $previous = null)
+    public function __construct(?string $msg = null, int $code = 0, ?\Throwable $previous = null)
     {
         $msg = $msg ?? 'Failed parsing API response.';
         parent::__construct($msg, $code, $previous);

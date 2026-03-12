@@ -13,7 +13,7 @@ namespace OlzaLogistic\PpApi\Client\Exception;
 
 class MethodFailedException extends \RuntimeException
 {
-    public function __construct(?string $reason = null, int $code = 0, \Throwable $previous = null)
+    public function __construct(?string $reason = null, int $code = 0, ?\Throwable $previous = null)
     {
         $reason = $reason ?? 'API method failed';
         parent::__construct($reason, $code, $previous);

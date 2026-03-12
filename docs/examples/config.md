@@ -11,9 +11,9 @@
 * [Public API methods](../api.md)
 * [Library classes reference](../classes.md)
 * Usage examples
-  * [Obtaing API configuration](config.md)
+  * Obtaing API configuration
   * [Searching for pickup points](find.md)
-  * Retrieving pickup point details
+  * [Retrieving pickup point details](details.md)
   * [Finding nearby pickup points](nearby.md)
 
 ---
