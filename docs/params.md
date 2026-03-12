@@ -45,15 +45,6 @@ public static function create(): self
 Create empty instance of Params class. That should be the your starting point for most of the cases.
 
 ```php
-public function throwOnError(): self
-```
-
-By default, all public API methods return a `Result` object when called. To determine if the command
-succeeded or not, you need to call the `success()` method on the returned object and then branch
-your code logic accordingly. This approach can lead to less readable code, so alternatively, you can
-instruct the client to always throw a `MethodFailedException` instead.
-
-```php
 public function withCountry(string $country): self
 ```
 
@@ -63,38 +54,52 @@ Sets country code (use Country::xxx consts) to use with the request.
 public function withCity(string $city): self
 ```
 
-Sets spedition code to be used with the request (use Spedition::xxx codes)
+Sets city name to be used with the request.
 
 ```php
 public function withSpedition(string $spedition): self
 ```
 
-Id of the element (mainly Pickup Point) as returned by the API (i.e. from /find)
+Sets spedition code to be used with the request (use Spedition::xxx codes).
+
+```php
+public function withSpeditions(array $speditions): self
+```
+
+Sets multiple spedition codes at once (array of Spedition::xxx codes).
 
 ```php
 public function withSpeditionId(string $speditionId): self
 ```
 
-Sets location to be sent with the request.
+Sets spedition ID to be sent with the request.
 
 ```php
 public function withLocation(?float $latitude, ?float $longitude): self
 ```
 
-Sets `fields` arguments (array of FieldType::xxx).
+Sets location to be sent with the request.
+
+```php
+public function withLimit(int $limit): self
+```
+
+Sets the maximum number of items to be returned by the API.
 
 ```php
 public function withFields(?array $fields): self
 ```
 
-Adds given field type (FieldType::xxx) to the list of requested fields.
+Sets `fields` arguments (array of FieldType::xxx).
 
 ```php
 public function addField(string $field): self
 ```
 
-Sets API access token to be used.
+Adds given field type (FieldType::xxx) to the list of requested fields.
 
 ```php
 public function withAccessToken(string $accessToken): self
 ```
+
+Sets API access token to be used.

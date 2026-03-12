@@ -32,9 +32,7 @@ all the method required arguments set using all exposed `withXXX()` helper metho
 
 ## `Result` - response data container
 
-Client responses are always provided as instances of the `Result` class. The object is immutable,
-and for ease of use, `Result` is a subclass
-of [ArrayObject](https://www.php.net/manual/en/class.arrayobject.php) and aside from exposing useful
-methods, it also acts as a regular array.
+Client responses are always provided as instances of the `Result` class. The object is immutable
+and exposes useful methods for accessing response status and payload data.
 
 [`Result` class API documentation](response.md)

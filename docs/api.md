@@ -97,8 +97,11 @@ Required arguments:
 * `country` - **[required]** country code (use `Country::xxx` consts).
 * `spedition` - **[required]** either a single spedition (string) or multiple speditions (array of
   strings).
-* `coords` - **[required]** geographic coordinates to search near. The value should be a string in
-  the format `latitude,longitude`.
+* `coords` - **[required]** geographic coordinates to search near. Pass latitude and longitude
+  via `withLocation(float $lat, float $lon)`.
+
+Optional arguments:
+
 * `limit` - The maximum number of items to be returned. The default is to return all matching
   items (API cap limit may apply).
 

@@ -18,15 +18,15 @@
 
 ## Accessing response data
 
-Client responses are always provided as instances of the `Result` class. The object is immutable,
-and for ease of use, `Result` is a subclass
-of [ArrayObject](https://www.php.net/manual/en/class.arrayobject.php). Aside from exposing useful
-methods, it also acts as a regular array:
+Client responses are always provided as instances of the `Result` class. The object is immutable
+and exposes useful methods for accessing response status and payload data:
 
 ```php
-$result = $client->find('cz');
-$items = $result->getData();
-foreach($items as $item) {
+$params = Params::create()
+                  ->withCountry(Country::CZECHIA)
+                  ->withSpedition(Spedition::GLS);
+$result = $client->find($params);
+foreach($result->getData() as $item) {
     echo $item->getSpeditionId() . PHP_EOL;
 }
 ```
@@ -46,10 +46,11 @@ public function getCode(): int
 Gets API returned status code associated with the response (this is not a HTTP status code).
 The expected values are:
 
-* `ApiCode::ERROR_OBJECT_NOT_FOUND` (`100`): API rejects the request due to invalid credentials (
-  like invalid or outdated access token)
+* `ApiCode::ERROR_OBJECT_NOT_FOUND` (`100`): requested data was not found (e.g. invalid PP
+  reference ID or invalid carrier ID).
 * `ApiCode::ERROR_ACCESS_DENIED` (`101`): API rejects the request due to invalid credentials (like
   invalid or outdated access token).
+* `ApiCode::INVALID_ARGUMENTS` (`102`): API rejects the request due to invalid or missing arguments.
 
 ```php
 public function getMessage(): ?string
@@ -62,15 +63,6 @@ public function getData(): ?Data
 ```
 
 Returns API returned payload.
-
-### Data class methods
-
-```php
-public function getItems(): ?array
-```
-
-Some endpoints return a list of items (e.g., a list of Pickup Points). In such cases, you can obtain
-the list of items using the `getItems()` method on the `Data` class instance.
 
 ### Accessing response payload
 
