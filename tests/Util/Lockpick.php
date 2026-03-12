@@ -39,7 +39,12 @@ class Lockpick
          */
         $reflection = new \ReflectionClass($clsOrObj);
         $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
+        
+        if (PHP_VERSION_ID < 80100) { // only for PHP < 8.1
+            // NOTE: In PHP 8.1+ setAccessible() is deprecated and not needed for non-private methods,
+            // but in older versions it is needed to call protected/private methods
+            $method->setAccessible(true);
+        }
 
         return $method->invokeArgs(\is_object($clsOrObj) ? $clsOrObj : null, $args);
     }
