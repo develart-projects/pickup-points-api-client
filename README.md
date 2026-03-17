@@ -2,6 +2,10 @@
 
 # PP API Client for PHP
 
+[![Unit Tests](https://github.com/develart-projects/pickup-points-api-client/actions/workflows/phpunit.yml/badge.svg)](https://github.com/develart-projects/pickup-points-api-client/actions/workflows/phpunit.yml)
+[![Static Analysis](https://github.com/develart-projects/pickup-points-api-client/actions/workflows/phpstan.yml/badge.svg)](https://github.com/develart-projects/pickup-points-api-client/actions/workflows/phpstan.yml)
+[![Markdown Lint](https://github.com/develart-projects/pickup-points-api-client/actions/workflows/markdown.yml/badge.svg)](https://github.com/develart-projects/pickup-points-api-client/actions/workflows/markdown.yml)
+
 The PP API Client is a robust library tailored for PHP 7.2 or newer, designed to interact with the
 Pickup Points (PP) API service offered by Olza Logistic. This library facilitates seamless access to
 a comprehensive database of parcel delivery pickup points, empowering developers to execute precise
