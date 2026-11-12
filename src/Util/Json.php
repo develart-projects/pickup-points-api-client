@@ -18,7 +18,7 @@ namespace OlzaLogistic\PpApi\Client\Util;
 final class Json
 {
     /**
-     * Helper methods that imitates JSON_THROW_ON_ERROR flag on PHP < 7.3
+     * decodes JSON string with JSON_THROW_ON_ERROR flag
      *
      * @param string $json JSON string to decode
      *
@@ -28,22 +28,14 @@ final class Json
      */
     public static function decode(string $json): array
     {
-        $flags = 0;
-        if (version_compare(phpversion(), '7.3.0', '>=')) {
-            $flags |= \JSON_THROW_ON_ERROR;
-        }
+        /** @var array $result */
+        $result = \json_decode($json, true, 32, \JSON_THROW_ON_ERROR);
 
-        $decodedJson = \json_decode($json, true, 32, $flags);
-        if (\json_last_error() !== \JSON_ERROR_NONE) {
-            throw new \JsonException('JSON decoding error: ' . \json_last_error_msg());
-        }
-
-        /** @var array $decodedJson */
-        return $decodedJson;
+        return $result;
     }
 
     /**
-     * Helper methods that imitates JSON_THROW_ON_ERROR flag on PHP < 7.3
+     * encodes data with JSON_THROW_ON_ERROR flag
      *
      * @param array $data Data to encode
      *
@@ -53,18 +45,7 @@ final class Json
      */
     public static function encode(array $data): string
     {
-        $flags = 0;
-        if (version_compare(phpversion(), '7.3.0', '>=')) {
-            $flags |= \JSON_THROW_ON_ERROR;
-        }
-
-        $json = \json_encode($data, $flags);
-        if (\json_last_error() !== \JSON_ERROR_NONE) {
-            throw new \JsonException('JSON encoding error: ' . \json_last_error_msg());
-        }
-
-        /** @var string $json */
-        return $json;
+        return \json_encode($data, \JSON_THROW_ON_ERROR);
     }
 
 }

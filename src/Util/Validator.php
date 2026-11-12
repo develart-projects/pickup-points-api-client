@@ -94,9 +94,6 @@ class Validator
                                              array  $allowedTypes): \RuntimeException
     {
         switch (\count($allowedTypes)) {
-            case 0:
-                throw new \RuntimeException('allowedTypes array must not be empty.');
-
             case 1:
                 $msg = '"%s" must be %s but %s found.';
                 break;

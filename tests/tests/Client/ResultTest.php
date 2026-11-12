@@ -12,8 +12,10 @@
 namespace OlzaLogistic\PpApi\Client\Tests\Client;
 
 use OlzaLogistic\PpApi\Client\ApiResponse;
+use OlzaLogistic\PpApi\Client\Model\PickupPoint;
 use OlzaLogistic\PpApi\Client\Result;
 use OlzaLogistic\PpApi\Client\Tests\BaseTestCase;
+use OlzaLogistic\PpApi\Client\Tests\Util\PickupPointResponseGenerator;
 use PHPUnit\Framework\Assert;
 use \Psr\Http\Message\StreamInterface;
 use \Psr\Http\Message\ResponseInterface;
@@ -102,6 +104,58 @@ class ResultTest extends BaseTestCase
                 ApiResponse::KEY_SUCCESS => true,
                 ApiResponse::KEY_MESSAGE => $this->getRandomString(),
                 ApiResponse::KEY_CODE    => $this->getRandomInt(0, 255),
+            ],
+        ];
+        $result[] = [$set];
+
+        /* -------------------------------------------------------------------------------------- */
+
+        // Wrong value types
+        $set = [
+            'expected' => false,
+            'json'     => [
+                ApiResponse::KEY_SUCCESS => 'yes',
+                ApiResponse::KEY_MESSAGE => $this->getRandomString(),
+                ApiResponse::KEY_CODE    => $this->getRandomInt(0, 255),
+                ApiResponse::KEY_DATA    => null,
+            ],
+        ];
+        $result[] = [$set];
+
+        $set = [
+            'expected' => false,
+            'json'     => [
+                ApiResponse::KEY_SUCCESS => true,
+                ApiResponse::KEY_MESSAGE => $this->getRandomString(),
+                ApiResponse::KEY_CODE    => $this->getRandomInt(0, 255),
+                ApiResponse::KEY_DATA    => 'not-an-array',
+            ],
+        ];
+        $result[] = [$set];
+
+        /* -------------------------------------------------------------------------------------- */
+
+        // Require extra keys in data
+        $set = [
+            'expected'  => false,
+            'extraKeys' => ['items'],
+            'json'      => [
+                ApiResponse::KEY_SUCCESS => true,
+                ApiResponse::KEY_MESSAGE => $this->getRandomString(),
+                ApiResponse::KEY_CODE    => $this->getRandomInt(0, 255),
+                ApiResponse::KEY_DATA    => null,
+            ],
+        ];
+        $result[] = [$set];
+
+        $set = [
+            'expected'  => false,
+            'extraKeys' => ['items'],
+            'json'      => [
+                ApiResponse::KEY_SUCCESS => true,
+                ApiResponse::KEY_MESSAGE => $this->getRandomString(),
+                ApiResponse::KEY_CODE    => $this->getRandomInt(0, 255),
+                ApiResponse::KEY_DATA    => ['other' => []],
             ],
         ];
         $result[] = [$set];
@@ -403,6 +457,95 @@ class ResultTest extends BaseTestCase
         $result = Result::fromGenericApiResponse($responseMock);
 
         // invalid JSON must be caught and returned as error result
+        $this->assertFalse($result->success());
+    }
+
+    public function testFromGenericApiResponseUsesHttpStatusWhenMessageEmpty(): void
+    {
+        $apiJson = \json_encode([
+            'success' => false,
+            'code'    => 5,
+            'message' => '',
+            'data'    => null,
+        ]);
+
+        $streamStub = $this->createStub(StreamInterface::class);
+        $streamStub->method('getContents')->willReturn($apiJson);
+
+        $responseMock = $this->createStub(ResponseInterface::class);
+        $responseMock->method('getBody')->willReturn($streamStub);
+        $responseMock->method('getStatusCode')->willReturn(503);
+
+        $result = Result::fromGenericApiResponse($responseMock);
+
+        $this->assertFalse($result->success());
+        $this->assertEquals('HTTP error #503', $result->getMessage());
+    }
+
+    public function testFromGenericApiResponseReturnsErrorOnInvalidStructure(): void
+    {
+        $apiJson = \json_encode([
+            'success' => true,
+            'message' => 'OK',
+        ]);
+
+        $streamStub = $this->createStub(StreamInterface::class);
+        $streamStub->method('getContents')->willReturn($apiJson);
+
+        $responseMock = $this->createStub(ResponseInterface::class);
+        $responseMock->method('getBody')->willReturn($streamStub);
+        $responseMock->method('getStatusCode')->willReturn(200);
+
+        $result = Result::fromGenericApiResponse($responseMock);
+
+        $this->assertFalse($result->success());
+    }
+
+    /* ****************************************************************************************** */
+
+    public function testFromApiResponseWithItemsSuccessWithItems(): void
+    {
+        $count = $this->getRandomInt(1, 5);
+        $items = [];
+        for ($i = 0; $i < $count; $i++) {
+            $items[] = PickupPointResponseGenerator::data()->get();
+        }
+        $apiJson = \json_encode([
+            'success' => true,
+            'code'    => 0,
+            'message' => 'OK',
+            'data'    => [
+                'items' => $items,
+            ],
+        ]);
+
+        $streamStub = $this->createStub(StreamInterface::class);
+        $streamStub->method('getContents')->willReturn($apiJson);
+
+        $responseMock = $this->createStub(ResponseInterface::class);
+        $responseMock->method('getBody')->willReturn($streamStub);
+        $responseMock->method('getStatusCode')->willReturn(200);
+
+        $result = Result::fromApiResponseWithItems($responseMock);
+
+        $this->assertTrue($result->success());
+        $data = $result->getData();
+        $this->assertNotNull($data);
+        $this->assertCount($count, $data);
+        $this->assertInstanceOf(PickupPoint::class, $data[0]);
+    }
+
+    public function testFromConfigApiResponseHandlesInvalidJson(): void
+    {
+        $streamStub = $this->createStub(StreamInterface::class);
+        $streamStub->method('getContents')->willReturn('not-valid-json');
+
+        $responseMock = $this->createStub(ResponseInterface::class);
+        $responseMock->method('getBody')->willReturn($streamStub);
+        $responseMock->method('getStatusCode')->willReturn(200);
+
+        $result = Result::fromConfigApiResponse($responseMock);
+
         $this->assertFalse($result->success());
     }
 

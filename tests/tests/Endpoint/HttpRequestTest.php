@@ -189,4 +189,55 @@ class HttpRequestTest extends RawRequestTest
         $this->assertFalse($result->success());
     }
 
+    /* ****************************************************************************************** */
+
+    /**
+     * @dataProvider provideInvalidEndpoints
+     */
+    public function testRawRequestReturnsErrorOnInvalidEndpoint(string $endpoint, string $expectedMessage): void
+    {
+        $apiJson = $this->buildSuccessApiJson();
+        $url = $this->getRandomString('url');
+        $accessToken = $this->getRandomString('pass');
+
+        $apiClient = $this->buildClientWithResponse($url, $accessToken, $apiJson);
+        $result = $apiClient->rawRequest(Method::GET, $endpoint, null);
+
+        $this->assertFalse($result->success());
+        $this->assertStringContainsString($expectedMessage, $result->getMessage());
+    }
+
+    public function provideInvalidEndpoints(): array
+    {
+        return [
+            'empty'              => ['   ', 'must not be empty'],
+            'no leading slash'   => ['pp/find', 'must start with "/"'],
+            'trailing question'  => ['/pp/find?', 'must not end with "?"'],
+        ];
+    }
+
+    public function testCreateRequestAppendsQueryArgs(): void
+    {
+        $url = $this->getRandomString('url');
+        $accessToken = $this->getRandomString('pass');
+        $target = 'https://example.com/api';
+
+        $requestStub = $this->createStub(DummyRequest::class);
+        $requestStub->method('withHeader')->willReturn($requestStub);
+
+        $requestFactoryMock = $this->createMock(DummyRequestFactory::class);
+        $requestFactoryMock->expects($this->once())
+                           ->method('createRequest')
+                           ->with(Method::GET, $target . '?a=1&b=x+y')
+                           ->willReturn($requestStub);
+
+        $apiClient = Client::useApi($url)
+                           ->withAccessToken($accessToken)
+                           ->withHttpClient($this->createStub(DummyHttpClient::class))
+                           ->withRequestFactory($requestFactoryMock)
+                           ->build();
+
+        $this->callProtectedMethod($apiClient, 'createRequest', [Method::GET, $target, ['a' => 1, 'b' => 'x y']]);
+    }
+
 } // end of class

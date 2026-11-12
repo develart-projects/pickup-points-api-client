@@ -295,4 +295,93 @@ class PickupPointTest extends BaseTestCase
         $this->assertArrayNotHasKey(PP::KEY_SUNDAY, $filtered);
     }
 
+    /* ****************************************************************************************** */
+
+    public function testSetSpeditionThrowsOnEmptyCode(): void
+    {
+        $pp = PP::fromApiResponse(PickupPointResponseGenerator::data()->get());
+
+        $this->expectException(\RuntimeException::class);
+        Lockpick::call($pp, 'setSpedition', ['   ']);
+    }
+
+    public function testGetFullAddressThrowsWhenNotSet(): void
+    {
+        $pp = PP::fromApiResponse(PickupPointResponseGenerator::data()->get());
+
+        $this->expectException(\RuntimeException::class);
+        $pp->getFullAddress();
+    }
+
+    /**
+     * @dataProvider provideEmptyHours
+     */
+    public function testSanitizeHoursReturnsNullForEmptyValue(?string $hours): void
+    {
+        $pp = PP::fromApiResponse(PickupPointResponseGenerator::data()->get());
+
+        $this->assertNull(Lockpick::call($pp, 'sanitizeHours', [$hours]));
+    }
+
+    public function provideEmptyHours(): array
+    {
+        return [
+            [null],
+            [''],
+            ['   '],
+        ];
+    }
+
+    public function testSanitizeHoursThrowsOnInvalidFormat(): void
+    {
+        $pp = PP::fromApiResponse(PickupPointResponseGenerator::data()->get());
+
+        $this->expectException(\RuntimeException::class);
+        Lockpick::call($pp, 'sanitizeHours', ['8:00-16:00']);
+    }
+
+    /* ****************************************************************************************** */
+
+    public function testSetLocationAcceptsNullCoordinates(): void
+    {
+        $pp = PP::fromApiResponse(PickupPointResponseGenerator::data()->get());
+
+        Lockpick::call($pp, 'setLocation', [null, null]);
+
+        $this->assertNull($pp->getLatitude());
+        $this->assertNull($pp->getLongitude());
+    }
+
+    public function testSetLocationConvertsCoordinatesToString(): void
+    {
+        $pp = PP::fromApiResponse(PickupPointResponseGenerator::data()->get());
+
+        Lockpick::call($pp, 'setLocation', [49.5, 17]);
+
+        $this->assertSame('49.5', $pp->getLatitude());
+        $this->assertSame('17', $pp->getLongitude());
+    }
+
+    /**
+     * @dataProvider provideInvalidCoordinates
+     *
+     * @param mixed $coord
+     */
+    public function testSetLocationThrowsOnInvalidCoordinate($coord): void
+    {
+        $pp = PP::fromApiResponse(PickupPointResponseGenerator::data()->get());
+
+        $this->expectException(\InvalidArgumentException::class);
+        Lockpick::call($pp, 'setLocation', [$coord, 10]);
+    }
+
+    public function provideInvalidCoordinates(): array
+    {
+        return [
+            'blank string' => ['   '],
+            'array'        => [[1]],
+            'bool'         => [true],
+        ];
+    }
+
 } // end of class

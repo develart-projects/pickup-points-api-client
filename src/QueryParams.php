@@ -631,13 +631,6 @@ class QueryParams
             self::SPEDITION    => $speditions,
         ];
 
-        if (!\array_key_exists(self::ACCESS_TOKEN, $queryArgs)) {
-            $accessToken = $this->getAccessToken();
-            if ($accessToken !== null) {
-                $queryArgs[self::ACCESS_TOKEN] = $accessToken;
-            }
-        }
-
         // Remove all null-value query arguments.
         $filtered = \array_filter($queryArgs, static function ($value): bool {
             return $value !== null;

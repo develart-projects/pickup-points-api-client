@@ -331,6 +331,53 @@ class QueryParamsTest extends BaseTestCase
         $p->toQueryString();
     }
 
+    public function testGetAccessTokenThrowsWhenNotSet(): void
+    {
+        $p = new QueryParams();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $p->getAccessToken();
+    }
+
+    /**
+     * @dataProvider provideRequiredFieldsMissingValue
+     */
+    public function testValidateThrowsExceptionWhenRequiredFieldIsEmpty(string $field): void
+    {
+        $p = new QueryParams();
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->callProtectedMethod($p, 'validate', [[$field]]);
+    }
+
+    public function provideRequiredFieldsMissingValue(): array
+    {
+        return [
+            [QueryParams::CITY],
+            [QueryParams::FIELDS],
+            [QueryParams::SERVICES],
+            [QueryParams::PAYMENTS],
+        ];
+    }
+
+    public function testValidateAcceptsSetRequiredFields(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $p = (new QueryParams())
+            ->withCity($this->getRandomString('city'))
+            ->withFields([$this->getRandomString('field')])
+            ->withServices([$this->getRandomString('service')])
+            ->withPayments([$this->getRandomString('payment')]);
+
+        $this->callProtectedMethod($p, 'validate', [[
+            QueryParams::CITY,
+            QueryParams::FIELDS,
+            QueryParams::SERVICES,
+            QueryParams::PAYMENTS,
+        ]]);
+    }
+
     public function testValidateThrowsExceptionForUnknownField(): void
     {
         $p = new QueryParams();

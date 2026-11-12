@@ -34,6 +34,35 @@ class SpeditionTest extends BaseTestCase
 
     /* ****************************************************************************************** */
 
+    public function testResponseParsingWithNames(): void
+    {
+        $names = [
+            'en' => $this->getRandomString('name_en'),
+            'cs' => $this->getRandomString('name_cs'),
+        ];
+
+        $sped = Spedition::fromApiResponse([
+            Spedition::KEY_CODE  => $this->getRandomString('code'),
+            Spedition::KEY_LABEL => $this->getRandomString('label'),
+            Spedition::KEY_NAMES => $names,
+        ]);
+
+        $this->assertEquals($names, $sped->getNames());
+    }
+
+    public function testSpeditionAccessors(): void
+    {
+        $code = $this->getRandomString('code');
+        $sped = Spedition::fromApiResponse([Spedition::KEY_CODE => $code]);
+
+        $result = $sped->setSpedition($code);
+
+        $this->assertSame($sped, $result);
+        $this->assertEquals($code, $sped->getSpedition());
+    }
+
+    /* ****************************************************************************************** */
+
     /**
      * Returns Generator yielding random Spedition source data.
      *

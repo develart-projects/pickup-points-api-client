@@ -105,6 +105,30 @@ class DataTest extends BaseTestCase
         $this->assertStringContainsString('<stdClass>', $result[$key]);
     }
 
+    public function testToArrayWithStringableObject(): void
+    {
+        $data = new Data();
+        $key = $this->getRandomString('key');
+        $text = $this->getRandomString('text');
+
+        $data[$key] = new class($text) {
+            protected string $text;
+
+            public function __construct(string $text)
+            {
+                $this->text = $text;
+            }
+
+            public function __toString(): string
+            {
+                return $this->text;
+            }
+        };
+
+        $result = $data->toArray();
+        $this->assertSame($text, $result[$key]);
+    }
+
     public function testToArrayWithEmptyData(): void
     {
         $data = new Data();
